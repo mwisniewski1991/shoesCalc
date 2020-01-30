@@ -2,19 +2,58 @@
 
     &--one{
         font-size: 8rem;
+        letter-spacing: 10px;
     }
 
     &--two{
-        font-size: 1.5rem;
+        font-size: 2rem;
     }
 }
 
-.nav{
+.fixedBar{
     position: fixed;
+    z-index: 1;
     top: 0;
     left: 0;
-    height: 8vh;
+    height: 5rem;
     width: 100%;
+    padding: 0 2rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: rgba(31, 2, 2, 0.363);
+
+    &__title{
+
+    }
+
+    &__list{
+        display: flex;
+        list-style: none;
+    }
+
+    &__item{
+        margin-right: 5px;
+    }
+
+    &__button{
+        background-color: darken($colorWhite, 50%);
+        width: 7.5rem;
+        height: 3rem;
+        outline: none;
+
+        transition: background-color .2s;
+
+        &:hover{
+            background-color: darken($colorWhite, 55%);
+        }
+
+        &:active{
+            transform: translate(0, 2px);
+        }
+    }
 }
 
 .logos{
