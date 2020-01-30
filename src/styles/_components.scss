@@ -1,0 +1,94 @@
+.heading{
+
+    &--one{
+        font-size: 2.5rem;
+    }
+
+    &--two{
+        font-size: 1.5rem;
+    }
+}
+
+.chart{
+
+    &__title{
+
+    }
+
+    &__container{
+        width: 400px;
+        height: 400px;
+        border: 1px solid white;
+
+        &--priceCategory{
+            width: 700px;
+            
+        }
+    }
+
+}
+
+
+.chart-priceCategory, .chart-priceCatBoxChart{
+
+    //AXIS
+    &__axisLine{
+
+        font-size: 15px;
+        
+        &--yLine{
+
+            & path{
+                stroke: white;
+                opacity: .2;
+            }
+
+             & .tick line{
+                opacity: .1;
+             }
+
+             & .tick text{
+                opacity: 1;
+            }
+        }
+
+        &--xLine{
+
+            & path{
+                stroke: white;
+                stroke-width: .2px;
+            }
+
+            & .tick line{
+                color: white;
+            }
+            & .tick line{
+                stroke-width: .2px;
+            }
+        }
+    }
+    
+
+    &__rect{
+        fill: rgba(199, 12, 12, 1);
+        stroke: white;
+
+        &:hover{
+            cursor: pointer;
+            fill: rgb(226, 15, 15);
+        }
+    }
+
+
+    &__verline, &__median, &__maxline, &__minline{
+        stroke: white;
+        fill: none;
+    }
+
+    &__circle{
+        fill: rgba(12, 24, 199, 0.25);
+
+    }
+
+
+}
