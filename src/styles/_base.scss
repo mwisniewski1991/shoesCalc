@@ -12,9 +12,36 @@
 html {
     box-sizing: border-box;
     font-size: 62.5%; //1rem = 10px
+
+    // @media screen and (max-width: $break-medium){
+    //     font-size: 50%; //1rem = 8px
+    // }
+
+    // @media screen and (max-width: $break-small){
+    //     font-size: 37.5%; //1rem = 6px
+    // }
+
+    // @media screen and (min-width: $break-big){
+    //     font-size: 75%; //1rem = 8px
+    // }
 }
 
 body{
     background-color: #222;
     color: #fff;
+}
+
+//RESTET STYLES
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; 
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
 }

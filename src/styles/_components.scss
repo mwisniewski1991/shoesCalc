@@ -1,12 +1,46 @@
 .heading{
 
     &--one{
-        font-size: 2.5rem;
+        font-size: 8rem;
     }
 
     &--two{
         font-size: 1.5rem;
     }
+}
+
+.nav{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 8vh;
+    width: 100%;
+}
+
+.logos{
+    position: relative;
+    
+
+    &__block{
+        position: absolute;
+        background-color: rgba(255, 255, 255, 0.15);
+        width: 50%;
+        height: 50%;
+
+        &--male{
+            left: 0;
+            top: 0;
+        }
+    
+        &--female{
+            right: 0;
+            bottom: 0;
+        }
+
+    }
+    
+   
+
 }
 
 .chart{

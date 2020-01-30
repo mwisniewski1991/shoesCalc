@@ -1,5 +1,26 @@
 .header{
+    position: relative;
+    height: 100vh;
+    background-image: linear-gradient(135deg, $colorMale 40%, $colorFemale 60%);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__title{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+
+    }
 
 
-    
+    &__logos{
+        width: 65%;
+        height: 50%;
+        border: solid 1px white;
+    }
+
+
 }
