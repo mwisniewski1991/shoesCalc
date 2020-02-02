@@ -10,31 +10,52 @@
 </head>
 <body>
 
-    <dic class="fixedBar">
+    <div class="fixedBar">
         
         <div class="nav__title">
             <h2 class="nav__heading heading--two">
                 Shoes Calc
-            </h2>
+            </h1>
         </div>
 
         <nav class="fixedBar__nav">
             <ul class="fixedBar__list">
-                <li class="fixedBar__item"><button class="fixedBar__button">OPT1</button></li>
-                <li class="fixedBar__item"><button class="fixedBar__button">OPT2</button></li>
-                <li class="fixedBar__item"><button class="fixedBar__button">OPT3</button></li>
-                <li class="fixedBar__item"><button class="fixedBar__button">OPT4</button></li>
-                <li class="fixedBar__item"><button class="fixedBar__button">OPT5</button></li>
+                <li class="fixedBar__item"><a class="fixedBar__link">OPT1</a></li>
+                <li class="fixedBar__item"><a class="fixedBar__link">OPT2</a></li>
+                <li class="fixedBar__item"><a class="fixedBar__link">OPT3</a></li>
+                <li class="fixedBar__item"><a class="fixedBar__link">OPT4</ a></li>
+                <li class="fixedBar__item"><a class="fixedBar__link">OPT5</a></li>
             </ul>
         </nav>
-    </dic>
+    </div>
 
     <header class="header">
-        <h1 class="header__title heading--one">Shoes Calc</h1>
-        <div class="header__logos logos">
-            <div class="logos__block logos__block--male"></div>
-            <div class="logos__block logos__block--female"></div>
+
+        
+        <div class="header__centerBox centerBox">
+            
+            <div class="centerBox__block centerBox__block--text centerBox__block--female"><h2 class="centerBox__title heading--one">Shoes</h2></div>    
+            
+            <div class="centerBox__block">
+                <svg class="centerBox__image centerBox__image--female">
+                    <use xlink:href="./images/femaleShoe.svg#femaleShoe"></use> 
+                    <!-- <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a></div> -->
+                </svg>  
+            </div>    
+
+            <div class="centerBox__block">
+                <svg class="centerBox__image centerBox__image--male">
+                    <use xlink:href="./images/maleShoe.svg#maleShoe"></use> 
+                    <!-- <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"     title="Flaticon">www.flaticon.com</a></div> -->
+                </svg>  
+            </div>    
+
+            <div class="centerBox__block centerBox__block--text centerBox__block--male"><h2 class="textBox__title heading--one">Calc</h2></div>    
+
+    
         </div>
+
+        
 
     </header>
 
