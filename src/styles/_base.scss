@@ -13,17 +13,17 @@ html {
     box-sizing: border-box;
     font-size: 62.5%; //1rem = 10px
 
-    // @media screen and (max-width: $break-medium){
-    //     font-size: 50%; //1rem = 8px
-    // }
+    @media screen and (max-width: $break-medium){
+        font-size: 50%; //1rem = 8px
+    }
 
-    // @media screen and (max-width: $break-small){
-    //     font-size: 37.5%; //1rem = 6px
-    // }
+    @media screen and (max-width: $break-small){
+        font-size: 37.5%; //1rem = 6px
+    }
 
-    // @media screen and (min-width: $break-big){
-    //     font-size: 75%; //1rem = 8px
-    // }
+    @media screen and (min-width: $break-big){
+        font-size: 75%; //1rem = 12px
+    }
 }
 
 body{

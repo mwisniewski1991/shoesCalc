@@ -12,26 +12,33 @@ const state = {
     priceCatBoxChart: {},
 };
 
+
+
+
 const appController = async () =>{
+
+    
+  
 
     state.dataFinder = new DataFinder();
     const { dataFinder } = state;
 
     //CREATE 1 CHART
     // state.sexDivide.data = await dataFinder.getCounterData('sex') //data
-    createSexDivideChart(state.sexDivide.data); //rendering chart
+
+    const testingDataSet = calcCategoryCounter(testData, 'sex');
+    createSexDivideChart(testingDataSet); //rendering chart
 
     //CREATE 2 CHART
     // state.discounts.data = await dataFinder.getCounterData('priceCat')
-    createDiscountsChart(state.discounts.data)
+    // createDiscountsChart(state.discounts.data)
 
     //CREATE 3 CHART
     // state.priceCatBoxChart.data = await dataFinder.getBoxPlotData()
-    createPriceCatChart(state.priceCatBoxChart.data);
+    // createPriceCatChart(state.priceCatBoxChart.data);
 
     console.log(state);
 };
-// appController();
 
 
 
@@ -82,49 +89,22 @@ const createPriceCatChart = (data) => {
     // priceCatBoxChart.chart.drawBoxPlotDots(xVal,'price',0 , 'circle')
 };
 
-
-
-
 const calcCategoryCounter = (data, select) => {
     const categories = Array.from(new Set(data.map((el)=>el[select])));
     const finalObj = {};
     categories.forEach((cat)=>{
         finalObj[cat] = data.filter((el) => {return el[select] === cat}).length;
     });
-
     return finalObj;
 };
 
-// appCtr();
+appController();
+
 
 
 // "sex": "F",
 // "category": "klapki-i-sandaly",
 // "subcategory": "sandaly",
 // "priceCat": "Regular"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const newData = testData.map((el) => {
-//     const sex = el.sex;
-//     const price = el.price;     
-//     const oldPrice = el.oldPrice;
-//     return {sex, price, oldPrice}
-// })
-
-// console.log(newData);
 
 

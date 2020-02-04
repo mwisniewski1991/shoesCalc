@@ -1,6 +1,6 @@
 export const htmlElements = {
     sexDivideChart: {
-        chartContainer: document.querySelector('.chart__container--sexDivide'),
+        chartContainer: document.querySelector('#sexDivide__chartContainer'),
     },
     discountsChart: {
         chartContainer: document.querySelector('.chart__container--discounts'),

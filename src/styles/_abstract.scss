@@ -11,3 +11,27 @@ $colorWhite: #dfe6e9;
 
 $mainGradient: linear-gradient(105deg, $colorMale 40%, $colorFemale 60%);
 // $mainGradient: linear-gradient(105deg, $colorMale 40%, $colorFemale 60%);
+
+//RESPONSIVE
+$break-verySmall: 300px;
+$break-small: 480px;
+$break-medium: 900px;
+$break-big: 1100px;
+
+
+
+//ANIMATIONS
+@keyframes entryAnimation__text{
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+}
+
+@keyframes entryAnimation__image{
+    0%{transform: scale(0);}
+    100%{transform: scale(1);}
+}
+
+@keyframes entryAnimation__topBar{
+    0%{transform: translateY(-100%);}
+    100%{transform: translateY(-0);}
+}

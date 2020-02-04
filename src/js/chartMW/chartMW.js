@@ -741,9 +741,8 @@ export default class ChartMW {
     }
 
     drawPie(z, dataElement, donutRadius=false){
-        this.createColorScale()
+        this.createColorScaleSex()
 
-        const { pieData } = this.data;
         const { scales: { colorScale } } = this.elements;
         const { id, dimension: { width, height, margins }  } = this.settings;
         const className = `${id}__${dataElement} ${dataElement}${z}`;
@@ -751,9 +750,6 @@ export default class ChartMW {
         const innerRadius = donutRadius === false ? 0 : 120;
         const outerRadius = Math.min(width, height) / 2 - margins.pieMargin;
 
-        // this.elements.pie[z] = {};
-        // this.elements.pie[z].dataJoin = this.elements.svgG.selectAll(`.pie${z}`).data(data_ready)
-        // this.elements.pie[z].pie = this.elements.pie[z].dataJoin.enter().append('path');
 
         const { element, dataJoin } = this.elements[dataElement][z];
         const fillValue = d => colorScale(d.data.key);
@@ -774,7 +770,7 @@ export default class ChartMW {
             .style("stroke", "white")
             .style('fill', fillValue)
             .style("stroke-width", "2px")
-            .style("opacity", 0.7)
+            .style("opacity", 0.85)
 
         dataJoin 
             .exit()
@@ -794,17 +790,22 @@ export default class ChartMW {
             .data(pieData)
             .enter()
             .append('text')
-            .text((d) => d.data.key)
+            .text((d) => this.changeSexText(d.data.key))
             .attr("transform", (d) => `translate(${arcGenerator.centroid(d)})`)
             .style("text-anchor", "middle")
             .style("font-size", 16)
     }
 
-    createColorScale(){
-        // this.elements.scales.colorScale = d3.scaleOrdinal()
-        //     .domain(this.data)
-        //     .range(d3.schemeSet2);
+    changeSexText(text){
+        if(text==='F'){
+            return 'Woman shoes'
+        }else{
+            return 'Man shoes'
+        }
+    }
 
+    createColorScale(){
+  
         const data = this.data;
         const { xAccessor } = this.settings.accessors;
 
@@ -812,6 +813,15 @@ export default class ChartMW {
             .domain((data) => data.city)
             .range(d3.schemeSet2);
     }
+
+    createColorScaleSex(){
+
+        this.elements.scales.colorScale = d3.scaleOrdinal()
+            .domain(['M','F'])
+            .range(['#0984e3','#e84393']);
+    }
+
+
     //PIE/DONUT  -----------------------------------------------------------------------------------
 
     //HISTOGRAM  -----------------------------------------------------------------------------------
