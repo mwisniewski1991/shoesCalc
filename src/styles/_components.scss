@@ -76,24 +76,29 @@
     &__item{
         margin-right: 5px;
         height: 5rem;
-        width: 7.5rem;
         cursor: pointer;
 
+        transition: background-color .2s;
         &:hover{
             background-color: rgba(31, 2, 2, 0.5);
         }
-
     }
 
     &__link{
         display: block;
         width: 100%;
+        padding: 0 .4rem;
+
+        color: $colorFont;
+        text-decoration: none;
 
         text-align: center;
         line-height: 5rem;
         font-size: 1.6rem;
 
-        transition: background-color .2s;
+        &:focus{
+            outline: auto;
+        }
 
         &:active{
             transform: translate(0, 2px);
@@ -233,6 +238,33 @@
         width: 100%;   
     }
 
+}
+
+.chart-sexDivide{
+
+
+    &__labels{
+        fill: $colorBlack;
+        text-anchor: middle;
+        font-size: 1.6rem;
+        font-weight: 700;
+    }
+
+    &__centerText{
+
+        fill: $colorFont;
+        text-anchor: middle;
+        text-shadow: $textShadow;
+        
+        &--small{
+            font-size: 1.5rem;
+        }
+        
+        &--big{
+            
+            font-size: 3.7rem;
+        }
+    }
 }
 
 

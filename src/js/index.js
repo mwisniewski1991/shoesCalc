@@ -1,6 +1,6 @@
 import '../styles/main.scss'; //IMPORT SASS
 import "babel-polyfill"; //IMPORT BABEL FOR ASYNC/AWAIT
-import ChartMW from './chartMW/chartMW';
+import MWpieChart from './chartMW/MWpieChart';
 import DataFinder from './data/dataFinder';
 import { htmlElements } from './UI/base';
 import { testData } from './data/testData';
@@ -10,24 +10,26 @@ const state = {
     sexDivide: {},
     discounts: {},
     priceCatBoxChart: {},
+    dataSet: testData,
 };
 
 
-
-
 const appController = async () =>{
-
-    
   
 
     state.dataFinder = new DataFinder();
     const { dataFinder } = state;
 
-    //CREATE 1 CHART
-    // state.sexDivide.data = await dataFinder.getCounterData('sex') //data
 
-    const testingDataSet = calcCategoryCounter(testData, 'sex');
-    createSexDivideChart(testingDataSet); //rendering chart
+    const { dataSet } = state;
+
+    //CREATE 1 CHART
+    const sexDivideData = calcCategoryCounter(dataSet, 'sex');
+    createSexDivideChart(sexDivideData); //rendering chart
+
+    //CREATE 2 CHART
+    const discountsData = calcCategoryCounter(dataSet, 'priceCat');
+    createDiscountsChart(discountsData)
 
     //CREATE 2 CHART
     // state.discounts.data = await dataFinder.getCounterData('priceCat')
@@ -44,30 +46,25 @@ const appController = async () =>{
 
 const createSexDivideChart = (data) => {
     //SEX DIVIDE CHART
-
-    const { sexDivide } = state;
     const div = htmlElements.sexDivideChart.chartContainer;
 
-    sexDivide.chart = new ChartMW('sexDivide', div);
-    sexDivide.chart.createSvg('pie');
-    sexDivide.chart.loadData(data);
-    sexDivide.chart.calcPieData();
-    sexDivide.chart.createCoreElement(0, 'path', 'pie');
-    sexDivide.chart.drawPie(0, 'path', true);
+    state.sexDivide = new MWpieChart('sexDivide', div);
+    const { sexDivide } = state;
+
+    sexDivide.renderChart(data);
+    sexDivide.renderVis(0, 'path', true);
 };
 
-const createDiscountsChart = (data) => {
 
-    //DISCOUNT CHART
-    const { discounts } = state;
+const createDiscountsChart = (data) => {
     const div = htmlElements.discountsChart.chartContainer;
 
-    discounts.chart = new ChartMW('discounts', div);
-    discounts.chart.createSvg('pie');
-    discounts.chart.loadData(data);
-    discounts.chart.calcPieData();
-    discounts.chart.createCoreElement(0, 'path', 'pie');
-    discounts.chart.drawPie(0, 'path');
+    state.discounts = new MWpieChart('sexDivide', div);
+    const { discounts } = state;
+
+    discounts.renderChart(data);
+    discounts.renderVisTwo(0, 'path', false);
+
 };
 
 const createPriceCatChart = (data) => {

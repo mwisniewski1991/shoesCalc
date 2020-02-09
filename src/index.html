@@ -25,9 +25,9 @@
 
         <nav class="topBar__nav">
             <ul class="topBar__list">
-                <li class="topBar__item"><a class="topBar__link">OPT1</a></li>
-                <li class="topBar__item"><a class="topBar__link">OPT2</a></li>
-                <li class="topBar__item"><a class="topBar__link">OPT3</a></li>
+                <li class="topBar__item"><a href="#section section--one" class="topBar__link">Breakdown</a></li>
+                <li class="topBar__item"><a href="#" class="topBar__link">OPT2</a></li>
+                <li class="topBar__item"><a href="#" class="topBar__link">OPT3</a></li>
                 <li class="topBar__item"><a class="topBar__link">OPT4</a></li>
                 <li class="topBar__item"><a class="topBar__link">OPT5</a></li>
             </ul>
@@ -66,30 +66,20 @@
         </div>
     </header>
 
-    <section class="section section--one">
+    <section class="section section--one" id="section section--one">
         <div class="section__background"></div>
 
-        <div class="section__title">
-            <h3 class="section__text heading--three">BASICS</h3>
+        <div class="section__title"><h3 class="section__text heading--three">Data breakdown</h3></div>
+
+        <div class="section__chartBlock section__chartBlock--half chartBlock">
+            <div class="chartBlock__title"><h4 class="chartBlock__text heading--four">by sex</h4></div>
+            <div class="chartBlock__chartContainer" id="sexDivide__chartContainer"></div>
         </div>
 
         <div class="section__chartBlock section__chartBlock--half chartBlock">
-            <div class="chartBlock__title">
-                <h4 class="chartBlock__text heading--four">CHART 1</h4>
-            </div>
-            <div class="chartBlock__chartContainer" id="sexDivide__chartContainer">
-
-            </div>
+            <div class="chartBlock__title"><h4 class="chartBlock__text heading--four">by price category</h4></div>
+            <div class="chartBlock__chartContainer" id="discounts__chartContainer"></div>
         </div>
-
-<!--         
-        <div class="section__chartBlock section__chartBlock--half chartBlock">
-            <div class="chartBlock__title">
-                <h4 class="chartBlock__text heading--four">CHART 2</h4>
-            </div>
-            
-        </div> -->
-
     
     </section>
 
