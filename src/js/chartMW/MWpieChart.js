@@ -150,7 +150,8 @@ export default class MWpieChart{
     calcArcGenerator(donutRadius){
 
         const { dimension: { width, height, margins } } = this.settings;
-        const innerRadius = donutRadius === false ? 0 : 120;
+        // const innerRadius = donutRadius === false ? 0 : 120;
+        const innerRadius = donutRadius === false ? 0 : width/4.5;
         const outerRadius = Math.min(width, height) / 2 - margins.pieMargin;
 
         this.settings.arcGenerator = d3.arc()
@@ -249,15 +250,6 @@ export default class MWpieChart{
     }
 
     changeSexText(text){
-
-        // if(text==='F'){
-        //     return 'Woman';
-        // }
-        // if(text==='M'){
-        //     return 'Man';
-        // }else{
-        //     return text;
-        // }
 
         switch(text){
             case 'F':

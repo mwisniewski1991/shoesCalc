@@ -17,11 +17,18 @@
     &--three{
         font-size: 4rem;
         letter-spacing: 10px;
+
+        @media screen and (max-width: $break-small){
+            letter-spacing: 5px;
+        }
+
     }
 
     &--four{
-        font-size: 2rem;
+        font-size: 3rem;
         letter-spacing: 2px;
+
+      
     }
 }
 
@@ -106,6 +113,30 @@
     }
 }
 
+.chartBlock{
+    
+    &__title{
+        height: 10%;   
+        width: 100%;
+        text-align: center;
+       
+        @media screen and (max-width: $break-small){
+            height: 5%;   
+        }
+    }
+
+    &__chartContainer{
+        height: 90%;
+        width: 100%;   
+
+        @media screen and (max-width: $break-small){
+            height: 95%;   
+        }
+    }
+
+}
+
+//HEADER
 .centerBox{
     position: relative;
     display: flex;
@@ -225,28 +256,14 @@
 
 }
 
-.chartBlock{
-    
-    &__title{
-        height: 10%;   
-        width: 100%;
-        text-align: center;
-    }
-
-    &__chartContainer{
-        height: 90%;
-        width: 100%;   
-    }
-
-}
-
+//SECTION BREAKDOWN
 .chart-sexDivide{
 
 
     &__labels{
         fill: $colorBlack;
         text-anchor: middle;
-        font-size: 1.6rem;
+        font-size: 2rem;
         font-weight: 700;
     }
 
@@ -267,6 +284,84 @@
     }
 }
 
+//SECTION MINMAX
+.minmaxBlock{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr;
+    grid-template-rows: 80px 200px 200px;
+    grid-template-areas: 
+    ". men women"
+    "max maxMen maxWomen"
+    "min minMen minWomen";
+
+    &__item{
+        background-color: rgba(0,0,0,0.5);
+        padding: 10px;
+        border-left: dashed 3px $colorWhite;
+        border-bottom: dashed 3px $colorWhite;
+
+        &--men{grid-area: men;}
+        &--women{grid-area: women;}
+        &--max{grid-area: max;}
+        &--maxMen{grid-area: maxMen;}
+        &--maxWomen{grid-area: maxWomen;}
+        &--min{grid-area: min;}
+        &--minMen{grid-area: minMen;}
+        &--minWomen{grid-area: minWomen;}
+
+    }
+
+    &__name{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        font-size: 3rem;
+        font-weight: 700;
+
+        &--male{color: $colorMale;}
+        &--female{color: $colorFemale;}
+        &--max{color: $colorFemale;}
+        &--min{color: $colorMale;}
+        
+
+    }
+
+
+    &__shoesContainer{
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+
+        justify-items: center;
+        align-items: center;
+    }
+
+    &__category{
+        &::before{content: "Kategoria: ";}
+        font-size: 1.5rem;
+    }
+    &__subcategory{
+        &::before{content: "Podkategoria: ";}
+        font-size: 1.5rem;
+    }
+
+    &__firstName{
+        font-size: 2rem;
+    }
+    &__price{
+        font-size: 3rem;
+
+        &::after{
+            content: " zł";
+        }
+    }
+
+}
 
 .chart{
 
@@ -286,7 +381,6 @@
     }
 
 }
-
 
 .chart-priceCategory, .chart-priceCatBoxChart{
 
