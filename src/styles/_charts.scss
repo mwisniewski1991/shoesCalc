@@ -1,0 +1,37 @@
+//SECTION BREAKDOWN
+.chart-pieChart{
+    fill: $colorFont;
+    text-shadow: $textShadow;
+
+    &__slices{
+        opacity: .5;
+        transition: transform .2s;
+        cursor: pointer;
+
+        &--0{
+            fill: $colorMale;
+        }
+
+        &--1{
+            fill: $colorFemale;
+        }
+    }
+
+    &__labels{
+        text-anchor: middle;
+        font-size: 1.75rem;  
+    }
+
+    &__numLabels{
+        opacity: 0;
+        text-anchor: middle;
+        font-size: 1.5rem;
+    }
+
+    &__centerText{
+        text-anchor: middle;
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+
+}

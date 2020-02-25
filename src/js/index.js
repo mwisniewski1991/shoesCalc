@@ -7,10 +7,87 @@ import { testData } from './data/testData';
 
 
 const state = {
-    sexDivide: {},
+    dataSet: testData,
+    sexBreakdown: {
+        chart: {},
+        currentSelection: {
+            category: true,
+            subcategory: false,
+        },
+        category: ['wszystkie','klapki-i-sandaly', 'polbuty', 'kozaki-i-inne', 'sportowe'],
+        subcategory: ['japonki',
+            'klapki',
+            'sandaly',
+            'kapcie',
+            'codzienne',
+            'wizytowe',
+            'glany',
+            'trampki',
+            'buty-trekkingowe-i-trapery',
+            'sneakersy',
+            'mokasyny',
+            'espadryle',
+            'codzienne',
+            'wizytowe',
+            'kalosze',
+            'trekkingi-i-trapery',
+            'glany',
+            'kozaki',
+            'trzewiki',
+            'sztyblety',
+            'sniegowce',
+            'trampki',
+            'trekkingi-i-trapery',
+            'bieganie',
+            'buty-do-wody',
+            'fitness',
+            'halowki',
+            'pilka-nozna',
+            'koszykowka',
+            'tenis',
+            'sandaly',
+            'klapki',
+            'japonki',
+            'koturny',
+            'espadryle',
+            'kapcie',
+            'codzienne',
+            'na-obcasie',
+            'na-koturnie',
+            'baleriny',
+            'trekkingi-i-trapery',
+            'trampki',
+            'szpilki',
+            'lordsy',
+            'eleganckie',
+            'plaskie',
+            'sneakersy',
+            'mokasyny',
+            'oxfordy',
+            'glany',
+            'espadryle',
+            'botki',
+            'kozaki',
+            'kalosze',
+            'trekkingi-i-trapery',
+            'emu',
+            'ugg',
+            'sztyblety',
+            'oficerki',
+            'muszkieterki',
+            'sniegowce',
+            'glany',
+            'kowbojki',
+            'trampki-i-tenisowki',
+            'trekkingi-i-trapery',
+            'bieganie',
+            'fitness',
+            'buty-do-wody',
+            'koszykowka',
+            'tenis'],
+    },
     discounts: {},
     priceCatBoxChart: {},
-    dataSet: testData,
 };
 
 
@@ -19,17 +96,15 @@ const appController = async () =>{
 
     state.dataFinder = new DataFinder();
     const { dataFinder } = state;
-
-
     const { dataSet } = state;
 
     //CREATE 1 CHART
-    const sexDivideData = calcCategoryCounter(dataSet, 'sex');
-    createSexDivideChart(sexDivideData); //rendering chart
+    const sexBreakdownData = calcCategoryCounter(dataSet, 'sex');
+    createSexDivideChart(sexBreakdownData); //rendering chart
 
     //CREATE 2 CHART
-    const discountsData = calcCategoryCounter(dataSet, 'priceCat');
-    createDiscountsChart(discountsData)
+    // const discountsData = calcCategoryCounter(dataSet, 'priceCat');
+    // createDiscountsChart(discountsData)
 
     //CREATE 2 CHART
     // state.discounts.data = await dataFinder.getCounterData('priceCat')
@@ -39,7 +114,7 @@ const appController = async () =>{
     // state.priceCatBoxChart.data = await dataFinder.getBoxPlotData()
     // createPriceCatChart(state.priceCatBoxChart.data);
 
-    console.log(state);
+    console.log(state.sexBreakdown);
 };
 
 
@@ -48,11 +123,11 @@ const createSexDivideChart = (data) => {
     //SEX DIVIDE CHART
     const div = htmlElements.sexDivideChart.chartContainer;
 
-    state.sexDivide = new MWpieChart('sexDivide', div);
-    const { sexDivide } = state;
+    state.sexBreakdown.chart = new MWpieChart('sexDivide', 'pieChart', div);
+    const { sexBreakdown : { chart } } = state;
 
-    sexDivide.renderChart(data);
-    sexDivide.renderVis(0, 'path', true);
+    chart.renderChart(data);
+
 };
 
 

@@ -1,6 +1,6 @@
 //COLORS AMERICAN PALLET
-$colorMale: #0984e3;
-$colorFemale: #e84393;
+        $colorMale: #0984e3;
+        $colorFemale: #e84393;
 
 $colorFont: #ffeaa7;
 
@@ -8,11 +8,14 @@ $colorGrey: #b2bec3;
 $colorBlack:#2d3436;
 $colorWhite: #dfe6e9;
 
-$colorMax: #d63031;
-$colorMin: #55efc4;
 
 $mainGradient: linear-gradient(105deg, $colorMale 40%, $colorFemale 60%);
+$mainGradientReverse: linear-gradient(105deg, $colorFemale 40%, $colorMale 60%);
 $textShadow: 1px 1px 2px $colorBlack;
+$borderRadius: 7px;
+$transitionTime: .2s;
+
+
 
 //RESPONSIVE
 $break-verySmall: 300px;

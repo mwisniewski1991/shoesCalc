@@ -1,8 +1,9 @@
 import * as d3 from "d3";
 
 export default class MWpieChart{
-    constructor(name, div){
+    constructor(id, mainClass, div){
         this.elements = {
+            container: div,            
             scales : {},
         }
         this.data = {
@@ -10,9 +11,10 @@ export default class MWpieChart{
             pieData: {},
         };
         this.settings = {
-            name: name,
-            id: `chart-${name}`,
-            container: div,            
+            name: id,
+            id: `chart-${id}`,
+            mainClass: `chart-${mainClass}`,
+            // container: div,            
             dimension: {
                 width: {},
                 height: {},
@@ -29,242 +31,304 @@ export default class MWpieChart{
     }
 
     //CONTROLLER ---------------------------------------------------------------------
+  
     renderChart(data){
         this.createSvg();
         this.loadData(data);
-    }
 
-    renderVis(z, dataElement, donutRadius=false){
         this.calcPieData();
-        this.calcArcGenerator(donutRadius)
-        this.createColorScaleSex()
-        
-        this.createCoreElement(z, dataElement);
-        this.drawPie(z, dataElement );
+        this.createArcGenerator();
+        this.drawPie();
 
-        this.addPieText(this.settings.arcGenerator);
+        this.addLabels();
+        this.addNumbersLabels();
         this.addMainNumber();
+
+        this.addHoverEffect();
+
     }
-
-    renderVisTwo(z, dataElement, donutRadius=false){
-        this.calcPieData();
-        this.calcArcGenerator(donutRadius)
-        this.createColorScaleSex()
-        
-        this.createCoreElement(z, dataElement);
-        this.drawPie(z, dataElement );
-
-        this.addPieText(this.settings.arcGenerator);
-    }
-
+    
     updateChart(data){
         this.loadData(data);
-    }
 
-    updateVis(z, dataElement, donutRadius=false){
         this.calcPieData();
-        this.calcArcGenerator(donutRadius)
+        this.createArcGenerator()
+        this.updatePie();
 
-        this.createCoreElement(z, dataElement);
-        this.drawPie(z, dataElement);
-
-        this.addPieText(this.settings.arcGenerator);
-        this.addMainNumber();
+        this.updateLabels();
+        this.updateNumberLabels();
+        this.updateMainNumber();
     }
-
     //CONTROLLER ---------------------------------------------------------------------
 
     //MAIN FUNCTION ---------------------------------------------------------------------
-    changeSettings(newSet){
-
-        for(const key in newSet){
-            this.settings[key] = newSet[key];
-        }
-    }
-
     loadData(data){
         this.data.rawData = data;
     }
 
     calcMainDimension(){
-
-        const { container, dimension: { margins } } = this.settings;
-
+        const { container } = this.elements;
         this.settings.dimension.width = container.getBoundingClientRect().width;
         this.settings.dimension.height = container.getBoundingClientRect().height;
-
-        const { width, height } = this.settings.dimension;
-
-        this.settings.dimension.innerWidth = width - margins.left - margins.right;
-        this.settings.dimension.innerHeight = height - margins.top - margins.bottom;
-
-
     }
 
     createSvg(){
-
         this.calcMainDimension();
 
         //SVG
-        const { id, container, dimension: { width, height, margins }  } = this.settings;
-
+        const { container } = this.elements;
+        const { mainClass, dimension: { width, height, margins }  } = this.settings;
         this.elements.svg  = d3.select(container)
             .append('svg')
-            .attr('class', id)
+            .attr('class', mainClass)
             .attr('width', width)
             .attr('height', height)
 
         //GROUP 
         const transformX = width/2 - margins.left;
         const transformY = height/2 - margins.top;
-        const classNameGroup = `${id}__group`;
-
-        this.elements.svgG = this.elements.svg
+        const classNameGroup = `${mainClass}__container`;
+        this.elements.pieContainer = this.elements.svg
             .append('g')
                 .attr('class', classNameGroup)
-                .attr('transform', `translate(${transformX}, ${transformY})`)
-                // .attr("transform", `translate(${margins.left}, ${margins.top})`) //line, scatter
-                // .attr('transform', `translate(${width / 2 - margins.left}, ${height / 2 - margins.top})`) //pie
-
+                .attr('transform', `translate(${transformX}, ${transformY})`);
     }
-    
-    //DATA ELEMENT -------------------------------------------------------------------------------
-    createCoreElement(z, dataElement){
-        
-        const { pieData } = this.data;
-        const classSelector = `.${dataElement}${z}`
+    //MAIN FUNCTION ---------------------------------------------------------------------
 
-        this.elements[dataElement] = [];
-        this.elements[dataElement][z] = {};
-        this.elements[dataElement][z].dataJoin = this.elements.svgG.selectAll(classSelector).data(pieData);
-        this.elements[dataElement][z].element = this.elements[dataElement][z].dataJoin.enter().append(dataElement); //path for example
-    }
-
-    //PIE/DONUT  -----------------------------------------------------------------------------------
+    //DATA CALCULATION
     calcPieData(){
         const data  = this.data.rawData;
         const pieGenerator = d3.pie().value((d)=> d.value);
         this.data.pieData = pieGenerator(d3.entries(data));
     }
 
-    calcArcGenerator(donutRadius){
-
+    createArcGenerator(){
         const { dimension: { width, height, margins } } = this.settings;
-        // const innerRadius = donutRadius === false ? 0 : 120;
-        const innerRadius = donutRadius === false ? 0 : width/4.5;
+        const innerRadius = width/6.5;
         const outerRadius = Math.min(width, height) / 2 - margins.pieMargin;
 
         this.settings.arcGenerator = d3.arc()
             .innerRadius(innerRadius)
             .outerRadius(outerRadius)
     }
+    //DATA CALCULATION
 
-    drawPie(z, dataElement ){
+    //PIE/DONUT  ------------------------------------------------------------------------------------
+    drawPie(){
+        const { pieData } = this.data;
+        const { pieContainer } = this.elements;
+        const { mainClass,  arcGenerator  } = this.settings;
+        const slicesClass = `${mainClass}__slices ${mainClass}__slices--`;
+        const groupClass = `${mainClass}__slicesGroup ${mainClass}__slicesGroup--`;
 
-        const { scales: { colorScale } } = this.elements;
-        const { id, arcGenerator  } = this.settings;
-        const className = `${id}__${dataElement} ${dataElement}${z}`;
-
-        const { element, dataJoin } = this.elements[dataElement][z];
-        const fillValue = d => colorScale(d.data.key);
-
-        element
-            .attr('class', className)
-            .style("opacity", 0)
-        .merge(dataJoin)
-            .transition().duration(500) 
+        pieContainer.selectAll(`.${mainClass}__slices`).data(pieData).enter()
+            .append('g')
+            .attr('class', (d,i)=> `${groupClass}${i}`)
+            .append('path')
+            .attr('class', (d,i)=> `${slicesClass}${i}`)
             .attr('d', arcGenerator)
             .style("stroke", "white")
-            .style('fill', fillValue)
-            .style("stroke-width", "2px")
-            .style("opacity", 0.85)
-
-        dataJoin 
-            .exit()
-            .transition().duration(500) 
-            .style("opacity", 0)
-            .remove();
-    }
-    //PIE/DONUT  -----------------------------------------------------------------------------------
- 
-    //ADDITIONAL ----------------------------------------------------------------------------------- 
-    createColorScale(){
-
-        this.elements.scales.colorScale = d3.scaleOrdinal()
-            .domain((data) => data.city)
-            .range(d3.schemeSet2);
+            .each(function(d){ this._current = d;})
     }
 
-    createColorScaleSex(){
+    updatePie(){
+        const { pieData } = this.data;
+        const { pieContainer } = this.elements;
+        const { mainClass, arcGenerator} = this.settings;
 
-        this.elements.scales.colorScale = d3.scaleOrdinal()
-            .domain(['M','F'])
-            .range(['#0984e3','#e84393']);
-    }
+        pieContainer.selectAll(`.${mainClass}__slicesGroup`).data(pieData)
+        const slices = pieContainer.selectAll(`.${mainClass}__slices`).data(pieData)
 
-    addPieText(arcGenerator){
+        const arcTween = function(a){
+            const i = d3.interpolate(this._current, a);
+            this._current = i(0);
+            return function(t) {
+              return arcGenerator(i(t));
+            };
+        }
 
-        const { pieData } = this.data;  
-        const { svgG } = this.elements;
-        const { id } = this.settings;
-        const classSelector = `labels`;
-        const className = `${id}__labels labels`;
+        slices.transition().duration(500).attrTween('d', arcTween)
+    };
 
-        this.elements.labels = svgG.selectAll(classSelector)
-            .data(pieData)
-            .enter()
+    addLabels(){
+        const { pieContainer } = this.elements;
+        const { mainClass, arcGenerator } = this.settings;
+        const className = `${mainClass}__labels ${mainClass}__labels--`;
+
+        const changeName = (name) => {
+
+            switch(name){
+                case 'F':
+                    return 'Damskie'
+                    break;
+                case 'M':
+                    return 'Męskie'
+                    break;
+            }
+        };
+
+        pieContainer.selectAll(`.${mainClass}__slicesGroup`)
             .append('text')
-            .attr('class',className)
-            .text((d) => this.changeSexText(d.data.key))
+            .attr('class', (d,i) => `${className}${i}`)
+            .text((d) => changeName(d.data.key))
             .attr("transform", (d) => `translate(${arcGenerator.centroid(d)})`)
+            .each(function(d){ this._current = d;});
+    }
+
+    updateLabels(){
+        const { pieData } = this.data;
+        const { pieContainer } = this.elements;
+        const { mainClass, arcGenerator } = this.settings;
+
+        const labels = pieContainer.selectAll(`.${mainClass}__labels`).data(pieData)
+
+        function labelarcTween(a) {
+            var i = d3.interpolate(this._current, a);
+            this._current = i(0);
+            return function(t) {
+              return "translate(" + arcGenerator.centroid(i(t)) + ")";
+            };
+        }
+
+          labels.transition().duration(500).attrTween("transform", labelarcTween);
+    }
+
+    addNumbersLabels(){
+        const { pieContainer } = this.elements;
+        const { mainClass } = this.settings;
+        const className = `${mainClass}__numLabels ${mainClass}__numLabels--`;
+
+        pieContainer.selectAll(`.${mainClass}__slicesGroup`)
+            .append('text')
+            .attr('class', (d,i) => `${className}${i}`)
+            .text((d) => `${d.data.value} szt.`)
+            .attr("transform", (d) => this.calcTransform(d));
+    };
+
+    updateNumberLabels(){
+        const { pieData } = this.data;
+        const { pieContainer } = this.elements;
+        const { mainClass, arcGenerator } = this.settings;
+
+        const numberLabels = pieContainer.selectAll(`.${mainClass}__numLabels`).data(pieData)
+
+        function labelarcTween(a) {
+            var i = d3.interpolate(this._current, a);
+            this._current = i(0);
+            return function(t) {
+                return `translate(${arcGenerator.centroid(i(t))[0]}, ${arcGenerator.centroid(i(t))[1]+25})`; 
+            };
+        }
+
+        numberLabels
+            .transition().duration(500)
+            .text((d) => `${d.data.value} pcs`)
+            .attrTween("transform", labelarcTween);
     }
 
     addMainNumber(){
         const { rawData } = this.data;  
-        const { id } = this.settings;
+        const { mainClass } = this.settings;
+        const { pieContainer } = this.elements;
 
         let sum = 0;
         for(const key in rawData){sum = sum + rawData[key];};
 
-        const classNameDesc = `${id}__centerText ${id}__centerText--small centerTextDesc`;
-        const classNameNumber = `${id}__centerText ${id}__centerText--big centerTextNumber`;
+        const classNameDesc = `${mainClass}__centerText ${mainClass}__centerText--small centerTextDesc`;
+        const classNameNumber = `${mainClass}__centerText ${mainClass}__centerText--big centerTextNumber`;
 
-        this.elements.centerTextgroup = this.elements.svgG.append('g')
-        const { centerTextgroup} = this.elements;
+        const centerTextgroup = pieContainer.append('g')
 
-        this.elements.centerTextDesc = centerTextgroup
+        const centerTextDesc = centerTextgroup
             .append('text')
             .attr('class', classNameDesc)
-            .text('Total number of shoes:')
+            .text('Ilość butów:')
             .style('transform','translate(0,-20px)')
 
-        this.elements.centerTextNumber = centerTextgroup
+        const centerTextNumber = centerTextgroup
             .append('text')
             .attr('class', classNameNumber)
             .text(sum)
             .style('transform','translate(0, 20px)');
 
-
-        
-
     }
 
-    changeSexText(text){
+    updateMainNumber(){
+        const { rawData } = this.data;  
+        const { mainClass } = this.settings;
+        const { pieContainer } = this.elements;
 
-        switch(text){
-            case 'F':
-                return 'Woman';
-                break;
-            case 'M':
-                return 'Man';
-                break;
-            case 'Special':
-                return 'Special Price';
-                break;
-            case 'Regular':
-                return 'Regular Price';
-                break;
-        }
+        let sum = 0;
+        for(const key in rawData){sum = sum + rawData[key];};
+
+        const centerTextNumber = pieContainer.selectAll(`.${mainClass}__centerText--big`);
+
+        centerTextNumber
+        .transition().duration(200)
+        .style('opacity', 0)
+        .transition()
+        .style('opacity', 1)
+        .text(sum)
     }
+    //PIE/DONUT  -----------------------------------------------------------------------------------
+ 
     //ADDITIONAL ----------------------------------------------------------------------------------- 
+    createColorScale(){
+        this.elements.scales.colorScale = d3.scaleOrdinal()
+            .domain((data) => data.city)
+            .range(d3.schemeSet2);
+    }
+    
+    calcTransform(d){
+        const { arcGenerator } = this.settings;
+        const transX = arcGenerator.centroid(d)[0] 
+        const transY = arcGenerator.centroid(d)[1] + 25
+        return `translate(${transX}, ${transY})`
+    };
+    //ADDITIONAL ----------------------------------------------------------------------------------- 
+
+    //INTERACTIVITY -----------------------------------------------------------------------------------
+    addHoverEffect(){
+
+        const { pieContainer } = this.elements;
+        const { mainClass, arcGenerator } = this.settings;
+        const slicesGroup = pieContainer.selectAll(`.${mainClass}__slicesGroup`)
+
+        slicesGroup.on('mouseover', (d,i,nodes)=>{
+
+            pieContainer.selectAll(`.${mainClass}__slices--${i}`)
+            .style('opacity', 1)
+            .style('transform', 'scale(1.05)')
+            
+            const xModify = i === 1 ? -10 : 10 
+            const transX = arcGenerator.centroid(d)[0] + xModify
+            const transY = arcGenerator.centroid(d)[1]
+
+            pieContainer.selectAll(`.${mainClass}__labels--${i}`)
+                .transition().duration(300)
+                .attr("transform", `translate(${transX}, ${transY}) scale(1.2)`)
+
+
+            pieContainer.selectAll(`.${mainClass}__numLabels--${i}`)
+                .transition().delay(200).duration(300)
+                .style('opacity', 1)
+
+        })
+
+        slicesGroup.on('mouseout', (d,i,nodes)=>{
+
+            pieContainer.selectAll(`.${mainClass}__slices--${i}`)
+                .style('opacity', .5)
+                .style('transform','scale(1)')
+
+            pieContainer.selectAll(`.${mainClass}__labels--${i}`)
+                .transition().duration(300)
+                .attr("transform", (d) => `translate(${arcGenerator.centroid(d)})`)
+
+            pieContainer.selectAll(`.${mainClass}__numLabels--${i}`)
+                .transition().delay(200).duration(300)
+                .style('opacity', 0)
+        })
+    }
+    //INTERACTIVITY -----------------------------------------------------------------------------------
 }

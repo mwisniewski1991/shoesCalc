@@ -19,18 +19,18 @@
         
         <div class="topBar__title">
             <h2 class="topBar__heading heading--two">
-                Shoes Calc
+                Buty w liczbach
             </h1>
         </div>
 
         <nav class="topBar__nav">
             <ul class="topBar__list">
-                <li class="topBar__item"><a href="#header" class="topBar__link">Go to Top &uarr;</a></li>
-                <li class="topBar__item"><a href="#section section--breakdown" class="topBar__link">Breakdown</a></li>
-                <li class="topBar__item"><a href="#section--minmax" class="topBar__link">Min/Max</a></li>
+                <li class="topBar__item"><a href="#header" class="topBar__link">Na górę &uarr;</a></li>
+                <li class="topBar__item"><a href="#section section--breakdown" class="topBar__link">Podział</a></li>
+                <li class="topBar__item"><a href="#section--minmax" class="topBar__link">Min/Maks</a></li>
                 <li class="topBar__item"><a href="#" class="topBar__link">OPT3</a></li>
                 <li class="topBar__item"><a href="#" class="topBar__link">OPT4</a></li>
-                <li class="topBar__item"><a href="#" class="topBar__link">Go to footer &darr;</a></li>
+                <li class="topBar__item"><a href="#" class="topBar__link">na dół &darr;</a></li>
             </ul>
         </nav>
     </div>
@@ -38,7 +38,7 @@
     <header class="header" id="header">
         <div class="header__centerBox centerBox">
             <div class="centerBox__block centerBox__block--one">
-                <h2 class="centerBox__title centerBox__title--female heading--one">Shoes</h2>
+                <h2 class="centerBox__title centerBox__title--female heading--one">Buty</h2>
             </div>    
             
             <div class="centerBox__block centerBox__block--two">
@@ -54,7 +54,7 @@
             </div>    
 
             <div class="centerBox__block centerBox__block--four">
-                <h2 class="centerBox__title centerBox__title--male heading--one">Calc</h2>
+                <h2 class="centerBox__title centerBox__title--male heading--one">w liczbach</h2>
             </div>    
         </div>
     </header>
@@ -62,15 +62,36 @@
     <section class="section section--breakdown" id="section section--breakdown">
         <div class="section__background section__background--breakdown"></div>
 
-        <div class="section__title"><h3 class="section__text heading--three">Data breakdown</h3></div>
+        <div class="section__title"><h3 class="section__text heading--three">Podział danych</h3></div>
 
         <div class="section__chartBlock section__chartBlock--half chartBlock">
-            <div class="chartBlock__title"><h4 class="chartBlock__text heading--four">by sex</h4></div>
+            <div class="chartBlock__title"><h4 class="chartBlock__text heading--four">na płeć</h4></div>
+
+
+                <div class="breakdownCtrl">
+
+                    <div class="breakdownCtrl__radioBox breakdownCtrl__radioBox--category radio">
+                        <input class="radio__input" type="radio" name="sexBreakdown__type" id="sexBreakdown__catinput" checked>
+                        <label class="radio__label radio__label--category" for="sexBreakdown__catinput">Kategoria</label>
+                    </div>
+                    
+                    <div class="breakdownCtrl__radioBox breakdownCtrl__radioBox--subcategory radio">
+                        <input class="radio__input" type="radio" name="sexBreakdown__type" id="sexBreakdown__subcatinput">
+                        <label class="radio__label radio__label--subcategory" for="sexBreakdown__subcatinput">Podkategoria</label>
+                    </div>
+
+                    <button class="breakdownCtrl__button breakdownCtrl__button--left button button--left" id="sexBreakdown__leftButton"> << Zmień</button>
+                    <div class="breakdownCtrl__selection"><span class="breakdownCtrl__span">Wszystkie</span></div>
+                    <button class="breakdownCtrl__button breakdownCtrl__button--right button button--right" id="sexBreakdown__rightButton">Zmień >> </button>
+                
+                </div>
+
+            
             <div class="chartBlock__chartContainer" id="sexDivide__chartContainer"></div>
         </div>
 
         <div class="section__chartBlock section__chartBlock--half chartBlock">
-            <div class="chartBlock__title"><h4 class="chartBlock__text heading--four">by price category</h4></div>
+            <div class="chartBlock__title"><h4 class="chartBlock__text heading--four">na rodzaj ceny</h4></div>
             <div class="chartBlock__chartContainer" id="discounts__chartContainer"></div>
         </div>
     </section>
@@ -80,25 +101,68 @@
 
         <div class="section__minmaxBlock minmaxBlock">
 
-            <div class="minmaxBlock__item minmaxBlock__item--men"><span class="minmaxBlock__name minmaxBlock__name--male">Men &#9794;</span></div>
-            <div class="minmaxBlock__item minmaxBlock__item--women"><span class="minmaxBlock__name minmaxBlock__name--female">Women &#9792;</span></div>
-            <div class="minmaxBlock__item minmaxBlock__item--max"><span class="minmaxBlock__name minmaxBlock__name--max">Max</span></div>
-            <div class="minmaxBlock__item minmaxBlock__item--min"><span class="minmaxBlock__name minmaxBlock__name--min">Min</span></div>
+            <div class="minmaxBlock__item minmaxBlock__item--men"><span class="minmaxBlock__name minmaxBlock__name--male">Męskie &#9794;</span></div>
+            <div class="minmaxBlock__item minmaxBlock__item--women"><span class="minmaxBlock__name minmaxBlock__name--female">Damskie &#9792;</span></div>
+            <div class="minmaxBlock__item minmaxBlock__item--max"><span class="minmaxBlock__name minmaxBlock__name--max">Maks cena</span></div>
+            <div class="minmaxBlock__item minmaxBlock__item--min"><span class="minmaxBlock__name minmaxBlock__name--min">Min cena</span></div>
+            <div class="minmaxBlock__item minmaxBlock__item--maxTwo"><span class="minmaxBlock__name minmaxBlock__name--max">Maks cena</span></div>
+            <div class="minmaxBlock__item minmaxBlock__item--minTwo"><span class="minmaxBlock__name minmaxBlock__name--min">Min cena</span></div>
 
             
             <div class="minmaxBlock__item minmaxBlock__item--maxMen">
 
-                <div class="minmaxBlock__shoesContainer">
-                    <span class="minmaxBlock__firstName">Półbuty BOSS</span>   
-                    <span class="minmaxBlock__price">1 000</span>   
-                    <span class="minmaxBlock__category">Półbuty</span>   
-                    <span class="minmaxBlock__subcategory">Wizytowe</span>   
+                <div class="minmaxBlock__shoesContainer shoesContainer">
+                    <span class="shoesContainer__firstName">Półbuty BOSS</span>   
+                    <span class="shoesContainer__price">100</span>   
+                    <span class="shoesContainer__category">Półbuty</span>   
+                    <span class="shoesContainer__subcategory">Wizytowe</span>
+                    <div class="shoesContainer__imageContainer">
+                        <img class="shoesContainer__image" src="./images/shoesImg/menMaxPrice.jpg" alt="Man shoes max price">
+                    </div>
                 </div>
 
             </div>
-            <div class="minmaxBlock__item minmaxBlock__item--maxWomen">maxWomen</div>
-            <div class="minmaxBlock__item minmaxBlock__item--minMen">minMen</div>
-            <div class="minmaxBlock__item minmaxBlock__item--minWomen">minWomen</div>
+
+            <div class="minmaxBlock__item minmaxBlock__item--maxWomen">
+
+                <div class="minmaxBlock__shoesContainer shoesContainer">
+                    <span class="shoesContainer__firstName">Sandały TORY BURCH"</span>   
+                    <span class="shoesContainer__price">12300</span>   
+                    <span class="shoesContainer__category">Klapki i sandały</span>   
+                    <span class="shoesContainer__subcategory">Sandaly</span>
+                    <div class="shoesContainer__imageContainer">
+                        <img class="shoesContainer__image" src="./images/shoesImg/womenMaxPrice.jpg" alt="Man shoes max price">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="minmaxBlock__item minmaxBlock__item--minMen">
+                
+                <div class="minmaxBlock__shoesContainer shoesContainer">
+                    <span class="shoesContainer__firstName">Półbuty CLARKS"</span>   
+                    <span class="shoesContainer__price">20</span>   
+                    <span class="shoesContainer__category">Półbuty</span>   
+                    <span class="shoesContainer__subcategory">Wizytowe</span>
+                    <div class="shoesContainer__imageContainer">
+                        <img class="shoesContainer__image" src="./images/shoesImg/menMinPrice.jpg" alt="Man shoes max price">
+                    </div>
+                </div>
+
+            </div>
+            <div class="minmaxBlock__item minmaxBlock__item--minWomen">
+
+                <div class="minmaxBlock__shoesContainer shoesContainer">
+                    <span class="shoesContainer__firstName">Japonki DOCKERS"</span>   
+                    <span class="shoesContainer__price">30</span>   
+                    <span class="shoesContainer__category">Klapki i sandały</span>   
+                    <span class="shoesContainer__subcategory">Sandaly</span>
+                    <div class="shoesContainer__imageContainer">
+                        <img class="shoesContainer__image" src="./images/shoesImg/womenMinPrice.jpg" alt="Man shoes max price">
+                    </div>
+                </div>
+
+            </div>
             
 
         </div>
