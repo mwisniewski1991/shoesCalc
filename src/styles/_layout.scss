@@ -13,7 +13,7 @@
     }
 
     &__centerBox{
-        width: 80%;
+        width: 95%;
         height: 75%;
     }
 
@@ -35,17 +35,12 @@
         justify-content: center;
 
         @media screen and (max-width: $break-small){
+            width: 100%;   
 
-            &--one{order: 1;
-            }
-            &--two{order: 4;
-                width: 100%;
-            }
-            &--three{order: 3;
-                width: 100%;
-            }
-            &--four{order: 2;
-            }
+            &--one{order: 1;}
+            &--two{order: 4;}
+            &--three{order: 3;}
+            &--four{order: 2;}
         }
      
     }
@@ -218,7 +213,6 @@
 
 .section{
     position: relative;
-    // height: 100vh;
     padding: 5.5rem .5rem .5rem .5rem;
 
     display: flex;
@@ -226,7 +220,6 @@
 
     &--breakdown{
         @media screen and (max-width: $break-small){
-            height: auto;
             flex-direction: column;
         }
     }
@@ -264,24 +257,13 @@
         justify-content: center;
         align-items: center;
     }
-
+   
     &__chartBlock{
+        width: 50%;
 
-        &--half{
-            width: 50%;
-            height: 600px;
-            // background-color: rgba($color: rgb(0, 0, 0), $alpha: .5);
-            // border: 1px solid white;
-
-            @media screen and (max-width: $break-small){
-                width: 100%;
-                // height: auto;
-                height: 300px;
-                margin-bottom: 1rem;
-            }
-
+        @media screen and (max-width: $break-small){
+            width: 100%;
         }
     }
-
 }
 

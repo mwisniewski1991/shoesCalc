@@ -64,37 +64,60 @@
 
         <div class="section__title"><h3 class="section__text heading--three">Podział danych</h3></div>
 
-        <div class="section__chartBlock section__chartBlock--half chartBlock">
-            <div class="chartBlock__title"><h4 class="chartBlock__text heading--four">na płeć</h4></div>
+        <!-- FIRST ------------------------------------------------------------------------------------------------------- -->
+        <div class="section__chartBlock section__chartBlock--half chartBreakdown">
 
+            <div class="chartBreakdown__title"><h4 class="chartBreakdown__text heading--four">na płeć</h4></div>
 
-                <div class="breakdownCtrl">
+            <div class="breakdownCtrl">
 
-                    <div class="breakdownCtrl__radioBox breakdownCtrl__radioBox--category radio">
-                        <input class="radio__input" type="radio" name="sexBreakdown__type" id="sexBreakdown__catinput" checked>
-                        <label class="radio__label radio__label--category" for="sexBreakdown__catinput">Kategoria</label>
-                    </div>
-                    
-                    <div class="breakdownCtrl__radioBox breakdownCtrl__radioBox--subcategory radio">
-                        <input class="radio__input" type="radio" name="sexBreakdown__type" id="sexBreakdown__subcatinput">
-                        <label class="radio__label radio__label--subcategory" for="sexBreakdown__subcatinput">Podkategoria</label>
-                    </div>
-
-                    <button class="breakdownCtrl__button breakdownCtrl__button--left button button--left" id="sexBreakdown__leftButton"> << Zmień</button>
-                    <div class="breakdownCtrl__selection"><span class="breakdownCtrl__span">Wszystkie</span></div>
-                    <button class="breakdownCtrl__button breakdownCtrl__button--right button button--right" id="sexBreakdown__rightButton">Zmień >> </button>
+                <div class="breakdownCtrl__radioBox radio">
+                    <input class="radio__input" type="radio" name="sexBreakdown__type" id="sexBreakdown__catinput" checked>
+                    <label class="radio__label radio__label--category" for="sexBreakdown__catinput">Kategoria</label>
+                </div>
                 
+                <div class="breakdownCtrl__radioBox radio">
+                    <input class="radio__input" type="radio" name="sexBreakdown__type" id="sexBreakdown__subcatinput">
+                    <label class="radio__label radio__label--subcategory" for="sexBreakdown__subcatinput">Podkategoria</label>
                 </div>
 
-            
-            <div class="chartBlock__chartContainer" id="sexDivide__chartContainer"></div>
+                <button class="breakdownCtrl__button breakdownCtrl__button--left button button--left" id="sexBreakdown__leftButton"> << Zmień</button>
+                <div class="breakdownCtrl__selection"><span class="breakdownCtrl__span">Wszystkie</span></div>
+                <button class="breakdownCtrl__button breakdownCtrl__button--right button button--right" id="sexBreakdown__rightButton">Zmień >> </button>
+
+            </div>
+
+            <div class="chartBreakdown__chartContainer" id="sexDivide__chartContainer"></div>
+
+        </div>
+        
+        <!-- SECOND ------------------------------------------------------------------------------------------------------- -->
+        <div class="section__chartBlock section__chartBlock--half chartBreakdown">
+
+            <div class="chartBreakdown__title"><h4 class="chartBreakdown__text heading--four">na rodzaj ceny</h4></div>
+
+            <div class="chartBreakdown__breakdownCtrl breakdownCtrl">
+                <div class="breakdownCtrl__radioBox radio">
+                    <input class="radio__input" type="radio" name="discountsBreakdown__type" id="discountsBreakdown__catinput" checked>
+                    <label class="radio__label radio__label--category" for="discountsBreakdown__catinput">Kategoria</label>
+                </div>
+                
+                <div class="breakdownCtrl__radioBox radio">
+                    <input class="radio__input" type="radio" name="discountsBreakdown__type" id="discountsBreakdown__subcatinput">
+                    <label class="radio__label radio__label--subcategory" for="discountsBreakdown__subcatinput">Podkategoria</label>
+                </div>
+
+                <button class="breakdownCtrl__button breakdownCtrl__button--left button button--left" id="discountsBreakdown__leftButton"> << Zmień</button>
+                <div class="breakdownCtrl__selection"><span class="breakdownCtrl__span">Wszystkie</span></div>
+                <button class="breakdownCtrl__button breakdownCtrl__button--right button button--right" id="discountsBreakdown__rightButton">Zmień >> </button>
+            </div>
+
+            <div class="chartBreakdown__chartContainer" id="sexDivide__chartContainer"></div>
+
         </div>
 
-        <div class="section__chartBlock section__chartBlock--half chartBlock">
-            <div class="chartBlock__title"><h4 class="chartBlock__text heading--four">na rodzaj ceny</h4></div>
-            <div class="chartBlock__chartContainer" id="discounts__chartContainer"></div>
-        </div>
     </section>
+
 
     <section class="section section--minmax" id="section--minmax">
         <div class="section__title"><h3 class="section__text heading--three">Min / Max</h3></div>
@@ -185,24 +208,6 @@
     </div> -->
 
 
-
-    <!-- <main>
-        <section class="section chart">
-            <h2 class="heading--two chart__title">Sex</h2>
-            <div class="chart__container chart__container--sexDivide"></div>
-        </section>
-
-        <section class="section chart">
-            <h2 class="heading--two chart__title">discounts</h2>
-            <div class="chart__container chart__container--discounts"></div>
-        </section>
-
-        <section class="section chart">
-            <h2 class="heading--two chart__title">priceCategory</h2>
-            <div class="chart__container chart__container--priceCategory"></div>
-        </section>
-
-    </main>    -->
     
     <script src="./js/index.js"></script>
 </body>
