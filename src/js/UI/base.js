@@ -1,12 +1,62 @@
 export const htmlElements = {
-    sexDivideChart: {
+    sexBreakdown: {
         chartContainer: document.querySelector('#sexDivide__chartContainer'),
+        controller: document.querySelector('#sexBreakdown__controller'),
     },
-    discountsChart: {
-        chartContainer: document.querySelector('#discounts__chartContainer'),
+    discountsBreakdown: {
+        chartContainer: document.querySelector('#discountsBreakdown__chartContainer'),
+        controller: document.querySelector('#discountsBreakdown__controller')
     },
     priceCatBoxChart: {
         chartContainer: document.querySelector('.chart__container--priceCategory'),
     }
-
 };
+
+export const uiLabels = {
+    'Wszystkie':'Wszystkie',
+    'klapki-i-sandaly': 'Klapki/sandały', 
+    'polbuty': 'Pólbuty', 
+    'kozaki-i-inne': 'Kozaki i inne', 
+    'sportowe':'Sportowe',
+    "japonki":'Japonki',
+    "klapki":'Klapki',
+    "sandaly":'Sandały',
+    "kapcie":'Kapcie',
+    "codzienne":'Codzienne',
+    "wizytowe":'Wizytowe',
+    "glany":'Glany',
+    "trampki":'Trampki',
+    "buty-trekkingowe-i-trapery":'Trekkingowe',
+    "sneakersy":'Sneakersy',
+    "mokasyny":'Mokasyny',
+    "espadryle":'Espadryle',
+    "kalosze":'Kalosze',
+    "trekkingi-i-trapery":'Trapery',
+    "kozaki":'Kozaki',
+    "trzewiki":'Trzewiki',
+    "sztyblety":'Sztyblety',
+    "sniegowce":'Śniegowce',
+    "bieganie":'Do biegania',
+    "buty-do-wody":'Buty do wody',
+    "fitness":'Fitness',
+    "halowki":'Halówki',
+    "pilka-nozna":'Piłka nożna',
+    "koszykowka":'Koszykówka',
+    "tenis":'Tenis',
+    "koturny":'Koturny',
+    "na-obcasie":'Na obcasie',
+    "na-koturnie":'Na koturnie',
+    "baleriny":'Baleriny',
+    "szpilki":'Szpliki',
+    "lordsy":'Lordsy',
+    "eleganckie":'Eleganckie',
+    "plaskie":'Płaskie',
+    "oxfordy":"Oxfordy",
+    "botki":'Botki',
+    "emu":'Emu',
+    "ugg":'Ugg',
+    "oficerki":'Oficerki',
+    "muszkieterki":'Muszkieterki',
+    "kowbojki":'Kowbojki',
+    "trampki-i-tenisowki":'Trampki',
+}

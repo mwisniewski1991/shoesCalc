@@ -65,25 +65,49 @@
         <div class="section__title"><h3 class="section__text heading--three">Podział danych</h3></div>
 
         <!-- FIRST ------------------------------------------------------------------------------------------------------- -->
-        <div class="section__chartBlock section__chartBlock--half chartBreakdown">
+        <div class="section__chartBlock section__chartBlock--half chartBreakdown" id="sexBreakdown__chartBlock">
 
             <div class="chartBreakdown__title"><h4 class="chartBreakdown__text heading--four">na płeć</h4></div>
 
-            <div class="breakdownCtrl">
+            <div class="breakdownCtrl" id="sexBreakdown__controller">
 
-                <div class="breakdownCtrl__radioBox radio">
-                    <input class="radio__input" type="radio" name="sexBreakdown__type" id="sexBreakdown__catinput" checked>
-                    <label class="radio__label radio__label--category" for="sexBreakdown__catinput">Kategoria</label>
+                <div class="breakdownCtrl__typeCtrl">
+                    <div class="breakdownCtrl__radioBox radio">
+                        <input class="radio__input" 
+                                type="radio"
+                                name="sexBreakdown__type" 
+                                id="sexBreakdown__input--category" 
+                                data-chartType="sexBreakdown" data-selectionType="category" 
+                                checked>
+                        <label class="radio__label radio__label--category" for="sexBreakdown__input--category">Kategoria</label>
+                    </div>
+
+                    <div class="breakdownCtrl__counter">
+                        <span class="breakdownCtrl__smallSpan catNumber">1</span>
+                        <span class="breakdownCtrl__smallSpan">/</span>
+                        <span class="breakdownCtrl__smallSpan">5</span>
+                    </div>
                 </div>
                 
-                <div class="breakdownCtrl__radioBox radio">
-                    <input class="radio__input" type="radio" name="sexBreakdown__type" id="sexBreakdown__subcatinput">
-                    <label class="radio__label radio__label--subcategory" for="sexBreakdown__subcatinput">Podkategoria</label>
+                <div class="breakdownCtrl__typeCtrl">
+                    <div class="breakdownCtrl__radioBox radio">
+                        <input class="radio__input" 
+                                type="radio" 
+                                name="sexBreakdown__type" 
+                                id="sexBreakdown__input--subacagtegory" 
+                                data-chartType="sexBreakdown" data-selectionType="subcategory">
+                        <label class="radio__label radio__label--subcategory" for="sexBreakdown__input--subacagtegory">Podkat.</label>
+                    </div>
+                    <div class="breakdownCtrl__counter">
+                        <span class="breakdownCtrl__smallSpan subcatNumber">1</span>
+                        <span class="breakdownCtrl__smallSpan">/</span>
+                        <span class="breakdownCtrl__smallSpan">42</span>
+                    </div>
                 </div>
-
-                <button class="breakdownCtrl__button breakdownCtrl__button--left button button--left" id="sexBreakdown__leftButton"> << Zmień</button>
-                <div class="breakdownCtrl__selection"><span class="breakdownCtrl__span">Wszystkie</span></div>
-                <button class="breakdownCtrl__button breakdownCtrl__button--right button button--right" id="sexBreakdown__rightButton">Zmień >> </button>
+                    
+                <button class="breakdownCtrl__button breakdownCtrl__button--left button button--left" id="sexBreakdown__leftButton" value="-1"> << Zmień</button>
+                <div class="breakdownCtrl__selection"><span class="breakdownCtrl__mainSpan">Wszystkie</span></div>
+                <button class="breakdownCtrl__button breakdownCtrl__button--right button button--right" id="sexBreakdown__rightButton" value="1">Zmień >> </button>
 
             </div>
 
@@ -92,27 +116,51 @@
         </div>
         
         <!-- SECOND ------------------------------------------------------------------------------------------------------- -->
-        <div class="section__chartBlock section__chartBlock--half chartBreakdown">
+        <div class="section__chartBlock section__chartBlock--half chartBreakdown" id="discountsBreakdown__chartBlock">
 
             <div class="chartBreakdown__title"><h4 class="chartBreakdown__text heading--four">na rodzaj ceny</h4></div>
 
-            <div class="chartBreakdown__breakdownCtrl breakdownCtrl">
-                <div class="breakdownCtrl__radioBox radio">
-                    <input class="radio__input" type="radio" name="discountsBreakdown__type" id="discountsBreakdown__catinput" checked>
-                    <label class="radio__label radio__label--category" for="discountsBreakdown__catinput">Kategoria</label>
+            <div class="breakdownCtrl" id="discountsBreakdown__controller">
+
+                <div class="breakdownCtrl__typeCtrl">
+                    <div class="breakdownCtrl__radioBox radio">
+                        <input class="radio__input" 
+                                type="radio" 
+                                name="discountsBreakdown__type" 
+                                id="discountsBreakdown__input--category" 
+                                data-chartType="discountsBreakdown" data-selectionType="category"
+                                checked>
+                        <label class="radio__label radio__label--category" for="discountsBreakdown__input--category">Kategoria</label>
+                    </div>
+                    <div class="breakdownCtrl__counter">
+                        <span class="breakdownCtrl__smallSpan catNumber">1</span>
+                        <span class="breakdownCtrl__smallSpan">/</span>
+                        <span class="breakdownCtrl__smallSpan">5</span>
+                    </div>
                 </div>
                 
-                <div class="breakdownCtrl__radioBox radio">
-                    <input class="radio__input" type="radio" name="discountsBreakdown__type" id="discountsBreakdown__subcatinput">
-                    <label class="radio__label radio__label--subcategory" for="discountsBreakdown__subcatinput">Podkategoria</label>
+                <div class="breakdownCtrl__typeCtrl">
+                    <div class="breakdownCtrl__radioBox radio">
+                        <input class="radio__input" 
+                                type="radio" 
+                                name="discountsBreakdown__type" 
+                                id="discountsBreakdown__input--subcategory" 
+                                data-chartType="discountsBreakdown" data-selectionType="subcategory">
+                        <label class="radio__label radio__label--subcategory" for="discountsBreakdown__input--subcategory">Podkat.</label>
+                    </div>
+                    <div class="breakdownCtrl__counter">
+                        <span class="breakdownCtrl__smallSpan subcatNumber">1</span>
+                        <span class="breakdownCtrl__smallSpan">/</span>
+                        <span class="breakdownCtrl__smallSpan">42</span>
+                    </div>
                 </div>
 
-                <button class="breakdownCtrl__button breakdownCtrl__button--left button button--left" id="discountsBreakdown__leftButton"> << Zmień</button>
-                <div class="breakdownCtrl__selection"><span class="breakdownCtrl__span">Wszystkie</span></div>
-                <button class="breakdownCtrl__button breakdownCtrl__button--right button button--right" id="discountsBreakdown__rightButton">Zmień >> </button>
+                <button class="breakdownCtrl__button breakdownCtrl__button--left button button--left" id="discountsBreakdown__leftButton" value="-1"> << Zmień</button>
+                <div class="breakdownCtrl__selection"><span class="breakdownCtrl__mainSpan">Wszystkie</span></div>
+                <button class="breakdownCtrl__button breakdownCtrl__button--right button button--right" id="discountsBreakdown__rightButton" value="1">Zmień >> </button>
             </div>
 
-            <div class="chartBreakdown__chartContainer" id="sexDivide__chartContainer"></div>
+            <div class="chartBreakdown__chartContainer" id="discountsBreakdown__chartContainer"></div>
 
         </div>
 

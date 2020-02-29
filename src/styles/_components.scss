@@ -91,6 +91,14 @@
         border-radius: 7px;
         border: 1px solid white;
 
+        
+        @media screen and (max-width: $break-medium){
+            width: 22px;
+            height: 22px;
+            left: -26px;
+            top: -3px
+        }
+
         @media screen and (max-width: $break-small){
             width: 20px;
             height: 20px;
@@ -151,7 +159,7 @@
 .breakdownCtrl{
 
     margin: 0 auto;
-    width: 90%;
+    width: 95%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 40px 40px;
@@ -164,10 +172,13 @@
     @media screen and (max-width: $break-medium){
         grid-template-rows: 40px 35px;
     }
+    @media screen and (max-width: $break-midmedium){
+        grid-template-rows: 60px 35px;
+    }
     @media screen and (max-width: $break-small){
-        grid-template-rows: 40px 30px;
+        grid-template-rows: 30px 30px;
         grid-row-gap: .5rem;
-        justify-items: center;
+        // justify-items: center;
     }
 
     &__button{
@@ -179,8 +190,9 @@
         &--right{grid-area: rightButton;}
 
         @media screen and (max-width: $break-small){
-            width: 100px;
+            width: 90%;
             font-size: 1.75rem;
+            justify-self: center;
         }
     }
 
@@ -194,7 +206,7 @@
         align-items: center;
     }
 
-    &__span{
+    &__mainSpan{
         font-size: 2rem;
 
         @media screen and (max-width: $break-small){
@@ -202,7 +214,11 @@
         }
     }
 
-    &__radioBox{
+    &__typeCtrl{
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
         &:nth-child(1){
             grid-area: catInput;
@@ -210,7 +226,38 @@
         &:nth-child(2){
             grid-area: subcatInput;
         }
+
+        @media screen and (max-width: $break-midmedium){
+            align-self: stretch;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        @media screen and (max-width: $break-small){
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+
+    &__radioBox{
+        margin-left: -7px;
+
+        &:nth-child(1){
+            grid-area: catInput;
+        }
+
+        &:nth-child(2){
+            grid-area: subcatInput;
+        }
     
+    }
+
+    &__counter{
+        margin-right: 4px;
+    }
+
+    &__smallSpan{
+        font-size: 1.4rem;
     }
 
 }

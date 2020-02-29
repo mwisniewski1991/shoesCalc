@@ -18,6 +18,10 @@ html {
         font-size: 50%; //1rem = 8px
     }
 
+    @media screen and (max-width: $break-midmedium){
+        // font-size: 50%; //1rem = 8px
+    }
+
     @media screen and (max-width: $break-small){
         font-size: 37.5%; //1rem = 6px
     }
