@@ -125,7 +125,7 @@ export default class MWpieChart{
             .append('g')
             .attr('class', (d,i)=> `${groupClass}${i}`)
             .append('path')
-            .attr('class', (d,i)=> `${slicesClass}${i}`)
+            .attr('class', (d,i)=> `${slicesClass}${d.data.key}`)
             .attr('d', arcGenerator)
             .style("stroke", "white")
             .each(function(d){ this._current = d;})
@@ -155,25 +155,15 @@ export default class MWpieChart{
         const { mainClass, arcGenerator } = this.settings;
         const className = `${mainClass}__labels ${mainClass}__labels--`;
 
-        const changeName = (name) => {
-
-            switch(name){
-                case 'F':
-                    return 'Damskie'
-                    break;
-                case 'M':
-                    return 'Męskie'
-                    break;
-            }
-        };
-
         pieContainer.selectAll(`.${mainClass}__slicesGroup`)
             .append('text')
             .attr('class', (d,i) => `${className}${i}`)
-            .text((d) => changeName(d.data.key))
+            .text((d) => this.changeName(d.data.key))
             .attr("transform", (d) => `translate(${arcGenerator.centroid(d)})`)
             .each(function(d){ this._current = d;});
     }
+
+    
 
     updateLabels(){
         const { pieData } = this.data;
@@ -272,7 +262,25 @@ export default class MWpieChart{
     }
     //PIE/DONUT  -----------------------------------------------------------------------------------
  
-    //ADDITIONAL ----------------------------------------------------------------------------------- 
+    //ADDITIONAL -----------------------------------------------------------------------------------
+    changeName(name){
+
+        switch(name){
+            case 'F':
+                return 'Damskie'
+                break;
+            case 'M':
+                return 'Męskie'
+                break;
+            case 'Regular':
+                return 'Standardowa'
+                break;
+            case 'Special':
+                return 'Przecena'
+                break;
+        }
+    };
+
     createColorScale(){
         this.elements.scales.colorScale = d3.scaleOrdinal()
             .domain((data) => data.city)
@@ -296,7 +304,7 @@ export default class MWpieChart{
 
         slicesGroup.on('mouseover', (d,i,nodes)=>{
 
-            pieContainer.selectAll(`.${mainClass}__slices--${i}`)
+            pieContainer.selectAll(`.${mainClass}__slices--${d.data.key}`)
             .style('opacity', 1)
             .style('transform', 'scale(1.05)')
             
@@ -317,7 +325,7 @@ export default class MWpieChart{
 
         slicesGroup.on('mouseout', (d,i,nodes)=>{
 
-            pieContainer.selectAll(`.${mainClass}__slices--${i}`)
+            pieContainer.selectAll(`.${mainClass}__slices--${d.data.key}`)
                 .style('opacity', .5)
                 .style('transform','scale(1)')
 

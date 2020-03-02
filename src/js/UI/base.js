@@ -1,11 +1,16 @@
 export const htmlElements = {
+    breakdowns: {
+        controllers: Array.from(document.querySelectorAll('.breakdownCtrl')),
+    },
     sexBreakdown: {
         chartContainer: document.querySelector('#sexDivide__chartContainer'),
         controller: document.querySelector('#sexBreakdown__controller'),
+        mainSpan: document.querySelector('.breakdownCtrl__mainSpan'),
     },
     discountsBreakdown: {
         chartContainer: document.querySelector('#discountsBreakdown__chartContainer'),
-        controller: document.querySelector('#discountsBreakdown__controller')
+        controller: document.querySelector('#discountsBreakdown__controller'),
+        mainSpan: document.querySelector('.breakdownCtrl__mainSpan'),
     },
     priceCatBoxChart: {
         chartContainer: document.querySelector('.chart__container--priceCategory'),
@@ -13,7 +18,7 @@ export const htmlElements = {
 };
 
 export const uiLabels = {
-    'Wszystkie':'Wszystkie',
+    'wszystkie':'Wszystkie',
     'klapki-i-sandaly': 'Klapki/sandały', 
     'polbuty': 'Pólbuty', 
     'kozaki-i-inne': 'Kozaki i inne', 

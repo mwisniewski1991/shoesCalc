@@ -4,9 +4,9 @@ export default class DataFinder {
     constructor(){
     };
 
-    async getCounterData(type){
+    async getCounterData(chartType, selectionType, filterValue='total'){
 
-        const apiURL = `/counter/${type}`;
+        const apiURL = `/counter/${chartType}/${selectionType}/${filterValue}`;
         const response = await fetch(apiURL);
         const serverData = await response.json();
         return serverData;

@@ -8,11 +8,11 @@
         transition: transform .2s;
         cursor: pointer;
 
-        &--0{
+        &--M, &--Special{
             fill: $colorMale;
         }
 
-        &--1{
+        &--F, &--Regular{
             fill: $colorFemale;
         }
     }
