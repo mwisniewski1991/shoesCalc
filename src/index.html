@@ -110,6 +110,7 @@
                         data-chartType="sexBreakdown"
                         value="-1"> << Zmień</button>
                 <div class="breakdownCtrl__selection"><span class="breakdownCtrl__mainSpan">Wszystkie</span></div>
+
                 <button class="breakdownCtrl__button breakdownCtrl__button--right button button--right" 
                         id="sexBreakdown__rightButton" 
                         data-chartType="sexBreakdown"
@@ -184,15 +185,66 @@
 
         <div class="section__minmaxBlock minmaxBlock">
 
-            <div class="minmaxBlock__item minmaxBlock__item--men"><span class="minmaxBlock__name minmaxBlock__name--male">Męskie &#9794;</span></div>
-            <div class="minmaxBlock__item minmaxBlock__item--women"><span class="minmaxBlock__name minmaxBlock__name--female">Damskie &#9792;</span></div>
+            <!-- CONTROLLER -->
+            <div class="minmaxBlock__item minmaxBlock__item--controller minmaxCtrl">
+
+                <div class="minmaxCtrl__typeCtrl">
+                    <div class="minmaxCtrl__radioBox radio">
+                        <input class="radio__input" 
+                                type="radio"
+                                name="minmaxCtrl__type" 
+                                id="minmaxCtrl__input--category" 
+                                data-chartType="minamax" data-selectionType="category" 
+                                checked>
+                        <label class="radio__label radio__label--category" for="minmaxCtrl__input--category">Kategoria</label>
+                    </div>
+
+                    <div class="minmaxCtrl__counter">
+                        <span class="minmaxCtrl__smallSpan catNumber">1</span>
+                        <span class="minmaxCtrl__smallSpan">/</span>
+                        <span class="minmaxCtrl__smallSpan">5</span>
+                    </div>
+                </div>
+
+                <div class="minmaxCtrl__typeCtrl">
+                    <div class="minmaxCtrl__radioBox radio">
+                        <input class="radio__input" 
+                                type="radio" 
+                                name="minmaxCtrl__type" 
+                                id="minmaxCtrl__input--subacagtegory" 
+                                data-chartType="minmaxCtrl" data-selectionType="subcategory">
+                        <label class="radio__label radio__label--subcategory" for="minmaxCtrl__input--subacagtegory">Podkat.</label>
+                    </div>
+                    <div class="minmaxCtrl__counter">
+                        <span class="minmaxCtrl__smallSpan subcatNumber">1</span>
+                        <span class="minmaxCtrl__smallSpan">/</span>
+                        <span class="minmaxCtrl__smallSpan">42</span>
+                    </div>
+                </div>
+
+                <button class="minmaxCtrl__button minmaxCtrl__button--left button button--left" 
+                id="minmax__leftButton" 
+                data-chartType="minmax"
+                value="-1"> << Zmień</button>
+
+                <div class="minmaxCtrl__selection"><span class="minmaxCtrl__mainSpan">Wszystkie</span></div>
+
+                <button class="minmaxCtrl__button minmaxCtrl__button--right button button--right" 
+                id="minmax__rightButton" 
+                data-chartType="minmax"
+                value="1">Zmień >> </button>
+
+            </div>
+
+            <!-- ITEMS -->
+            <div class="minmaxBlock__item minmaxBlock__item--male"><span class="minmaxBlock__name minmaxBlock__name--male">Męskie &#9794;</span></div>
+            <div class="minmaxBlock__item minmaxBlock__item--female"><span class="minmaxBlock__name minmaxBlock__name--female">Damskie &#9792;</span></div>
             <div class="minmaxBlock__item minmaxBlock__item--max"><span class="minmaxBlock__name minmaxBlock__name--max">Maks cena</span></div>
             <div class="minmaxBlock__item minmaxBlock__item--min"><span class="minmaxBlock__name minmaxBlock__name--min">Min cena</span></div>
             <div class="minmaxBlock__item minmaxBlock__item--maxTwo"><span class="minmaxBlock__name minmaxBlock__name--max">Maks cena</span></div>
             <div class="minmaxBlock__item minmaxBlock__item--minTwo"><span class="minmaxBlock__name minmaxBlock__name--min">Min cena</span></div>
 
-            
-            <div class="minmaxBlock__item minmaxBlock__item--maxMen">
+            <div class="minmaxBlock__item minmaxBlock__item--maxMale">
 
                 <div class="minmaxBlock__shoesContainer shoesContainer">
                     <span class="shoesContainer__firstName">Półbuty BOSS</span>   
@@ -206,7 +258,7 @@
 
             </div>
 
-            <div class="minmaxBlock__item minmaxBlock__item--maxWomen">
+            <div class="minmaxBlock__item minmaxBlock__item--maxFemale">
 
                 <div class="minmaxBlock__shoesContainer shoesContainer">
                     <span class="shoesContainer__firstName">Sandały TORY BURCH"</span>   
@@ -220,7 +272,7 @@
 
             </div>
 
-            <div class="minmaxBlock__item minmaxBlock__item--minMen">
+            <div class="minmaxBlock__item minmaxBlock__item--minMale">
                 
                 <div class="minmaxBlock__shoesContainer shoesContainer">
                     <span class="shoesContainer__firstName">Półbuty CLARKS"</span>   
@@ -233,7 +285,8 @@
                 </div>
 
             </div>
-            <div class="minmaxBlock__item minmaxBlock__item--minWomen">
+
+            <div class="minmaxBlock__item minmaxBlock__item--minFemale">
 
                 <div class="minmaxBlock__shoesContainer shoesContainer">
                     <span class="shoesContainer__firstName">Japonki DOCKERS"</span>   

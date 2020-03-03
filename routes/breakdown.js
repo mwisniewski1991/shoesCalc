@@ -37,7 +37,7 @@ router.get('/:chartType/:selectionType/:filterValue', async (req, res) => {
 
       client.connect( async (err) => {
         
-        const collection = client.db("test").collection("testCol");
+        const collection = client.db("shoesCalc").collection("collection");
 
         const cursorFirst = collection.find(firstPartQuery);
         const cursorSecond = collection.find(secondQueryMethod);

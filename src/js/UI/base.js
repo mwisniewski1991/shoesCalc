@@ -5,12 +5,10 @@ export const htmlElements = {
     sexBreakdown: {
         chartContainer: document.querySelector('#sexDivide__chartContainer'),
         controller: document.querySelector('#sexBreakdown__controller'),
-        mainSpan: document.querySelector('.breakdownCtrl__mainSpan'),
     },
     discountsBreakdown: {
         chartContainer: document.querySelector('#discountsBreakdown__chartContainer'),
         controller: document.querySelector('#discountsBreakdown__controller'),
-        mainSpan: document.querySelector('.breakdownCtrl__mainSpan'),
     },
     priceCatBoxChart: {
         chartContainer: document.querySelector('.chart__container--priceCategory'),

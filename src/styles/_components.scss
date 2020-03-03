@@ -269,24 +269,24 @@
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 2fr 2fr;
-    grid-template-rows: 80px 200px 200px;
+    grid-template-rows: 160px 200px 200px;
     grid-template-areas: 
-    ". men women"
-    "max maxMen maxWomen"
-    "min minMen minWomen";
+    "ctrl male female"
+    "max maxMale maxFemale"
+    "min minMale minFemale";
 
     @media screen and (max-width: $break-medium){
         margin-top: 3rem;
         grid-template-columns: 1fr 2fr;
-        grid-template-rows: 65px 200px 200px 66px 200px 200px;
+        grid-template-rows: 90px 65px 200px 200px 66px 200px 200px;
         grid-template-areas: 
-            "men men"
-            "max maxMen "
-            "min minMen "
-            "women women"
-            "maxTwo maxWomen"
-            "minTwo minWomen";
-        
+            "ctrl ctrl"
+            "male male"
+            "max maxMale"
+            "min minMale"
+            "female female"
+            "maxTwo maxFemale"
+            "minTwo minFemale";
     }
 
     &__item{
@@ -299,14 +299,15 @@
             border: dashed 1px $colorWhite;
         }
 
-        &--men{grid-area: men;}
-        &--women{grid-area: women;}
+        &--controller{grid-area: ctrl;}
+        &--male{grid-area: male;}
+        &--female{grid-area: female;}
         &--max{grid-area: max;}
         &--min{grid-area: min;}
-        &--maxMen{grid-area: maxMen;}
-        &--maxWomen{grid-area: maxWomen;}
-        &--minMen{grid-area: minMen;}
-        &--minWomen{grid-area: minWomen;}
+        &--maxMale{grid-area: maxMale;}
+        &--maxFemale{grid-area: maxFemale;}
+        &--minMale{grid-area: minMale;}
+        &--minFemale{grid-area: minFemale;}
         &--maxTwo{
             display: none;
             @media screen and (max-width: $break-medium){
@@ -321,8 +322,6 @@
                 grid-area: minTwo;
             }
         }
-
-
     }
 
     &__name{
@@ -345,14 +344,142 @@
         &--max{color: $colorFemale;}
         &--min{color: $colorMale;}
         
-
     }
-
 
     &__shoesContainer{
         height: 100%;
         width: 100%;
     }
+}
+
+.minmaxCtrl{
+    width: 100%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 50px 50px 50px;
+    align-items: center;
+    grid-template-areas: 
+    "catInput subcatInput" 
+    "leftButton rightButton"
+    "centerText centerText";
+    
+
+    @media screen and (max-width: $break-medium){
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 35px 35px;
+
+        grid-template-areas: 
+        "catInput centerText leftButton"
+        "subcatInput centerText rightButton";
+    }
+   
+
+    &__button{
+        font-size: 1.3rem;
+        height: 70%;   
+        width: 90%;   
+
+        &--left{grid-area: leftButton;}
+
+        &--right{grid-area: rightButton;}
+
+        @media screen and (max-width: $break-medium){
+            margin: 0 auto;
+            width: 60%;
+        }
+
+        @media screen and (max-width: $break-small){
+            width: 90%;
+            font-size: 1.75rem;
+            justify-self: center;
+        }
+    }
+
+    &__selection{
+        grid-area: centerText;
+        margin: 4px;
+
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__mainSpan{
+        font-size: 2rem;
+
+        @media screen and (max-width: $break-medium){
+            font-size: 3rem;
+        }
+
+        @media screen and (max-width: $break-small){
+            font-size: 2.75rem;
+        }
+    }
+
+    &__typeCtrl{
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+
+        &:nth-child(1){
+            grid-area: catInput;
+        }
+        &:nth-child(2){
+            grid-area: subcatInput;
+        }
+
+        @media screen and (max-width: $break-medium){
+            width: 50%;
+            margin: 0 auto;
+            flex-direction: row;
+        }
+
+        @media screen and (max-width: $break-midmedium){
+            width: 75%;
+        }
+
+        @media screen and (max-width: $break-small){
+            width: 90%;
+        }
+    }
+
+    &__radioBox{
+        margin-left: -7px;
+        margin-bottom: 4px;
+
+        &:nth-child(1){
+            grid-area: catInput;
+        }
+
+        &:nth-child(2){
+            grid-area: subcatInput;
+        }
+   
+    }
+
+    &__radioBox .radio__label{
+        font-size: 1.2rem;
+
+        @media screen and (max-width: $break-medium){
+            font-size: 1.5rem;
+        }
+    }
+
+    &__counter{
+        margin-right: 4px;
+    }
+
+    &__smallSpan{
+        font-size: 1.2rem;
+        @media screen and (max-width: $break-medium){
+            font-size: 1.5rem;
+        }
+    }
+
 }
 
 .shoesContainer{

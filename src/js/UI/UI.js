@@ -10,7 +10,8 @@ export const changeBreakdownCatNumber = (chartType, type, newIndex)=>{
 };  
 
 export const changeBreakdownMainSpan = (chartType, newIndex, list)=>{
-    const mainSpanElement = htmlElements[chartType].mainSpan;
+    const controller = htmlElements[chartType].controller;
+    const mainSpanElement = controller.querySelector('.breakdownCtrl__mainSpan');
     const newLabels = uiLabels[list[newIndex-1]]; //search ui label based on arrat from state
-    mainSpanElement.innerText = newLabels
+    mainSpanElement.innerText = newLabels;
 };

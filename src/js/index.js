@@ -144,14 +144,14 @@ const appController = async () =>{
     
     //CREATE 1 CHART
     const { dataSet } = state;
-    const sexBreakdownData = calcCategoryCounter(dataSet, 'sex');
+    // const sexBreakdownData = calcCategoryCounter(dataSet, 'sex');
     // const sexBreakdownData = await dataFinder.getCounterData('sexBreakdown','category','wszystkie');
-    createSexDivideChart(sexBreakdownData); //rendering chart
+    // createSexDivideChart(sexBreakdownData); //rendering chart
 
     // CREATE 2 CHART
-    const discountsData = calcCategoryCounter(dataSet, 'priceCat');
+    // const discountsData = calcCategoryCounter(dataSet, 'priceCat');
     // const discountsData = await dataFinder.getCounterData('discountsBreakdown','category','wszystkie');
-    createDiscountsChart(discountsData)
+    // createDiscountsChart(discountsData)
 
     //CREATE 2 CHART
     // state.discounts.data = await dataFinder.getCounterData('priceCat')
@@ -206,7 +206,7 @@ const changeBreakdownSelection = async (e)=>{
 
     const target = e.target;
     const className = target.classList[0];
-
+    
     if(className === "breakdownCtrl__button"){
         const changeIndex = parseInt(target.value);
         const chartType = target.dataset.charttype
@@ -221,11 +221,11 @@ const changeBreakdownSelection = async (e)=>{
             const filter = list[newIndex-1];
             const { chart } = state[chartType];
             const { dataFinder } = state;
-            const sexBreakdownData = await dataFinder.getCounterData(chartType,selectionType,filter);
-              
             ui.changeBreakdownCatNumber(chartType, selectionType, newIndex)
             ui.changeBreakdownMainSpan(chartType, newIndex, list)
-            chart.updateChart(sexBreakdownData)
+
+            // const sexBreakdownData = await dataFinder.getCounterData(chartType,selectionType,filter);
+            // chart.updateChart(sexBreakdownData)
         }
     }
 };
@@ -248,8 +248,9 @@ const changeBreakdownType = async (e)=>{
         const filter = list[currentIndex-1];
         const { chart } = state[chartType];
         const { dataFinder } = state;
-        const sexBreakdownData = await dataFinder.getCounterData(chartType,selectionType,filter);
-        chart.updateChart(sexBreakdownData)
+
+        // const sexBreakdownData = await dataFinder.getCounterData(chartType,selectionType,filter);
+        // chart.updateChart(sexBreakdownData)
     }
 };
 
