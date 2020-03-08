@@ -11,7 +11,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon/favicon-16x16.png">
 
-    <title>Shoes Calc</title>
+    <title>Buty w liczbach</title>
 </head>
 <body>
 
@@ -69,7 +69,7 @@
 
             <div class="chartBreakdown__title"><h4 class="chartBreakdown__text heading--four">na płeć</h4></div>
 
-            <div class="breakdownCtrl" id="sexBreakdown__controller">
+            <div class="breakdownCtrl controllerOne" id="sexBreakdown__controller">
 
                 <div class="breakdownCtrl__typeCtrl">
                     <div class="breakdownCtrl__radioBox radio">
@@ -77,7 +77,7 @@
                                 type="radio"
                                 name="sexBreakdown__type" 
                                 id="sexBreakdown__input--category" 
-                                data-chartType="sexBreakdown" data-selectionType="category" 
+                                data-sectionType="sexBreakdown" data-selectionType="category" 
                                 checked>
                         <label class="radio__label radio__label--category" for="sexBreakdown__input--category">Kategoria</label>
                     </div>
@@ -95,7 +95,7 @@
                                 type="radio" 
                                 name="sexBreakdown__type" 
                                 id="sexBreakdown__input--subacagtegory" 
-                                data-chartType="sexBreakdown" data-selectionType="subcategory">
+                                data-sectionType="sexBreakdown" data-selectionType="subcategory">
                         <label class="radio__label radio__label--subcategory" for="sexBreakdown__input--subacagtegory">Podkat.</label>
                     </div>
                     <div class="breakdownCtrl__counter">
@@ -107,13 +107,13 @@
                     
                 <button class="breakdownCtrl__button breakdownCtrl__button--left button button--left" 
                         id="sexBreakdown__leftButton" 
-                        data-chartType="sexBreakdown"
+                        data-sectionType="sexBreakdown"
                         value="-1"> << Zmień</button>
-                <div class="breakdownCtrl__selection"><span class="breakdownCtrl__mainSpan">Wszystkie</span></div>
+                <div class="breakdownCtrl__selection"><span class="breakdownCtrl__mainSpan mainSpan">Wszystkie</span></div>
 
                 <button class="breakdownCtrl__button breakdownCtrl__button--right button button--right" 
                         id="sexBreakdown__rightButton" 
-                        data-chartType="sexBreakdown"
+                        data-sectionType="sexBreakdown"
                         value="1">Zmień >> </button>
 
             </div>
@@ -127,7 +127,7 @@
 
             <div class="chartBreakdown__title"><h4 class="chartBreakdown__text heading--four">na rodzaj ceny</h4></div>
 
-            <div class="breakdownCtrl" id="discountsBreakdown__controller">
+            <div class="breakdownCtrl controllerOne" id="discountsBreakdown__controller">
 
                 <div class="breakdownCtrl__typeCtrl">
                     <div class="breakdownCtrl__radioBox radio">
@@ -135,7 +135,7 @@
                                 type="radio" 
                                 name="discountsBreakdown__type" 
                                 id="discountsBreakdown__input--category" 
-                                data-chartType="discountsBreakdown" data-selectionType="category"
+                                data-sectionType="discountsBreakdown" data-selectionType="category"
                                 checked>
                         <label class="radio__label radio__label--category" for="discountsBreakdown__input--category">Kategoria</label>
                     </div>
@@ -152,7 +152,7 @@
                                 type="radio" 
                                 name="discountsBreakdown__type" 
                                 id="discountsBreakdown__input--subcategory" 
-                                data-chartType="discountsBreakdown" data-selectionType="subcategory">
+                                data-sectionType="discountsBreakdown" data-selectionType="subcategory">
                         <label class="radio__label radio__label--subcategory" for="discountsBreakdown__input--subcategory">Podkat.</label>
                     </div>
                     <div class="breakdownCtrl__counter">
@@ -164,12 +164,12 @@
 
                 <button class="breakdownCtrl__button breakdownCtrl__button--left button button--left" 
                         id="discountsBreakdown__leftButton" 
-                        data-chartType="discountsBreakdown"
+                        data-sectionType="discountsBreakdown"
                         value="-1"> << Zmień</button>
-                <div class="breakdownCtrl__selection"><span class="breakdownCtrl__mainSpan">Wszystkie</span></div>
+                <div class="breakdownCtrl__selection"><span class="breakdownCtrl__mainSpan mainSpan">Wszystkie</span></div>
                 <button class="breakdownCtrl__button breakdownCtrl__button--right button button--right" 
                         id="discountsBreakdown__rightButton" 
-                        data-chartType="discountsBreakdown"
+                        data-sectionType="discountsBreakdown"
                         value="1">Zmień >> </button>
             </div>
 
@@ -186,7 +186,7 @@
         <div class="section__minmaxBlock minmaxBlock">
 
             <!-- CONTROLLER -->
-            <div class="minmaxBlock__item minmaxBlock__item--controller minmaxCtrl">
+            <div class="minmaxBlock__item minmaxBlock__item--controller minmaxCtrl controllerOne">
 
                 <div class="minmaxCtrl__typeCtrl">
                     <div class="minmaxCtrl__radioBox radio">
@@ -194,7 +194,7 @@
                                 type="radio"
                                 name="minmaxCtrl__type" 
                                 id="minmaxCtrl__input--category" 
-                                data-chartType="minamax" data-selectionType="category" 
+                                data-sectionType="minmax" data-selectionType="category" 
                                 checked>
                         <label class="radio__label radio__label--category" for="minmaxCtrl__input--category">Kategoria</label>
                     </div>
@@ -212,7 +212,7 @@
                                 type="radio" 
                                 name="minmaxCtrl__type" 
                                 id="minmaxCtrl__input--subacagtegory" 
-                                data-chartType="minmaxCtrl" data-selectionType="subcategory">
+                                data-sectionType="minmax" data-selectionType="subcategory">
                         <label class="radio__label radio__label--subcategory" for="minmaxCtrl__input--subacagtegory">Podkat.</label>
                     </div>
                     <div class="minmaxCtrl__counter">
@@ -224,14 +224,14 @@
 
                 <button class="minmaxCtrl__button minmaxCtrl__button--left button button--left" 
                 id="minmax__leftButton" 
-                data-chartType="minmax"
+                data-sectionType="minmax"
                 value="-1"> << Zmień</button>
 
-                <div class="minmaxCtrl__selection"><span class="minmaxCtrl__mainSpan">Wszystkie</span></div>
+                <div class="minmaxCtrl__selection"><span class="minmaxCtrl__mainSpan mainSpan">Wszystkie</span></div>
 
                 <button class="minmaxCtrl__button minmaxCtrl__button--right button button--right" 
                 id="minmax__rightButton" 
-                data-chartType="minmax"
+                data-sectionType="minmax"
                 value="1">Zmień >> </button>
 
             </div>

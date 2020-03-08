@@ -1,6 +1,6 @@
 import { htmlElements, uiLabels } from './base';
 
-export const changeBreakdownCatNumber = (chartType, type, newIndex)=>{
+export const changeCatNumber = (chartType, type, newIndex)=>{
 
     const controller = htmlElements[chartType].controller
     const spanId = type === 'category' ? '.catNumber' : '.subcatNumber';
@@ -8,10 +8,9 @@ export const changeBreakdownCatNumber = (chartType, type, newIndex)=>{
     spanElement.innerText = newIndex
 
 };  
-
-export const changeBreakdownMainSpan = (chartType, newIndex, list)=>{
+export const changeMainSpan = (chartType, newIndex, list)=>{
     const controller = htmlElements[chartType].controller;
-    const mainSpanElement = controller.querySelector('.breakdownCtrl__mainSpan');
+    const mainSpanElement = controller.querySelector('.mainSpan');
     const newLabels = uiLabels[list[newIndex-1]]; //search ui label based on arrat from state
     mainSpanElement.innerText = newLabels;
 };

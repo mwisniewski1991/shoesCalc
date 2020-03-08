@@ -58,7 +58,6 @@ router.get('/:chartType/:selectionType/:filterValue', async (req, res) => {
     });
 
     }catch(err){
-
         console.log(err)
     }
 

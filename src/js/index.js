@@ -9,128 +9,90 @@ import { testData } from './data/testData';
 
 const state = {
     dataSet: testData,
+    shoesList: {
+        category: ['wszystkie','klapki-i-sandaly', 'polbuty', 'kozaki-i-inne', 'sportowe'],
+        subcategory: [
+            "wszystkie",
+            "japonki",
+            "klapki",
+            "sandaly",
+            "kapcie",
+            "codzienne",
+            "wizytowe",
+            "glany",
+            "trampki",
+            "buty-trekkingowe-i-trapery",
+            "sneakersy",
+            "mokasyny",
+            "espadryle",
+            "kalosze",
+            "trekkingi-i-trapery",
+            "kozaki",
+            "trzewiki",
+            "sztyblety",
+            "sniegowce",
+            "bieganie",
+            "buty-do-wody",
+            "fitness",
+            "halowki",
+            "pilka-nozna",
+            "koszykowka",
+            "tenis",
+            "koturny",
+            "na-obcasie",
+            "na-koturnie",
+            "baleriny",
+            "szpilki",
+            "lordsy",
+            "eleganckie",
+            "plaskie",
+            "oxfordy",
+            "botki",
+            "emu",
+            "ugg",
+            "oficerki",
+            "muszkieterki",
+            "kowbojki",
+            "trampki-i-tenisowki"] 
+    },
     sexBreakdown: {
         data: {},
         chart: {},
-        currentSelection: {
-            category: true,
-            subcategory: false,
-        },
         category:{
             currentSelection: true,
             currentIndex: 1,
             maxIndex: 5,
-            list: ['wszystkie','klapki-i-sandaly', 'polbuty', 'kozaki-i-inne', 'sportowe'],
         }, 
         subcategory:{
             currentSelection: false,
             currentIndex: 1,
             maxIndex: 42,
-            list: [
-            "wszystkie",
-            "japonki",
-            "klapki",
-            "sandaly",
-            "kapcie",
-            "codzienne",
-            "wizytowe",
-            "glany",
-            "trampki",
-            "buty-trekkingowe-i-trapery",
-            "sneakersy",
-            "mokasyny",
-            "espadryle",
-            "kalosze",
-            "trekkingi-i-trapery",
-            "kozaki",
-            "trzewiki",
-            "sztyblety",
-            "sniegowce",
-            "bieganie",
-            "buty-do-wody",
-            "fitness",
-            "halowki",
-            "pilka-nozna",
-            "koszykowka",
-            "tenis",
-            "koturny",
-            "na-obcasie",
-            "na-koturnie",
-            "baleriny",
-            "szpilki",
-            "lordsy",
-            "eleganckie",
-            "plaskie",
-            "oxfordy",
-            "botki",
-            "emu",
-            "ugg",
-            "oficerki",
-            "muszkieterki",
-            "kowbojki",
-            "trampki-i-tenisowki"
-        ]},
+        },
     },
     discountsBreakdown: {
         chart: {},
-        currentSelection: {
-            category: true,
-            subcategory: false,
-        },
         category:{
             currentSelection: true,
             currentIndex: 1,
             maxIndex: 5,
-            list: ['wszystkie','klapki-i-sandaly', 'polbuty', 'kozaki-i-inne', 'sportowe'],
         }, 
         subcategory:{
             currentSelection: false,
             currentIndex: 1,
             maxIndex: 42,
-            list: [
-            "wszystkie",
-            "japonki",
-            "klapki",
-            "sandaly",
-            "kapcie",
-            "codzienne",
-            "wizytowe",
-            "glany",
-            "trampki",
-            "buty-trekkingowe-i-trapery",
-            "sneakersy",
-            "mokasyny",
-            "espadryle",
-            "kalosze",
-            "trekkingi-i-trapery",
-            "kozaki",
-            "trzewiki",
-            "sztyblety",
-            "sniegowce",
-            "bieganie",
-            "buty-do-wody",
-            "fitness",
-            "halowki",
-            "pilka-nozna",
-            "koszykowka",
-            "tenis",
-            "koturny",
-            "na-obcasie",
-            "na-koturnie",
-            "baleriny",
-            "szpilki",
-            "lordsy",
-            "eleganckie",
-            "plaskie",
-            "oxfordy",
-            "botki",
-            "emu",
-            "ugg",
-            "oficerki",
-            "muszkieterki",
-            "kowbojki",
-            "trampki-i-tenisowki"
-        ]},
+        },
+    },
+    minmax:{
+        category:{
+            currentSelection: true,
+            currentIndex: 1,
+            maxIndex: 5,
+        }, 
+        subcategory:{
+            currentSelection: false,
+            currentIndex: 1,
+            maxIndex: 42,
+        },
     },
     priceCatBoxChart: {},
 };
@@ -140,7 +102,6 @@ const appController = async () =>{
 
     state.dataFinder = new DataFinder();
     const { dataFinder } = state;
-    
     
     //CREATE 1 CHART
     const { dataSet } = state;
@@ -199,64 +160,76 @@ const createPriceCatChart = (data) => {
     // priceCatBoxChart.chart.drawBoxPlotDots(xVal,'price',0 , 'circle')
 };
 
-
-
-const changeBreakdownSelection = async (e)=>{
+const changeSelection = async (e)=>{
     //BASED OND USER CLICK FUNCTION CHANGE USER INTERFACE AND UPDATES CHARTS
 
     const target = e.target;
     const className = target.classList[0];
     
-    if(className === "breakdownCtrl__button"){
+    if(className === "breakdownCtrl__button" || className==='minmaxCtrl__button'){
         const changeIndex = parseInt(target.value);
-        const chartType = target.dataset.charttype
-        const selectionType = state[chartType].category.currentSelection === true ? 'category' : 'subcategory';
+        const sectionType = target.dataset.sectiontype
+        const selectionType = state[sectionType].category.currentSelection === true ? 'category' : 'subcategory';
 
-        const { currentIndex, maxIndex, list } = state[chartType][selectionType];
+        const { currentIndex, maxIndex } = state[sectionType][selectionType];
+        const list = state.shoesList[selectionType];
+
         const newIndex = currentIndex + changeIndex; 
 
         if(newIndex > 0 && newIndex <= maxIndex){
-            state[chartType][selectionType].currentIndex = newIndex //UPDATE STATE WITH NEW INDEX THEN CHANGE UI AND CHARTS
+            state[sectionType][selectionType].currentIndex = newIndex //UPDATE STATE WITH NEW INDEX THEN CHANGE UI AND CHARTS
           
-            const filter = list[newIndex-1];
-            const { chart } = state[chartType];
-            const { dataFinder } = state;
-            ui.changeBreakdownCatNumber(chartType, selectionType, newIndex)
-            ui.changeBreakdownMainSpan(chartType, newIndex, list)
+      
+            ui.changeCatNumber(sectionType, selectionType, newIndex)
+            ui.changeMainSpan(sectionType, newIndex, list)
 
-            // const sexBreakdownData = await dataFinder.getCounterData(chartType,selectionType,filter);
-            // chart.updateChart(sexBreakdownData)
+            if(sectionType === 'minmax'){
+
+            }else{
+                // const filter = list[newIndex-1];
+                // const { chart } = state[sectionType];
+                // const { dataFinder } = state;
+                // const sexBreakdownData = await dataFinder.getCounterData(sectionType,selectionType,filter);
+                // chart.updateChart(sexBreakdownData)
+            }
         }
     }
 };
  
-const changeBreakdownType = async (e)=>{
+const changeType = async (e)=>{
     const target = e.target;
     const className = target.classList[0];
     
     if(className === 'radio__input'){
-        const chartType = target.dataset.charttype
+        const sectionType = target.dataset.sectiontype
         const selectionType = target.dataset.selectiontype
 
-        state[chartType].category.currentSelection = false; //reset 
-        state[chartType].subcategory.currentSelection = false; //reset
-        state[chartType][selectionType].currentSelection = true;
+        state[sectionType].category.currentSelection = false; //reset 
+        state[sectionType].subcategory.currentSelection = false; //reset
+        state[sectionType][selectionType].currentSelection = true;
 
-        const { currentIndex, list } = state[chartType][selectionType];
-        ui.changeBreakdownMainSpan(chartType, currentIndex, list)
+        const { currentIndex } = state[sectionType][selectionType];
+        const list = state.shoesList[selectionType];
+        ui.changeMainSpan(sectionType, currentIndex, list)
 
-        const filter = list[currentIndex-1];
-        const { chart } = state[chartType];
-        const { dataFinder } = state;
+        if(sectionType === 'minmax'){
 
-        // const sexBreakdownData = await dataFinder.getCounterData(chartType,selectionType,filter);
-        // chart.updateChart(sexBreakdownData)
+
+        }else{
+            // const filter = list[currentIndex-1];
+            // const { chart } = state[sectionType];
+            // const { dataFinder } = state;
+            // const sexBreakdownData = await dataFinder.getCounterData(sectionType,selectionType,filter);
+            // chart.updateChart(sexBreakdownData)
+        }
     }
 };
 
-const controllers = htmlElements.breakdowns.controllers;
-controllers.forEach((contr) => contr.addEventListener('click', changeBreakdownSelection))
-controllers.forEach((contr) => contr.addEventListener('click', changeBreakdownType))
+
+const controllersOne = htmlElements.controllersOne;
+controllersOne.forEach((contr) => contr.addEventListener('click', changeSelection))
+controllersOne.forEach((contr) => contr.addEventListener('click', changeType))
+
 
 
 

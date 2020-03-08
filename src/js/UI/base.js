@@ -1,7 +1,5 @@
 export const htmlElements = {
-    breakdowns: {
-        controllers: Array.from(document.querySelectorAll('.breakdownCtrl')),
-    },
+    controllersOne: Array.from(document.querySelectorAll('.controllerOne')),
     sexBreakdown: {
         chartContainer: document.querySelector('#sexDivide__chartContainer'),
         controller: document.querySelector('#sexBreakdown__controller'),
@@ -12,6 +10,9 @@ export const htmlElements = {
     },
     priceCatBoxChart: {
         chartContainer: document.querySelector('.chart__container--priceCategory'),
+    },
+    minmax:{
+        controller: document.querySelector('.minmaxBlock__item--controller'),
     }
 };
 
