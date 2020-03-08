@@ -13,6 +13,12 @@ export const htmlElements = {
     },
     minmax:{
         controller: document.querySelector('.minmaxBlock__item--controller'),
+        elements:{
+            maleMax: document.querySelector('.minmaxBlock__item--maxMale'),
+            maleMin: document.querySelector('.minmaxBlock__item--minMale'),
+            femaleMax: document.querySelector('.minmaxBlock__item--maxFemale'),
+            femaleMin: document.querySelector('.minmaxBlock__item--minFemale'),
+        }
     }
 };
 

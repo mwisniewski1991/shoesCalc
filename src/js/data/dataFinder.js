@@ -12,6 +12,14 @@ export default class DataFinder {
         return serverData;
     }
 
+    async getminmaxData(selectionType, filterValue){
+
+        const apiURL = `/minmax/${selectionType}/${filterValue}`;
+        const response = await fetch(apiURL);
+        const serverData= await response.json();
+        return serverData
+    };
+
     async getBoxPlotData(){
 
         const apiURL = `/total`;

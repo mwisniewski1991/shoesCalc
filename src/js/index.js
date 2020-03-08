@@ -4,11 +4,12 @@ import MWpieChart from './chartMW/MWpieChart';
 import DataFinder from './data/dataFinder';
 import * as ui from './UI/UI';
 import { htmlElements } from './UI/base';
-import { testData } from './data/testData';
+// import { testData } from './data/testDataMinmax.js/testData';
+import { minmaxTestData } from './data/minmaxTestData';
 
 
 const state = {
-    dataSet: testData,
+    // dataSet: testData,
     shoesList: {
         category: ['wszystkie','klapki-i-sandaly', 'polbuty', 'kozaki-i-inne', 'sportowe'],
         subcategory: [
@@ -102,21 +103,22 @@ const appController = async () =>{
 
     state.dataFinder = new DataFinder();
     const { dataFinder } = state;
+    // const { dataSet } = state;
     
     //CREATE 1 CHART
-    const { dataSet } = state;
-    // const sexBreakdownData = calcCategoryCounter(dataSet, 'sex');
+    // const sexBreakdownData = calcCategoryCounter(dataSet, 'sex'); //TEST DATA
     // const sexBreakdownData = await dataFinder.getCounterData('sexBreakdown','category','wszystkie');
     // createSexDivideChart(sexBreakdownData); //rendering chart
 
     // CREATE 2 CHART
-    // const discountsData = calcCategoryCounter(dataSet, 'priceCat');
+    // const discountsData = calcCategoryCounter(dataSet, 'priceCat'); //TEST DATA
     // const discountsData = await dataFinder.getCounterData('discountsBreakdown','category','wszystkie');
     // createDiscountsChart(discountsData)
 
-    //CREATE 2 CHART
-    // state.discounts.data = await dataFinder.getCounterData('priceCat')
-    // createDiscountsChart(state.discounts.data)
+    //CREATE MINMAX SECTION
+    // const minmaxData = await dataFinder.getminmaxData('category','wszystkie');
+    createMinmaxSection(minmaxTestData);
+    
 
     //CREATE 3 CHART
     // state.priceCatBoxChart.data = await dataFinder.getBoxPlotData()
@@ -133,13 +135,23 @@ const createSexDivideChart = (data) => {
     chart.renderChart(data);
 };
 
-
 const createDiscountsChart = (data) => {
     const div = htmlElements.discountsBreakdown.chartContainer;
     state.discountsBreakdown.chart = new MWpieChart('discountsBreakdown', 'pieChart', div);
     const { discountsBreakdown : { chart } } = state;
     chart.renderChart(data);
 };
+
+const createMinmaxSection = (data)=>{
+    // console.log(data);    
+    const keys = Object.keys(data);
+
+    for(let key of keys){
+        ui.createMinmaxElement(key, data[key][0])
+    }
+
+};
+
 
 const createPriceCatChart = (data) => {
 

@@ -54,13 +54,12 @@ router.get('/:chartType/:selectionType/:filterValue', async (req, res) => {
           console.log(err)
         };
     
-      client.close();
-    });
+        client.close();
+      });
 
     }catch(err){
         console.log(err)
     }
-
 });
 
 module.exports = router;
