@@ -107,13 +107,13 @@ const appController = async () =>{
     
     //CREATE 1 CHART
     // const sexBreakdownData = calcCategoryCounter(dataSet, 'sex'); //TEST DATA
-    // const sexBreakdownData = await dataFinder.getCounterData('sexBreakdown','category','wszystkie');
-    // createSexDivideChart(sexBreakdownData); //rendering chart
+    const sexBreakdownData = await dataFinder.getCounterData('sexBreakdown','category','wszystkie');
+    createSexDivideChart(sexBreakdownData); //rendering chart
 
     // CREATE 2 CHART
     // const discountsData = calcCategoryCounter(dataSet, 'priceCat'); //TEST DATA
-    // const discountsData = await dataFinder.getCounterData('discountsBreakdown','category','wszystkie');
-    // createDiscountsChart(discountsData)
+    const discountsData = await dataFinder.getCounterData('discountsBreakdown','category','wszystkie');
+    createDiscountsChart(discountsData)
 
     //CREATE MINMAX SECTION
     // const minmaxData = await dataFinder.getminmaxData('category','wszystkie');
@@ -185,24 +185,26 @@ const changeSelection = async (e)=>{
 
         const { currentIndex, maxIndex } = state[sectionType][selectionType];
         const list = state.shoesList[selectionType];
-
         const newIndex = currentIndex + changeIndex; 
 
         if(newIndex > 0 && newIndex <= maxIndex){
             state[sectionType][selectionType].currentIndex = newIndex //UPDATE STATE WITH NEW INDEX THEN CHANGE UI AND CHARTS
-          
       
             ui.changeCatNumber(sectionType, selectionType, newIndex)
             ui.changeMainSpan(sectionType, newIndex, list)
 
             if(sectionType === 'minmax'){
+                const { dataFinder } = state;
+                const filter = list[newIndex-1];
+                const minmaxData = await dataFinder.getminmaxData(selectionType,filter);
+                createMinmaxSection(minmaxData);
 
             }else{
-                // const filter = list[newIndex-1];
-                // const { chart } = state[sectionType];
-                // const { dataFinder } = state;
-                // const sexBreakdownData = await dataFinder.getCounterData(sectionType,selectionType,filter);
-                // chart.updateChart(sexBreakdownData)
+                const filter = list[newIndex-1];
+                const { chart } = state[sectionType];
+                const { dataFinder } = state;
+                const sexBreakdownData = await dataFinder.getCounterData(sectionType,selectionType,filter);
+                chart.updateChart(sexBreakdownData)
             }
         }
     }
@@ -225,14 +227,17 @@ const changeType = async (e)=>{
         ui.changeMainSpan(sectionType, currentIndex, list)
 
         if(sectionType === 'minmax'){
-
+            const { dataFinder } = state;
+            const filter = list[currentIndex-1];
+            const minmaxData = await dataFinder.getminmaxData(selectionType,filter);
+            createMinmaxSection(minmaxData);
 
         }else{
-            // const filter = list[currentIndex-1];
-            // const { chart } = state[sectionType];
-            // const { dataFinder } = state;
-            // const sexBreakdownData = await dataFinder.getCounterData(sectionType,selectionType,filter);
-            // chart.updateChart(sexBreakdownData)
+            const filter = list[currentIndex-1];
+            const { chart } = state[sectionType];
+            const { dataFinder } = state;
+            const sexBreakdownData = await dataFinder.getCounterData(sectionType,selectionType,filter);
+            chart.updateChart(sexBreakdownData)
         }
     }
 };

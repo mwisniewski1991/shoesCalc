@@ -25,41 +25,30 @@ router.get('/:chartType/:selectionType/:filterValue', async (req, res) => {
       secondQueryMethod[selectionType] = filterValue
     };
   
-    // console.log(firstQueryMethod);
-    // console.log(secondQueryMethod);
-  
     const url = process.env.DB_CONNECTION
-    const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
+    const dbName = "shoesCalc";
+    const collectionName = "collection";
 
     let result = {};
 
-    try{
+    MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, async (error, client)=>{
+      if(error){
+          console.log(error)
+      }else{
+          const collection = client.db(dbName).collection(collectionName);
 
-      client.connect( async (err) => {
-        
-        const collection = client.db("shoesCalc").collection("collection");
+          const cursorFirst = collection.find(firstQueryMethod);
+          const cursorSecond = collection.find(secondQueryMethod);
+  
+          const counterFirst = await cursorFirst.count();
+          const counterSecond = await cursorSecond.count();
+  
+          result[firstValue] = counterFirst
+          result[secondValue] = counterSecond
 
-        const cursorFirst = collection.find(firstPartQuery);
-        const cursorSecond = collection.find(secondQueryMethod);
-
-        const counterFirst = await cursorFirst.count();
-        const counterSecond = await cursorSecond.count();
-
-        result[firstValue] = counterFirst
-        result[secondValue] = counterSecond
-
-        res.json(result)
-        
-        if(err){
-          console.log(err)
-        };
-    
-        client.close();
-      });
-
-    }catch(err){
-        console.log(err)
-    }
+          res.json(result)
+          client.close();
+      }
+    });
 });
-
 module.exports = router;

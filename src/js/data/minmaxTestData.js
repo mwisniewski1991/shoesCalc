@@ -1,21 +1,22 @@
 export const minmaxTestData = {
-    "maleMax": [
-      {
-        "_id": "5e5d1691ea098f9f145cb930",
-        "timestamp": 1583158787.656992,
-        "sex": "M",
-        "category": "polbuty",
-        "subcategory": "codzienne",
-        "priceCat": "Regular",
-        "price": 1989,
-        "oldPrice": null,
-        "discount": 0,
-        "nameFirst": "Sneakersy BALLY",
-        "nameSecond": "Wilsy 6231624 White Calf Plain",
-        "link": "https://www.eobuwie.com.pl/sneakersy-bally-wilsy-6231624-white-calf-plain.html",
-        "imageLink": "www.eobuwie.com.pl/media/catalog/product/cache/small_image/300x300/0/0/0000206717733_01_pl_1.jpg"
-      }
-    ],
+    // "maleMax": [
+    //   {
+    //     "_id": "5e5d1691ea098f9f145cb930",
+    //     "timestamp": 1583158787.656992,
+    //     "sex": "M",
+    //     "category": "polbuty",
+    //     "subcategory": "codzienne",
+    //     "priceCat": "Regular",
+    //     "price": 1989,
+    //     "oldPrice": null,
+    //     "discount": 0,
+    //     "nameFirst": "Sneakersy BALLY",
+    //     "nameSecond": "Wilsy 6231624 White Calf Plain",
+    //     "link": "https://www.eobuwie.com.pl/sneakersy-bally-wilsy-6231624-white-calf-plain.html",
+    //     "imageLink": "www.eobuwie.com.pl/media/catalog/product/cache/small_image/300x300/0/0/0000206717733_01_pl_1.jpg"
+    //   }
+    // ],
+    "maleMax": [],
     "maleMin": [
       {
         "_id": "5e5d15e8a5343aa067a5f7b9",

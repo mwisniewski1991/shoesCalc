@@ -50,17 +50,20 @@ router.get('/:selectionType/:filterValue', async (req,res)=>{
     // }
     
     const url = process.env.DB_CONNECTION
-    const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
+    const dbName = "shoesCalc";
+    const collectionName = "collection";
+
     let result = {};
 
-    try{
+    MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, async (error, client)=>{
+        if(error){
+            console.log(error)
+        }else{
+            const collection = client.db(dbName).collection(collectionName);
 
-        client.connect(async (err) => {
-            
-            const collection = client.db('shoesCalc').collection('collection');
             const keys = Object.keys(queryObjs);
             for(let key of keys){
-
+    
                 const { query, sort } = queryObjs[key];
                 const cursor = collection.find(query).sort(sort).limit(1);
                 const oneResult = await cursor.toArray();
@@ -68,14 +71,8 @@ router.get('/:selectionType/:filterValue', async (req,res)=>{
                 result[key] = oneResult;
             };
             res.json(result)
-    
             client.close();
-            if(err){console.log(err);}
-        })
-    }catch{
-        console.log(err)
-    }
-
-
+        }
+    });
 });
 module.exports = router;
