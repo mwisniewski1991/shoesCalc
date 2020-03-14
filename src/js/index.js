@@ -13,7 +13,6 @@ const state = {
     shoesList: {
         category: ['wszystkie','klapki-i-sandaly', 'polbuty', 'kozaki-i-inne', 'sportowe'],
         subcategory: [
-            "wszystkie",
             "japonki",
             "klapki",
             "sandaly",
@@ -67,7 +66,7 @@ const state = {
         subcategory:{
             currentSelection: false,
             currentIndex: 1,
-            maxIndex: 42,
+            maxIndex: 41,
         },
     },
     discountsBreakdown: {
@@ -80,7 +79,7 @@ const state = {
         subcategory:{
             currentSelection: false,
             currentIndex: 1,
-            maxIndex: 42,
+            maxIndex: 41,
         },
     },
     minmax:{
@@ -92,7 +91,7 @@ const state = {
         subcategory:{
             currentSelection: false,
             currentIndex: 1,
-            maxIndex: 42,
+            maxIndex: 41,
         },
     },
     priceCatBoxChart: {},
@@ -100,6 +99,12 @@ const state = {
 
 
 const appController = async () =>{
+
+    //START LOADERS
+    ui.minmaxLoaders();
+    ui.breakdownLoaders('sexBreakdown');
+    ui.breakdownLoaders('discountsBreakdown');
+
 
     state.dataFinder = new DataFinder();
     const { dataFinder } = state;
@@ -109,16 +114,21 @@ const appController = async () =>{
     // const sexBreakdownData = calcCategoryCounter(dataSet, 'sex'); //TEST DATA
     const sexBreakdownData = await dataFinder.getCounterData('sexBreakdown','category','wszystkie');
     createSexDivideChart(sexBreakdownData); //rendering chart
+    ui.breakdownLoaders('sexBreakdown');
+
 
     // CREATE 2 CHART
     // const discountsData = calcCategoryCounter(dataSet, 'priceCat'); //TEST DATA
     const discountsData = await dataFinder.getCounterData('discountsBreakdown','category','wszystkie');
     createDiscountsChart(discountsData)
+    ui.breakdownLoaders('discountsBreakdown');
+
 
     //CREATE MINMAX SECTION
-    // const minmaxData = await dataFinder.getminmaxData('category','wszystkie');
-    createMinmaxSection(minmaxTestData);
-    
+    const minmaxData = await dataFinder.getminmaxData('category','wszystkie');
+    createMinmaxSection(minmaxData);
+    ui.minmaxLoaders()
+
 
     //CREATE 3 CHART
     // state.priceCatBoxChart.data = await dataFinder.getBoxPlotData()
@@ -188,23 +198,28 @@ const changeSelection = async (e)=>{
         const newIndex = currentIndex + changeIndex; 
 
         if(newIndex > 0 && newIndex <= maxIndex){
+
             state[sectionType][selectionType].currentIndex = newIndex //UPDATE STATE WITH NEW INDEX THEN CHANGE UI AND CHARTS
       
             ui.changeCatNumber(sectionType, selectionType, newIndex)
             ui.changeMainSpan(sectionType, newIndex, list)
 
             if(sectionType === 'minmax'){
+                ui.minmaxLoaders()
                 const { dataFinder } = state;
                 const filter = list[newIndex-1];
                 const minmaxData = await dataFinder.getminmaxData(selectionType,filter);
                 createMinmaxSection(minmaxData);
+                ui.minmaxLoaders()
 
             }else{
+                ui.breakdownLoaders(sectionType);
                 const filter = list[newIndex-1];
                 const { chart } = state[sectionType];
                 const { dataFinder } = state;
-                const sexBreakdownData = await dataFinder.getCounterData(sectionType,selectionType,filter);
-                chart.updateChart(sexBreakdownData)
+                const piechartData = await dataFinder.getCounterData(sectionType,selectionType,filter);
+                chart.updateChart(piechartData)
+                ui.breakdownLoaders(sectionType);
             }
         }
     }
@@ -227,17 +242,21 @@ const changeType = async (e)=>{
         ui.changeMainSpan(sectionType, currentIndex, list)
 
         if(sectionType === 'minmax'){
+            ui.minmaxLoaders()
             const { dataFinder } = state;
             const filter = list[currentIndex-1];
             const minmaxData = await dataFinder.getminmaxData(selectionType,filter);
             createMinmaxSection(minmaxData);
+            ui.minmaxLoaders()
 
         }else{
+            ui.breakdownLoaders(sectionType);
             const filter = list[currentIndex-1];
             const { chart } = state[sectionType];
             const { dataFinder } = state;
-            const sexBreakdownData = await dataFinder.getCounterData(sectionType,selectionType,filter);
-            chart.updateChart(sexBreakdownData)
+            const piechartData = await dataFinder.getCounterData(sectionType,selectionType,filter);
+            chart.updateChart(piechartData)
+            ui.breakdownLoaders(sectionType);
         }
     }
 };

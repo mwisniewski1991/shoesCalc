@@ -1,12 +1,14 @@
 export const htmlElements = {
-    controllersOne: Array.from(document.querySelectorAll('.controllerOne')),
+    controllersOne: [...document.querySelectorAll('.controllerOne')],
     sexBreakdown: {
         chartContainer: document.querySelector('#sexDivide__chartContainer'),
         controller: document.querySelector('#sexBreakdown__controller'),
+        loader: document.querySelector('.chartBreakdown__loaderContainer--sexBreakdown'),
     },
     discountsBreakdown: {
         chartContainer: document.querySelector('#discountsBreakdown__chartContainer'),
         controller: document.querySelector('#discountsBreakdown__controller'),
+        loader: document.querySelector('.chartBreakdown__loaderContainer--discountsBreakdown'),
     },
     priceCatBoxChart: {
         chartContainer: document.querySelector('.chart__container--priceCategory'),
@@ -18,7 +20,8 @@ export const htmlElements = {
             maleMin: document.querySelector('.minmaxBlock__item--minMale'),
             femaleMax: document.querySelector('.minmaxBlock__item--maxFemale'),
             femaleMin: document.querySelector('.minmaxBlock__item--minFemale'),
-        }
+        },
+        loaders: [...document.querySelectorAll('.shoesContainer__loaderContainer')],
     }
 };
 

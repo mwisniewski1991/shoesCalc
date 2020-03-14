@@ -1,4 +1,6 @@
 import { htmlElements, uiLabels } from './base';
+import image from '../../images/shoesImg/lackShoesThree.png';
+
 
 export const changeCatNumber = (chartType, type, newIndex)=>{
 
@@ -8,6 +10,7 @@ export const changeCatNumber = (chartType, type, newIndex)=>{
     spanElement.innerText = newIndex
 
 };  
+
 export const changeMainSpan = (chartType, newIndex, list)=>{
     const controller = htmlElements[chartType].controller;
     const mainSpanElement = controller.querySelector('.mainSpan');
@@ -33,9 +36,36 @@ export const createMinmaxElement = (DOMelement, shoesObject)=>{
 
         const htmlParent = htmlElements.minmax.elements[DOMelement];
         htmlParent.querySelector('.shoesContainer__firstName').innerText = 'Brak w bazie';
-        htmlParent.querySelector('.shoesContainer__category').innerText = '';
-        htmlParent.querySelector('.shoesContainer__subcategory').innerText = '';
+        htmlParent.querySelector('.shoesContainer__category').innerText = '--';
+        htmlParent.querySelector('.shoesContainer__subcategory').innerText = '--';
         htmlParent.querySelector('.shoesContainer__price').innerText = '?';
-        htmlParent.querySelector('.shoesContainer__image').src = ``;
+        htmlParent.querySelector('.shoesContainer__image').src = image;
     }
+};
+
+export const breakdownLoaders = (chartType) => {
+    const loader = htmlElements[chartType].loader;
+    loader.classList.toggle('chartBreakdown__loaderContainer--hidden')
+    const bigCircles = loader.querySelector('.loader');
+    const smallCircles = [...loader.querySelectorAll('.loader__small')];
+
+    //ACTIVTA-DISACTIVATE LOADERS
+
+    bigCircles.classList.toggle('loader--stoped');
+    smallCircles.forEach(smallCircle => smallCircle.classList.toggle('loader__small--stoped'))
+};
+
+export const minmaxLoaders = () => {
+    const loaders = htmlElements.minmax.loaders;
+
+    //ACTIVTA-DISACTIVATE LOADERS
+    for(const loader of loaders){
+        loader.classList.toggle('shoesContainer__loaderContainer--hidden');
+
+        const bigCircles = loader.querySelector('.loader');
+        const smallCircles = [...loader.querySelectorAll('.loader__small')];
+
+        bigCircles.classList.toggle('loader--stoped');
+        smallCircles.forEach(smallCircle => smallCircle.classList.toggle('loader__small--stoped'))
+    };
 };

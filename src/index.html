@@ -15,6 +15,7 @@
 </head>
 <body>
 
+    <!-- TOP-BAR TOP-BAR TOP-BAR TOP-BAR TOP-BAR -->
     <div class="topBar">
         
         <div class="topBar__title">
@@ -25,17 +26,19 @@
 
         <nav class="topBar__nav">
             <ul class="topBar__list">
-                <li class="topBar__item"><a href="#header" class="topBar__link">Na górę &uarr;</a></li>
-                <li class="topBar__item"><a href="#section section--breakdown" class="topBar__link">Podział</a></li>
-                <li class="topBar__item"><a href="#section--minmax" class="topBar__link">Min/Maks</a></li>
-                <li class="topBar__item"><a href="#" class="topBar__link">OPT3</a></li>
-                <li class="topBar__item"><a href="#" class="topBar__link">OPT4</a></li>
-                <li class="topBar__item"><a href="#" class="topBar__link">na dół &darr;</a></li>
+                <li class="topBar__item"><a class="topBar__link" href="#header">Na górę &uarr;</a></li>
+                <li class="topBar__item"><a class="topBar__link" href="#section section--breakdown">Podział</a></li>
+                <li class="topBar__item"><a class="topBar__link" href="#section--minmax">Min/Maks</a></li>
+                <li class="topBar__item"><a class="topBar__link" href="#">OPT3</a></li>
+                <li class="topBar__item"><a class="topBar__link" href="#">OPT4</a></li>
+                <li class="topBar__item"><a class="topBar__link" href="#">na dół &darr;</a></li>
             </ul>
         </nav>
     </div>
 
+    <!-- HEADER HEADER HEADER HEADER HEADER -->
     <header class="header" id="header">
+
         <div class="header__centerBox centerBox">
             <div class="centerBox__block centerBox__block--one">
                 <h2 class="centerBox__title centerBox__title--female heading--one">Buty</h2>
@@ -57,8 +60,10 @@
                 <h2 class="centerBox__title centerBox__title--male heading--one">w liczbach</h2>
             </div>    
         </div>
+
     </header>
 
+    <!-- BREAKDOWN BREAKDOWN BREAKDOWN BREAKDOWN  -->
     <section class="section section--breakdown" id="section section--breakdown">
         <div class="section__background section__background--breakdown"></div>
 
@@ -101,7 +106,7 @@
                     <div class="breakdownCtrl__counter">
                         <span class="breakdownCtrl__smallSpan subcatNumber">1</span>
                         <span class="breakdownCtrl__smallSpan">/</span>
-                        <span class="breakdownCtrl__smallSpan">42</span>
+                        <span class="breakdownCtrl__smallSpan">41</span>
                     </div>
                 </div>
                     
@@ -118,7 +123,17 @@
 
             </div>
 
-            <div class="chartBreakdown__chartContainer" id="sexDivide__chartContainer"></div>
+            <div class="chartBreakdown__chartContainer" id="sexDivide__chartContainer">
+                <div class="chartBreakdown__loaderContainer chartBreakdown__loaderContainer--sexBreakdown chartBreakdown__loaderContainer--hidden">
+                    <div class="loader loader--breakdown loader--stoped">
+                        <div class="loader__small loader__small--stoped">
+                            <div class="loader__small loader__small--stoped">
+                                <div class="loader__small loader__small--stoped"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
         
@@ -158,7 +173,7 @@
                     <div class="breakdownCtrl__counter">
                         <span class="breakdownCtrl__smallSpan subcatNumber">1</span>
                         <span class="breakdownCtrl__smallSpan">/</span>
-                        <span class="breakdownCtrl__smallSpan">42</span>
+                        <span class="breakdownCtrl__smallSpan">41</span>
                     </div>
                 </div>
 
@@ -173,15 +188,25 @@
                         value="1">Zmień >> </button>
             </div>
 
-            <div class="chartBreakdown__chartContainer" id="discountsBreakdown__chartContainer"></div>
+            <div class="chartBreakdown__chartContainer" id="discountsBreakdown__chartContainer">
+                <div class="chartBreakdown__loaderContainer chartBreakdown__loaderContainer--discountsBreakdown chartBreakdown__loaderContainer--hidden">
+                    <div class="loader loader--breakdown loader--stoped">
+                        <div class="loader__small loader__small--stoped">
+                            <div class="loader__small loader__small--stoped">
+                                <div class="loader__small loader__small--stoped"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
 
     </section>
 
-
+    <!-- MIN-MAX MIN-MAX MIN-MAX MIN-MAX MIN-MAX -->
     <section class="section section--minmax" id="section--minmax">
-        <div class="section__title"><h3 class="section__text heading--three">Min / Max</h3></div>
+        <div class="section__title"><h3 class="section__text heading--three">Min / Maks</h3></div>
 
         <div class="section__minmaxBlock minmaxBlock">
 
@@ -218,7 +243,7 @@
                     <div class="minmaxCtrl__counter">
                         <span class="minmaxCtrl__smallSpan subcatNumber">1</span>
                         <span class="minmaxCtrl__smallSpan">/</span>
-                        <span class="minmaxCtrl__smallSpan">42</span>
+                        <span class="minmaxCtrl__smallSpan">41</span>
                     </div>
                 </div>
 
@@ -247,59 +272,88 @@
             <div class="minmaxBlock__item minmaxBlock__item--maxMale">
 
                 <div class="minmaxBlock__shoesContainer shoesContainer">
-                    <span class="shoesContainer__firstName">Półbuty BOSS</span>   
-                    <span class="shoesContainer__price">100</span>   
-                    <span class="shoesContainer__category">Półbuty</span>   
-                    <span class="shoesContainer__subcategory">Wizytowe</span>
+                    <span class="shoesContainer__firstName">___</span>   
+                    <span class="shoesContainer__price">___</span>   
+                    <span class="shoesContainer__category">___</span>   
+                    <span class="shoesContainer__subcategory">___</span>
                     <div class="shoesContainer__imageContainer">
-                        <img class="shoesContainer__image" src="./images/shoesImg/menMaxPrice.jpg" alt="Man shoes max price">
+                        <div class="shoesContainer__loaderContainer shoesContainer__loaderContainer--hidden">
+                            <div class="loader loader--minmax loader--stoped">
+                                <div class="loader__small loader__small--stoped">
+                                    <div class="loader__small loader__small--stoped">
+                                        <div class="loader__small loader__small--stoped"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <img class="shoesContainer__image" src="./images/shoesImg/lackShoesThree.png" alt="Man shoes max price">
                     </div>
                 </div>
 
             </div>
 
             <div class="minmaxBlock__item minmaxBlock__item--maxFemale">
-
                 <div class="minmaxBlock__shoesContainer shoesContainer">
-                    <span class="shoesContainer__firstName">Sandały TORY BURCH"</span>   
-                    <span class="shoesContainer__price">12300</span>   
-                    <span class="shoesContainer__category">Klapki i sandały</span>   
-                    <span class="shoesContainer__subcategory">Sandaly</span>
+                    <span class="shoesContainer__firstName">___</span>   
+                    <span class="shoesContainer__price">___</span>   
+                    <span class="shoesContainer__category">___</span>   
+                    <span class="shoesContainer__subcategory">___</span>
                     <div class="shoesContainer__imageContainer">
-                        <img class="shoesContainer__image" src="./images/shoesImg/womenMaxPrice.jpg" alt="Man shoes max price">
+                        <div class="shoesContainer__loaderContainer shoesContainer__loaderContainer--hidden">
+                            <div class="loader loader--minmax loader--stoped">
+                                <div class="loader__small loader__small--stoped">
+                                    <div class="loader__small loader__small--stoped">
+                                        <div class="loader__small loader__small--stoped"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <img class="shoesContainer__image" src="./images/shoesImg/lackShoesThree.png" alt="Man shoes max price">
                     </div>
                 </div>
-
             </div>
 
             <div class="minmaxBlock__item minmaxBlock__item--minMale">
-                
                 <div class="minmaxBlock__shoesContainer shoesContainer">
-                    <span class="shoesContainer__firstName">Półbuty CLARKS"</span>   
-                    <span class="shoesContainer__price">20</span>   
-                    <span class="shoesContainer__category">Półbuty</span>   
-                    <span class="shoesContainer__subcategory">Wizytowe</span>
+                    <span class="shoesContainer__firstName">___"</span>   
+                    <span class="shoesContainer__price">___</span>   
+                    <span class="shoesContainer__category">___</span>   
+                    <span class="shoesContainer__subcategory">___</span>
                     <div class="shoesContainer__imageContainer">
-                        <img class="shoesContainer__image" src="./images/shoesImg/menMinPrice.jpg" alt="Man shoes max price">
+                        <div class="shoesContainer__loaderContainer shoesContainer__loaderContainer--hidden">
+                            <div class="loader loader--minmax loader--stoped">
+                                <div class="loader__small loader__small--stoped">
+                                    <div class="loader__small loader__small--stoped">
+                                        <div class="loader__small loader__small--stoped"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <img class="shoesContainer__image" src="./images/shoesImg/lackShoesThree.png" alt="Man shoes max price">
                     </div>
                 </div>
-
             </div>
 
             <div class="minmaxBlock__item minmaxBlock__item--minFemale">
-
                 <div class="minmaxBlock__shoesContainer shoesContainer">
-                    <span class="shoesContainer__firstName">Japonki DOCKERS"</span>   
-                    <span class="shoesContainer__price">30</span>   
-                    <span class="shoesContainer__category">Klapki i sandały</span>   
-                    <span class="shoesContainer__subcategory">Sandaly</span>
+                    <span class="shoesContainer__firstName">___</span>   
+                    <span class="shoesContainer__price">___</span>   
+                    <span class="shoesContainer__category">___</span>   
+                    <span class="shoesContainer__subcategory">___</span>
                     <div class="shoesContainer__imageContainer">
-                        <img class="shoesContainer__image" src="./images/shoesImg/womenMinPrice.jpg" alt="Man shoes max price">
+                        <div class="shoesContainer__loaderContainer shoesContainer__loaderContainer--hidden">
+                            <div class="loader loader--minmax loader--stoped">
+                                <div class="loader__small loader__small--stoped">
+                                    <div class="loader__small loader__small--stoped">
+                                        <div class="loader__small loader__small--stoped"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <img class="shoesContainer__image" src="./images/shoesImg/lackShoesThree.png" alt="Man shoes max price">
                     </div>
                 </div>
-
             </div>
-            
 
         </div>
 

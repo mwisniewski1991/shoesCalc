@@ -1,6 +1,6 @@
 //COLORS AMERICAN PALLET
-        $colorMale: #0984e3;
-        $colorFemale: #e84393;
+$colorMale: #0984e3;
+$colorFemale:#e84393;
 
 $colorFont: #ffeaa7;
 
@@ -14,7 +14,7 @@ $mainGradientReverse: linear-gradient(105deg, $colorFemale 40%, $colorMale 60%);
 $textShadow: 1px 1px 2px $colorBlack;
 $borderRadius: 7px;
 $transitionTime: .2s;
-
+$loaderBorderSize: 3px;
 
 
 //RESPONSIVE
@@ -40,4 +40,32 @@ $break-big: 1100px;
 @keyframes entryAnimation__topBar{
     0%{transform: translateY(-100%);}
     100%{transform: translateY(-0);}
+}
+
+
+@keyframes rotateLoader{
+    0% {
+        transform: rotate(0deg);
+        border-top: $loaderBorderSize solid $colorMale;
+        border-bottom: $loaderBorderSize solid $colorFemale;
+    }  
+    50% {
+        // transform: rotate(180deg);
+        // border-top: $loaderBorderSize solid $colorFemale;
+        // border-bottom: $loaderBorderSize solid $colorMale;
+    }  
+    100% {
+        transform: rotate(360deg);
+        border-top: $loaderBorderSize solid $colorMale;
+        border-bottom: $loaderBorderSize solid $colorFemale;
+    }  
+  }
+
+@mixin loaderStyle{
+    padding: 8px;
+    border-radius: 50%;
+    border-top: $loaderBorderSize solid $colorMale;
+    border-bottom: $loaderBorderSize solid $colorFemale;
+    border-left: $loaderBorderSize solid transparent;
+    border-right: $loaderBorderSize solid transparent;
 }
