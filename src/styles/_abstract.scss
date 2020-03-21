@@ -68,4 +68,7 @@ $break-big: 1100px;
     border-bottom: $loaderBorderSize solid $colorFemale;
     border-left: $loaderBorderSize solid transparent;
     border-right: $loaderBorderSize solid transparent;
+    animation: rotateLoader linear 2s infinite;
+
 }
+

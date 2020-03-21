@@ -112,21 +112,21 @@ const appController = async () =>{
     
     //CREATE 1 CHART
     // const sexBreakdownData = calcCategoryCounter(dataSet, 'sex'); //TEST DATA
-    const sexBreakdownData = await dataFinder.getCounterData('sexBreakdown','category','wszystkie');
-    createSexDivideChart(sexBreakdownData); //rendering chart
+    // const sexBreakdownData = await dataFinder.getCounterData('sexBreakdown','category','wszystkie');
+    // createSexDivideChart(sexBreakdownData); //rendering chart
     ui.breakdownLoaders('sexBreakdown');
 
 
     // CREATE 2 CHART
     // const discountsData = calcCategoryCounter(dataSet, 'priceCat'); //TEST DATA
-    const discountsData = await dataFinder.getCounterData('discountsBreakdown','category','wszystkie');
-    createDiscountsChart(discountsData)
+    // const discountsData = await dataFinder.getCounterData('discountsBreakdown','category','wszystkie');
+    // createDiscountsChart(discountsData)
     ui.breakdownLoaders('discountsBreakdown');
 
 
     //CREATE MINMAX SECTION
-    const minmaxData = await dataFinder.getminmaxData('category','wszystkie');
-    createMinmaxSection(minmaxData);
+    // const minmaxData = await dataFinder.getminmaxData('category','wszystkie');
+    createMinmaxSection(minmaxTestData);
     ui.minmaxLoaders()
 
 

@@ -149,7 +149,6 @@
     }
 
     @include loaderStyle;
-    animation: rotateLoader linear 2s infinite;
 
     &--stoped{
         animation-play-state: paused;
@@ -161,7 +160,6 @@
     
     &__small{
         @include loaderStyle;
-        animation: rotateLoader linear 2s infinite;
 
         &--stoped{
             animation-play-state: paused;
