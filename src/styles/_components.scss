@@ -639,3 +639,74 @@
 
     }
 }
+
+
+//SECTION PRICE LEVEL
+.chart-boxplot{
+    position: relative;
+
+    &__rect{
+        fill: #fff;
+        stroke: #fff;
+        
+        &:hover{
+            cursor: pointer;
+            fill: lighten($color: #e84393, $amount: 5);
+        }
+
+        &--male{
+            fill: #0984e3,
+        }
+        &--female{
+            fill: #e84393;
+        }
+    }
+    
+    &__median, &__minLine, &__maxLine, &__verticalLine{
+        stroke: white;
+    }
+
+    &__outlierMax{
+        fill: #0984e3;
+        stroke: #fff;
+        opacity: .5;
+
+        &--male{
+            fill: #0984e3,
+        }
+        &--female{
+            fill: #e84393;
+        }
+    }
+}
+
+.boxplotTooltip{
+    position: absolute;
+    left: 0px;
+    top: 25px;
+    z-index: 1;
+    visibility: hidden;
+
+    width: 100px;
+    height: 70px;
+    padding: 0 12px;
+
+    opacity: 0;
+    background-color: rgba(#0984e3,.8);
+    border: 1px solid white;
+    border-radius: 25px;
+    color: #fff;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    &__box{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__label, &__value{
+        font-size: 12px;
+    }
+}

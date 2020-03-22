@@ -1,6 +1,6 @@
 import '../styles/main.scss'; //IMPORT SASS
 import "babel-polyfill"; //IMPORT BABEL FOR ASYNC/AWAIT
-import MWpieChart from './chartMW/MWpieChart';
+import MWpieChart from './chartMW/pieChart';
 import DataFinder from './data/dataFinder';
 import * as ui from './UI/UI';
 import { htmlElements } from './UI/base';
