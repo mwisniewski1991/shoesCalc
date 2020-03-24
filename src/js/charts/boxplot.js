@@ -19,7 +19,7 @@ export default class Boxplot {
             },
             boxplotWidth: 60,
             animationTime:{
-                tooltipTime: 150,
+                tooltipTime: 50,
             }
         };
 
@@ -30,9 +30,9 @@ export default class Boxplot {
         };
     }
 
-    renderChart(data){
+    renderChart(data, { sortType }){
         this.loadData(data);
-        this.sortData(data);
+        this.sortData(data, sortType);
 
         this.createBound();
         this.createXaxis();
@@ -53,8 +53,8 @@ export default class Boxplot {
         this.data.rawData = data;
     };
 
-    sortData(data){
-        data.sort((a,b) => b.value.median-a.value.median);
+    sortData(data, sortType){
+        data.sort((a,b) => b.value[sortType]-a.value[sortType]);
     }
 
     createBound(){
@@ -284,18 +284,29 @@ export default class Boxplot {
         const { rawData } = this.data;
         const className = `${mainClass}__outlierMax`;
 
-        const newData = [...rawData[0].value.outliersMaxArr, ...rawData[1].value.outliersMaxArr];
-        console.log(newData);
+        //join arrays in one and add key
+        const joinedArrData = rawData.reduce((total, keyObject)=> {
+            //first reduce join arrays
+            return [
+                    ...total, 
+                    //second reduce put in every array 'key; 
+                    ...keyObject.value.outliersMaxArr.reduce((total, shoe)=>{
+                        return [...total, {...shoe, key: keyObject.key}];
+                    },[])
+            ]
+        },[]);
+        //above can be in one line but it is too complicated                
+        // const joinedArrData = rawData.reduce((total, keyObject)=> [...total, ...keyObject.value.outliersMaxArr.reduce((total, shoe)=>[...total, {...shoe, key: keyObject.key}],[])],[]);
 
-        const outliersMax = bound.selectAll(className).data(newData)
+        const outliersMax = bound.selectAll(className).data(joinedArrData)
             .join(
                 (enter) => enter
                     .append('circle')
                     .attr('class', (d) => this.generateSexClass(d.sex, 'outlierMax', mainClass))
-                    .attr('cx', (d)=> xScale(d.sex) + (xScale.bandwidth()/2) - boxplotWidth/2 + Math.random()*boxplotWidth )
+                    .attr('cx', (d)=> xScale(d.key) + (xScale.bandwidth()/2) - boxplotWidth/2 + Math.random()*boxplotWidth )
                     .attr('cy', (d)=> yScale(d.price))
                     .attr('r', 10)
-            );
+        );
     }
 
     //INTERACTIVITY
@@ -314,12 +325,11 @@ export default class Boxplot {
             const x = nodes[i].x.baseVal.value;
             const y = nodes[i].y.baseVal.value;
             tooltip
-                .style('left', `${x + 40}px`)
-                .style('top', `${y - 50}px`)
+                .style('left', `${x + 45}px`)
+                .style('top', `${y + 60}px`)
                 .style('visibility','visible')
                 .transition().duration(tooltipTime)
                 .style('opacity',1);
-
         })
         .on('mouseout',()=>{
             tooltip

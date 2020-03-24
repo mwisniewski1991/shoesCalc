@@ -29,7 +29,7 @@
                 <li class="topBar__item"><a class="topBar__link" href="#header">Na górę &uarr;</a></li>
                 <li class="topBar__item"><a class="topBar__link" href="#section section--breakdown">Podział</a></li>
                 <li class="topBar__item"><a class="topBar__link" href="#section--minmax">Min/Maks</a></li>
-                <li class="topBar__item"><a class="topBar__link" href="#">OPT3</a></li>
+                <li class="topBar__item"><a class="topBar__link" href="#section section--priceLevel">Poziom cen</a></li>
                 <li class="topBar__item"><a class="topBar__link" href="#">OPT4</a></li>
                 <li class="topBar__item"><a class="topBar__link" href="#">na dół &darr;</a></li>
             </ul>
@@ -63,10 +63,36 @@
 
     </header>
 
+    <!-- PRICE LEVEL -->
+    <section class="section section--priceLevel" id="section section--priceLevel">
+        <div class="section__background section__background--priceLevel"></div>
+        <div class="section__title section__title--blackFont"><h3 class="section__text heading--three">Poziom cen</h3></div>
+
+        <div class="section__chartBlock section__chartBlock--long" id="priceLevel__chartBlock">
+            <div class="boxplotTooltip">
+                <div class="boxplotTooltip__box">
+                    <span class="boxplotTooltip__label">Maks: </span>
+                    <span class="boxplotTooltip__value boxplotTooltip__value--max">3000</span>
+    
+                </div>
+                <div class="boxplotTooltip__box">
+                    <span class="boxplotTooltip__label">Mediana: </span>
+                    <span class="boxplotTooltip__value  boxplotTooltip__value--median">600</span>
+    
+                </div>
+                <div class="boxplotTooltip__box">
+                    <span class="boxplotTooltip__label">Min: </span>
+                    <span class="boxplotTooltip__value  boxplotTooltip__value--min">50</span>
+                </div>
+            </div>
+    
+        </div>
+        
+    </section>
+
     <!-- BREAKDOWN BREAKDOWN BREAKDOWN BREAKDOWN  -->
     <section class="section section--breakdown" id="section section--breakdown">
         <div class="section__background section__background--breakdown"></div>
-
         <div class="section__title"><h3 class="section__text heading--three">Podział danych</h3></div>
 
         <!-- FIRST ------------------------------------------------------------------------------------------------------- -->
@@ -201,7 +227,6 @@
             </div>
 
         </div>
-
     </section>
 
     <!-- MIN-MAX MIN-MAX MIN-MAX MIN-MAX MIN-MAX -->
@@ -356,7 +381,6 @@
             </div>
 
         </div>
-
     </section>
 
 

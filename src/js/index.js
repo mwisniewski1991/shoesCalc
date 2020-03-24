@@ -1,12 +1,15 @@
 import '../styles/main.scss'; //IMPORT SASS
 import "babel-polyfill"; //IMPORT BABEL FOR ASYNC/AWAIT
-import MWpieChart from './chartMW/pieChart';
 import DataFinder from './data/dataFinder';
+import PieChart from './charts/pieChart';
+import Boxplot from './charts/boxplot';
 import * as ui from './UI/UI';
 import { htmlElements } from './UI/base';
+
 // import { testData } from './data/testDataMinmax.js/testData';
 import { minmaxTestData } from './data/minmaxTestData';
-
+import { boxPlotSex, boxPlotCat, boxPlotSubcat} from './data/priceLevelTestData';
+import { median } from 'd3';
 
 const state = {
     // dataSet: testData,
@@ -94,7 +97,12 @@ const state = {
             maxIndex: 41,
         },
     },
-    priceCatBoxChart: {},
+    priceLevel: {
+        chart: {},
+        settings:{
+            sortType: 'median', 
+        },
+    },
 };
 
 
@@ -110,44 +118,42 @@ const appController = async () =>{
     const { dataFinder } = state;
     // const { dataSet } = state;
     
-    //CREATE 1 CHART
+    //BREAKDOWN
     // const sexBreakdownData = calcCategoryCounter(dataSet, 'sex'); //TEST DATA
     // const sexBreakdownData = await dataFinder.getCounterData('sexBreakdown','category','wszystkie');
     // createSexDivideChart(sexBreakdownData); //rendering chart
     ui.breakdownLoaders('sexBreakdown');
 
-
-    // CREATE 2 CHART
     // const discountsData = calcCategoryCounter(dataSet, 'priceCat'); //TEST DATA
     // const discountsData = await dataFinder.getCounterData('discountsBreakdown','category','wszystkie');
     // createDiscountsChart(discountsData)
     ui.breakdownLoaders('discountsBreakdown');
 
 
-    //CREATE MINMAX SECTION
+    //MINMAX SECTION
     // const minmaxData = await dataFinder.getminmaxData('category','wszystkie');
     createMinmaxSection(minmaxTestData);
     ui.minmaxLoaders()
 
 
-    //CREATE 3 CHART
+    //PRICE LEVEL
     // state.priceCatBoxChart.data = await dataFinder.getBoxPlotData()
-    // createPriceCatChart(state.priceCatBoxChart.data);
+    createPriceLevelChart(boxPlotCat)
 
-    // console.log(state);
+    console.log(state.priceLevel);
 };
 
 const createSexDivideChart = (data) => {
     //SEX DIVIDE CHART
     const div = htmlElements.sexBreakdown.chartContainer;
-    state.sexBreakdown.chart = new MWpieChart('sexDivide', 'pieChart', div);
+    state.sexBreakdown.chart = new PieChart('sexDivide', 'pieChart', div);
     const { sexBreakdown : { chart } } = state;
     chart.renderChart(data);
 };
 
 const createDiscountsChart = (data) => {
     const div = htmlElements.discountsBreakdown.chartContainer;
-    state.discountsBreakdown.chart = new MWpieChart('discountsBreakdown', 'pieChart', div);
+    state.discountsBreakdown.chart = new PieChart('discountsBreakdown', 'pieChart', div);
     const { discountsBreakdown : { chart } } = state;
     chart.renderChart(data);
 };
@@ -162,25 +168,15 @@ const createMinmaxSection = (data)=>{
 
 };
 
+const createPriceLevelChart = (data) => {
 
-const createPriceCatChart = (data) => {
+    const div = document.querySelector('#priceLevel__chartBlock');
+    state.priceLevel.chart = new Boxplot('priceLevel','boxplot', div);
+    const { chart, settings } = state.priceLevel;
+    chart.renderChart(data, settings);
 
-    //PRICECATEGORY
-    const { priceCatBoxChart } = state;
-    const div = htmlElements.priceCatBoxChart.chartContainer;
-    state.priceCatBoxChart.chart = new ChartMW('priceCatBoxChart', div);
-
-    const xVal = 'subcategory';
-    priceCatBoxChart.chart.createSvg(div);
-    priceCatBoxChart.chart.loadData(data);
-    priceCatBoxChart.chart.calcBoxPlotData(xVal, 'price');
-    priceCatBoxChart.chart.createXaxis(xVal,'bandBox');
-    priceCatBoxChart.chart.createYaxis('price','linearZero');
-    priceCatBoxChart.chart.drawBoxes(0);
-    priceCatBoxChart.chart.createCoreElement(0,'circle');
-
-    // priceCatBoxChart.chart.drawBoxPlotDots(xVal,'price',0 , 'circle')
 };
+
 
 const changeSelection = async (e)=>{
     //BASED OND USER CLICK FUNCTION CHANGE USER INTERFACE AND UPDATES CHARTS
@@ -267,16 +263,10 @@ controllersOne.forEach((contr) => contr.addEventListener('click', changeSelectio
 controllersOne.forEach((contr) => contr.addEventListener('click', changeType))
 
 
-
-
 // "sex": "F",
 // "category": "klapki-i-sandaly",
 // "subcategory": "sandaly",
 // "priceCat": "Regular"
-
-const filterData = () =>{
-
-};
 
 const calcCategoryCounter = (data, select) => {
     const categories = Array.from(new Set(data.map((el)=>el[select])));

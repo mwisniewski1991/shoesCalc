@@ -231,6 +231,10 @@
         }
     }
 
+    &--priceLevel{
+        height: 100vh;
+    }
+
     &__background{
         position: absolute;
         left: 0;
@@ -238,13 +242,21 @@
         width: 100%;
         height: 100%;
 
+        background-size: cover;
+        background-position: center;
+        z-index: -1;
+
         &--breakdown{
             background-image: url(('../images/backOne.jpg'));
-            // <!-- Photo by Jakob Owens on Unsplash -->
-            background-size: cover;
-            background-position: center;
+            // Photo by Jakob Owens on Unsplash
             filter: blur(2px);
             z-index: -1;
+        }
+
+        &--priceLevel{
+            background-image: url(('../images/backTwo.jpg'));
+            // Photo by Md. Zahid Hasan Joy on Unsplash
+            filter: blur(2px);
         }
     }
 
@@ -256,12 +268,21 @@
         display: flex;
         justify-content: center;
         align-items: center;
+
+        &--blackFont{
+            color: $colorBlack;
+        }
     }
    
     &__chartBlock{
-
+        height: calc(95vh - 10rem);
         &--half{
             width: 50%;
+        }
+
+        &--long{
+            width: 100%;
+            background-color: rgba(#000, .75);
         }
 
         @media screen and (max-width: $break-small){

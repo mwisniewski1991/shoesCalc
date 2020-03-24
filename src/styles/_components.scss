@@ -26,7 +26,6 @@
         @media screen and (max-width: $break-small){
             letter-spacing: 5px;
         }
-
     }
 
     &--four{
@@ -643,6 +642,8 @@
 
 //SECTION PRICE LEVEL
 .chart-boxplot{
+    display: block;
+    margin: 0 auto;   
     position: relative;
 
     &__rect{

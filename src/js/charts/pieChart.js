@@ -1,6 +1,6 @@
 import * as d3 from "d3";
 
-export default class MWpieChart{
+export default class PieChart{
     constructor(id, mainClass, div){
         this.elements = {
             container: div,            
