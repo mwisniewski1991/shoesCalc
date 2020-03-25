@@ -170,7 +170,7 @@ const createMinmaxSection = (data)=>{
 
 const createPriceLevelChart = (data) => {
 
-    const div = document.querySelector('#priceLevel__chartBlock');
+    const div = document.querySelector('#priceLevel__chartContainer');
     state.priceLevel.chart = new Boxplot('priceLevel','boxplot', div);
     const { chart, settings } = state.priceLevel;
     chart.renderChart(data, settings);

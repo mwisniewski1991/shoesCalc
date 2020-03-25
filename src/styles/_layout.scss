@@ -214,6 +214,7 @@
 .section{
     position: relative;
     padding: 5.5rem .5rem .5rem .5rem;
+    height: 100vh;   
 
     display: flex;
     flex-wrap: wrap;
@@ -256,26 +257,25 @@
         &--priceLevel{
             background-image: url(('../images/backTwo.jpg'));
             // Photo by Md. Zahid Hasan Joy on Unsplash
-            filter: blur(2px);
+            filter: blur(2px) brightness(.45);
         }
     }
 
     &__title{
-        height: 5rem;
+        height: 5%;
         width: 100%;
-        // text-align: center;
 
         display: flex;
         justify-content: center;
         align-items: center;
 
         &--blackFont{
-            color: $colorBlack;
+            // color: $colorBlack;
         }
     }
    
     &__chartBlock{
-        height: calc(95vh - 10rem);
+
         &--half{
             width: 50%;
         }
@@ -290,5 +290,22 @@
         }
     }
 
+    &__dataVisualization{
+        height: 95%;
+        padding-top: 2rem;
+
+        &--half{
+            width: 50%;
+        }
+
+        &--long{
+            width: 100%;
+        }
+
+        @media screen and (max-width: $break-small){
+            width: 100%;
+        }
+
+    }
 }
 

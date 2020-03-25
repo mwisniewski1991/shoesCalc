@@ -166,6 +166,7 @@
     }
 }
  
+//BREAKDOWN
 .chartBreakdown{
     // width: 50%;
     display: grid;
@@ -321,8 +322,7 @@
 
 }
 
-
-//SECTION MINMAX
+//MINMAX
 .minmaxBlock{
     width: 100%;
     display: grid;
@@ -640,7 +640,54 @@
 }
 
 
-//SECTION PRICE LEVEL
+//PRICE LEVEL
+.priceLevelBox{
+
+    
+    &__chartContainer{
+        position: relative;
+        height: 80%;
+    }
+
+    &__controller{
+        height: 20%;   
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+
+    &__queryBox{
+        display: grid;
+        grid-template-rows: 30% 70%;
+        grid-template-rows: 33% 33% 33%;
+        grid-template-areas: 
+        "title title"
+        "sex category"
+        "subcategoryOne subcategoryTwo"
+        ;
+
+        align-items: center;
+        justify-items: center;
+    };
+
+    &__title{
+        font-size: 2rem;
+        text-align: center;
+        grid-area: title;
+    }
+
+    &__radioBox{
+        width: 50%;
+        
+        &--one{grid-area: sex;}
+        &--two{grid-area: category;}
+        &--three{grid-area: subcategoryOne;}
+        &--four{grid-area: subcategoryTwo;}
+
+    }
+}
+
 .chart-boxplot{
     display: block;
     margin: 0 auto;   
@@ -711,3 +758,4 @@
         font-size: 12px;
     }
 }
+

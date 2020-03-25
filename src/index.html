@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400,700&display=swap" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400,700&display=swap" rel="stylesheet"> -->
 
     <!-- FAVIICON -->
     <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon/apple-touch-icon.png"> 
@@ -17,7 +17,6 @@
 
     <!-- TOP-BAR TOP-BAR TOP-BAR TOP-BAR TOP-BAR -->
     <div class="topBar">
-        
         <div class="topBar__title">
             <h2 class="topBar__heading heading--two">
                 Buty w liczbach
@@ -68,24 +67,107 @@
         <div class="section__background section__background--priceLevel"></div>
         <div class="section__title section__title--blackFont"><h3 class="section__text heading--three">Poziom cen</h3></div>
 
-        <div class="section__chartBlock section__chartBlock--long" id="priceLevel__chartBlock">
-            <div class="boxplotTooltip">
-                <div class="boxplotTooltip__box">
-                    <span class="boxplotTooltip__label">Maks: </span>
-                    <span class="boxplotTooltip__value boxplotTooltip__value--max">3000</span>
-    
+
+        <div class="section__dataVisualization section__dataVisualization--long priceLevelBox">
+
+            <div class="priceLevelBox__controller">
+
+                <div class="priceLevelBox__queryBox">
+                    <h4 class="priceLevelBox__title">Wybierz zmienną</h4>
+
+                    <div class="priceLevelBox__radioBox priceLevelBox__radioBox--one radio">
+                        <input class="radio__input" 
+                            type="radio" 
+                            name="priceLevel__variable" 
+                            id="priceLevel__input--sex" 
+                            checked>
+                        <label class="radio__label radio__label--subcategory" for="priceLevel__input--sex">Płeć</label>
+                    </div>
+
+                    <div class="priceLevelBox__radioBox priceLevelBox__radioBox--two radio">
+                        <input class="radio__input" 
+                            type="radio" 
+                            name="priceLevel__variable" 
+                            id="priceLevel__input--category">
+                        <label class="radio__label radio__label--subcategory" for="priceLevel__input--category">Kategoria</label>
+                    </div>
+
+                    <div class="priceLevelBox__radioBox priceLevelBox__radioBox--three radio">
+                        <input class="radio__input" 
+                            type="radio" 
+                            name="priceLevel__variable" 
+                            id="priceLevel__input--subcategoryOne">
+                        <label class="radio__label radio__label--subcategory" for="priceLevel__input--subcategoryOne">Podkat. 1</label>
+                    </div>
+
+                    <div class="priceLevelBox__radioBox priceLevelBox__radioBox--four radio">
+                        <input class="radio__input" 
+                            type="radio" 
+                            name="priceLevel__variable" 
+                            id="priceLevel__input--subcategoryTwo">
+                        <label class="radio__label radio__label--subcategory" for="priceLevel__input--subcategoryTwo">Podkat. 2</label>
+                    </div>
+
                 </div>
-                <div class="boxplotTooltip__box">
-                    <span class="boxplotTooltip__label">Mediana: </span>
-                    <span class="boxplotTooltip__value  boxplotTooltip__value--median">600</span>
-    
+
+                <div class="priceLevelBox__queryBox">
+                    <h4 class="priceLevelBox__title">Sortuj</h4>
+
+                    <div class="priceLevelBox__radioBox priceLevelBox__radioBox--one radio">
+                        <input class="radio__input" 
+                            type="radio" 
+                            name="priceLevel__sort" 
+                            id="priceLevel__input--max" 
+                            checked>
+                        <label class="radio__label radio__label--subcategory" for="priceLevel__input--max">Maks</label>
+                    </div>
+
+                    <div class="priceLevelBox__radioBox priceLevelBox__radioBox--two radio">
+                        <input class="radio__input" 
+                            type="radio" 
+                            name="priceLevel__sort" 
+                            id="priceLevel__input--min">
+                        <label class="radio__label radio__label--subcategory" for="priceLevel__input--min">Min</label>
+                    </div>
+
+                    <div class="priceLevelBox__radioBox priceLevelBox__radioBox--three radio">
+                        <input class="radio__input" 
+                            type="radio" 
+                            name="priceLevel__sort" 
+                            id="priceLevel__input--median">
+                        <label class="radio__label radio__label--subcategory" for="priceLevel__input--median">Mediana</label>
+                    </div>
+
+                    <div class="priceLevelBox__radioBox priceLevelBox__radioBox--four radio">
+                        <input class="radio__input" 
+                            type="radio" 
+                            name="priceLevel__sort" 
+                            id="priceLevel__input--extremeMax"> 
+                        <label class="radio__label radio__label--subcategory" for="priceLevel__input--extremeMax">Extreme maks</label>
+                    </div>
                 </div>
-                <div class="boxplotTooltip__box">
-                    <span class="boxplotTooltip__label">Min: </span>
-                    <span class="boxplotTooltip__value  boxplotTooltip__value--min">50</span>
+
+            </div>
+
+            <div class="priceLevelBox__chartContainer" id="priceLevel__chartContainer">
+                <div class="boxplotTooltip">
+                    <div class="boxplotTooltip__box">
+                        <span class="boxplotTooltip__label">Maks: </span>
+                        <span class="boxplotTooltip__value boxplotTooltip__value--max">3000</span>
+        
+                    </div>
+                    <div class="boxplotTooltip__box">
+                        <span class="boxplotTooltip__label">Mediana: </span>
+                        <span class="boxplotTooltip__value  boxplotTooltip__value--median">600</span>
+        
+                    </div>
+                    <div class="boxplotTooltip__box">
+                        <span class="boxplotTooltip__label">Min: </span>
+                        <span class="boxplotTooltip__value  boxplotTooltip__value--min">50</span>
+                    </div>
                 </div>
             </div>
-    
+
         </div>
         
     </section>
@@ -140,6 +222,7 @@
                         id="sexBreakdown__leftButton" 
                         data-sectionType="sexBreakdown"
                         value="-1"> << Zmień</button>
+                        
                 <div class="breakdownCtrl__selection"><span class="breakdownCtrl__mainSpan mainSpan">Wszystkie</span></div>
 
                 <button class="breakdownCtrl__button breakdownCtrl__button--right button button--right" 
