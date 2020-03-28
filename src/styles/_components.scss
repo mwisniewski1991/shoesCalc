@@ -730,10 +730,9 @@
 
 .boxplotTooltip{
     position: absolute;
-    left: 0px;
+    left: -150px;
     top: 25px;
     z-index: 1;
-    visibility: hidden;
 
     width: 100px;
     height: 70px;

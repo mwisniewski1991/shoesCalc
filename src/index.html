@@ -80,7 +80,7 @@
                             type="radio" 
                             name="priceLevel__variable" 
                             id="priceLevel__input--sex" 
-                            data-selectionType="category" 
+                            data-variable="sex" 
                             checked>
                         <label class="radio__label radio__label--subcategory" for="priceLevel__input--sex">Płeć</label>
                     </div>
@@ -89,7 +89,8 @@
                         <input class="radio__input" 
                             type="radio" 
                             name="priceLevel__variable" 
-                            id="priceLevel__input--category">
+                            id="priceLevel__input--category"
+                            data-variable="category">
                         <label class="radio__label radio__label--subcategory" for="priceLevel__input--category">Kategoria</label>
                     </div>
 
@@ -97,7 +98,8 @@
                         <input class="radio__input" 
                             type="radio" 
                             name="priceLevel__variable" 
-                            id="priceLevel__input--subcategoryOne">
+                            id="priceLevel__input--subcategoryOne"
+                            data-variable="subcategoryOne">
                         <label class="radio__label radio__label--subcategory" for="priceLevel__input--subcategoryOne">Podkat. 1</label>
                     </div>
 
@@ -105,7 +107,8 @@
                         <input class="radio__input" 
                             type="radio" 
                             name="priceLevel__variable" 
-                            id="priceLevel__input--subcategoryTwo">
+                            id="priceLevel__input--subcategoryTwo"
+                            data-variable="subcategoryTwo">
                         <label class="radio__label radio__label--subcategory" for="priceLevel__input--subcategoryTwo">Podkat. 2</label>
                     </div>
 
@@ -119,7 +122,7 @@
                             type="radio" 
                             name="priceLevel__sort" 
                             id="priceLevel__input--max" 
-                            checked>
+                            data-sorttype="max">
                         <label class="radio__label radio__label--subcategory" for="priceLevel__input--max">Maks</label>
                     </div>
 
@@ -127,7 +130,8 @@
                         <input class="radio__input" 
                             type="radio" 
                             name="priceLevel__sort" 
-                            id="priceLevel__input--min">
+                            id="priceLevel__input--min"
+                            data-sorttype="min">
                         <label class="radio__label radio__label--subcategory" for="priceLevel__input--min">Min</label>
                     </div>
 
@@ -135,7 +139,9 @@
                         <input class="radio__input" 
                             type="radio" 
                             name="priceLevel__sort" 
-                            id="priceLevel__input--median">
+                            id="priceLevel__input--median"
+                            data-sorttype="median"
+                            checked>
                         <label class="radio__label radio__label--subcategory" for="priceLevel__input--median">Mediana</label>
                     </div>
 
@@ -143,8 +149,9 @@
                         <input class="radio__input" 
                             type="radio" 
                             name="priceLevel__sort" 
-                            id="priceLevel__input--extremeMax"> 
-                        <label class="radio__label radio__label--subcategory" for="priceLevel__input--extremeMax">Extreme maks</label>
+                            id="priceLevel__input--extremeMax"
+                            data-sorttype="outliersMax"> 
+                        <label class="radio__label radio__label--subcategory" for="priceLevel__input--extremeMax">Ext. maks</label>
                     </div>
                 </div>
 

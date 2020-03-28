@@ -1,5 +1,6 @@
 import '../styles/main.scss'; //IMPORT SASS
 import "babel-polyfill"; //IMPORT BABEL FOR ASYNC/AWAIT
+import * as stateCtrl from './state';
 import DataFinder from './data/dataFinder';
 import PieChart from './charts/pieChart';
 import Boxplot from './charts/boxplot';
@@ -11,100 +12,7 @@ import { minmaxTestData } from './data/minmaxTestData';
 import { boxPlotSex, boxPlotCat, boxPlotSubcat} from './data/priceLevelTestData';
 
 
-const state = {
-    // dataSet: testData,
-    shoesList: {
-        category: ['wszystkie','klapki-i-sandaly', 'polbuty', 'kozaki-i-inne', 'sportowe'],
-        subcategory: [
-            "japonki",
-            "klapki",
-            "sandaly",
-            "kapcie",
-            "codzienne",
-            "wizytowe",
-            "glany",
-            "trampki",
-            "buty-trekkingowe-i-trapery",
-            "sneakersy",
-            "mokasyny",
-            "espadryle",
-            "kalosze",
-            "trekkingi-i-trapery",
-            "kozaki",
-            "trzewiki",
-            "sztyblety",
-            "sniegowce",
-            "bieganie",
-            "buty-do-wody",
-            "fitness",
-            "halowki",
-            "pilka-nozna",
-            "koszykowka",
-            "tenis",
-            "koturny",
-            "na-obcasie",
-            "na-koturnie",
-            "baleriny",
-            "szpilki",
-            "lordsy",
-            "eleganckie",
-            "plaskie",
-            "oxfordy",
-            "botki",
-            "emu",
-            "ugg",
-            "oficerki",
-            "muszkieterki",
-            "kowbojki",
-            "trampki-i-tenisowki"] 
-    },
-    sexBreakdown: {
-        data: {},
-        chart: {},
-        category:{
-            currentSelection: true,
-            currentIndex: 1,
-            maxIndex: 5,
-        }, 
-        subcategory:{
-            currentSelection: false,
-            currentIndex: 1,
-            maxIndex: 41,
-        },
-    },
-    discountsBreakdown: {
-        chart: {},
-        category:{
-            currentSelection: true,
-            currentIndex: 1,
-            maxIndex: 5,
-        }, 
-        subcategory:{
-            currentSelection: false,
-            currentIndex: 1,
-            maxIndex: 41,
-        },
-    },
-    minmax:{
-        category:{
-            currentSelection: true,
-            currentIndex: 1,
-            maxIndex: 5,
-        }, 
-        subcategory:{
-            currentSelection: false,
-            currentIndex: 1,
-            maxIndex: 41,
-        },
-    },
-    priceLevel: {
-        chart: {},
-        settings:{
-            sortType: 'median', 
-        },
-    },
-};
-
+const { state } = stateCtrl;
 
 const appController = async () =>{
 
@@ -263,16 +171,54 @@ const changeType = async (e)=>{
 };
 
 //boxplot / pricelevel
-const changeVariables = async (e)=>{
+const changePriceLevelVariables = async (e)=>{
 
     if (e.target.matches('.radio__input')){
+        const variable = e.target.dataset.variable;
+        const { priceLevel: {settings: { currentVariable }} } = state;
 
-        const data = boxPlotCat;
+        if(currentVariable !== variable){
+            stateCtrl.priceLevelselectVariable(variable);
 
-        const { chart, settings } = state.priceLevel;
-        chart.updateChart(data, settings);
+
+            let data = [];
+            switch(variable){
+                case 'sex':
+                    data = boxPlotSex;
+                    break;
+                case 'category':
+                    data = boxPlotCat;
+                    break;
+                case 'subcategoryOne':
+                    data = boxPlotSubcat.slice(0,10);
+                    break;
+                case 'subcategoryTwo':
+                    data = boxPlotSubcat.slice(10,20);
+                    break;
+            };
+            
+            const { chart, settings } = state.priceLevel;
+            chart.updateChart(data, settings);
+        }
     };
 
+};
+ 
+const changePriceLevelSort = async (e) =>{
+
+    if (e.target.matches('.radio__input')){
+        const sortType = e.target.dataset.sorttype;
+        const { priceLevel: { settings: { currentSort } } } = state;
+
+
+        if(currentSort !== sortType){
+
+            stateCtrl.priceLevelSelectSort(sortType);
+
+            const { chart, settings } = state.priceLevel;
+            chart.sortChart(settings);
+        }
+    }
 };
 
 
@@ -282,7 +228,10 @@ controllersOne.forEach((contr) => contr.addEventListener('click', changeSelectio
 controllersOne.forEach((contr) => contr.addEventListener('click', changeType))
 
 const variablesController = htmlElements.priceLevel.variablesController;
-variablesController.addEventListener('click', changeVariables);
+variablesController.addEventListener('click', changePriceLevelVariables);
+
+const sortController = htmlElements.priceLevel.sortController;
+sortController.addEventListener('click', changePriceLevelSort)
 
 // "sex": "F",
 // "category": "klapki-i-sandaly",

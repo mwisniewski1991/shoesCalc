@@ -31,9 +31,9 @@ export default class Boxplot {
         };
     }
 
-    renderChart(data, { sortType }){
+    renderChart(data, { currentSort }){
         this.loadData(data);
-        this.sortData(data, sortType);
+        this.sortData(currentSort);
 
         this.createBound();
         this.createXaxis();
@@ -49,12 +49,27 @@ export default class Boxplot {
         this.boxesTooltip()
     };
 
-    updateChart(data, { sortType }){
+    updateChart(data, { currentSort }){
         this.loadData(data);
-        this.sortData(data, sortType);
+        this.sortData(currentSort);
 
         this.redrawXaxis()
         this.redrawYaxis();
+
+        this.drawVertivalLine();
+        this.drawBoxes();
+        this.drawMedians();
+        this.drawMinLines();
+        this.drawMaxLines();
+        this.drawOutliersMax();
+
+        this.boxesTooltip()
+
+    }
+
+    sortChart({ currentSort }){
+        this.sortData(currentSort);
+        this.redrawXaxis()
 
         this.drawVertivalLine();
         this.drawBoxes();
@@ -68,8 +83,9 @@ export default class Boxplot {
         this.data.rawData = data;
     };
 
-    sortData(data, sortType){
-        data.sort((a,b) => b.value[sortType]-a.value[sortType]);
+    sortData(currentSort){
+        const { data: { rawData } } = this;
+        rawData.sort((a,b) => b.value[currentSort]-a.value[currentSort]);
     }
 
     createBound(){
@@ -183,7 +199,7 @@ export default class Boxplot {
 
         const className = `${mainClass}__rect`;
 
-        const boxes = bound.selectAll(`.${className}`).data(rawData)
+        const boxes = bound.selectAll(`.${className}`).data(rawData, (d)=>d.key)
             .join(
                 (enter) => enter
                     .append('rect')
@@ -210,7 +226,7 @@ export default class Boxplot {
         } = this;       
         const className = `${mainClass}__median`;
 
-        const medians = bound.selectAll(`.${className}`).data(rawData)
+        const medians = bound.selectAll(`.${className}`).data(rawData, (d)=>d.key)
             .join(
                 (enter) => enter
                     .append('line')
@@ -238,7 +254,7 @@ export default class Boxplot {
         } = this;    
         const className = `${mainClass}__minLine`;
 
-        const minLines = bound.selectAll(`.${className}`).data(rawData)
+        const minLines = bound.selectAll(`.${className}`).data(rawData, (d)=>d.key)
             .join(
                 (enter) => enter
                     .append('line')
@@ -266,7 +282,7 @@ export default class Boxplot {
         } = this;    
         const className = `${mainClass}__maxLine`;
 
-        const maxLines = bound.selectAll(`.${className}`).data(rawData)
+        const maxLines = bound.selectAll(`.${className}`).data(rawData, (d)=>d.key)
         .join(
             (enter) => enter
                 .append('line')
@@ -294,7 +310,7 @@ export default class Boxplot {
         } = this;   
         const className = `${mainClass}__verticalLine`;
 
-        const verticalLines = bound.selectAll(`.${className}`).data(rawData)
+        const verticalLines = bound.selectAll(`.${className}`).data(rawData, (d)=>d.key)
         .join(
             (enter) => enter
                 .append('line')
@@ -336,7 +352,7 @@ export default class Boxplot {
         //above can be in one line but it is too complicated                
         // const joinedArrData = rawData.reduce((total, keyObject)=> [...total, ...keyObject.value.outliersMaxArr.reduce((total, shoe)=>[...total, {...shoe, key: keyObject.key}],[])],[]);
 
-        const outliersMax = bound.selectAll(`.${className}`).data(joinedArrData)
+        const outliersMax = bound.selectAll(`.${className}`).data(joinedArrData, (d)=>d.key)
             .join(
                 (enter) => enter
                     .append('circle')
@@ -351,6 +367,8 @@ export default class Boxplot {
                     ),
                 (exit) => exit.remove()
             );
+
+        this.elements.outliersMax = outliersMax;
     }
 
     //INTERACTIVITY
@@ -368,19 +386,16 @@ export default class Boxplot {
             //change tooltip position
             const x = nodes[i].x.baseVal.value;
             const y = nodes[i].y.baseVal.value;
+
             tooltip
                 .style('left', `${x + 45}px`)
                 .style('top', `${y + 60}px`)
-                .style('visibility','visible')
-                .transition().duration(tooltipTime)
                 .style('opacity',1);
         })
         .on('mouseout',()=>{
             tooltip
-                .transition().duration(tooltipTime)
+                .style('left', `-150px`)
                 .style('opacity',0)
-                .transition()
-                .style('visibility','hidden');
         })
     }
 
