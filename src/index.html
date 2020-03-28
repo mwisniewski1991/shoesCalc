@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400,700&display=swap" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400,700&display=swap" rel="stylesheet">
 
     <!-- FAVIICON -->
     <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon/apple-touch-icon.png"> 
@@ -72,7 +72,7 @@
 
             <div class="priceLevelBox__controller">
 
-                <div class="priceLevelBox__queryBox">
+                <div class="priceLevelBox__queryBox" id="priceLevel__variablesQueryController">
                     <h4 class="priceLevelBox__title">Wybierz zmienną</h4>
 
                     <div class="priceLevelBox__radioBox priceLevelBox__radioBox--one radio">
@@ -80,6 +80,7 @@
                             type="radio" 
                             name="priceLevel__variable" 
                             id="priceLevel__input--sex" 
+                            data-selectionType="category" 
                             checked>
                         <label class="radio__label radio__label--subcategory" for="priceLevel__input--sex">Płeć</label>
                     </div>
@@ -110,7 +111,7 @@
 
                 </div>
 
-                <div class="priceLevelBox__queryBox">
+                <div class="priceLevelBox__queryBox" id="priceLevel__sortQueryController">
                     <h4 class="priceLevelBox__title">Sortuj</h4>
 
                     <div class="priceLevelBox__radioBox priceLevelBox__radioBox--one radio">

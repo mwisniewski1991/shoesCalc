@@ -10,9 +10,6 @@ export const htmlElements = {
         controller: document.querySelector('#discountsBreakdown__controller'),
         loader: document.querySelector('.chartBreakdown__loaderContainer--discountsBreakdown'),
     },
-    priceCatBoxChart: {
-        chartContainer: document.querySelector('.chart__container--priceCategory'),
-    },
     minmax:{
         controller: document.querySelector('.minmaxBlock__item--controller'),
         elements:{
@@ -22,6 +19,11 @@ export const htmlElements = {
             femaleMin: document.querySelector('.minmaxBlock__item--minFemale'),
         },
         loaders: [...document.querySelectorAll('.shoesContainer__loaderContainer')],
+    },
+    priceLevel:{
+        chartContainer: document.querySelector('#priceLevel__chartContainer'),
+        variablesController: document.querySelector('#priceLevel__variablesQueryController'),
+        sortController: document.querySelector('#priceLevel__sortQueryController'),
     }
 };
 

@@ -9,7 +9,7 @@ import { htmlElements } from './UI/base';
 // import { testData } from './data/testDataMinmax.js/testData';
 import { minmaxTestData } from './data/minmaxTestData';
 import { boxPlotSex, boxPlotCat, boxPlotSubcat} from './data/priceLevelTestData';
-import { median } from 'd3';
+
 
 const state = {
     // dataSet: testData,
@@ -115,6 +115,9 @@ const appController = async () =>{
 
 
     state.dataFinder = new DataFinder();
+
+    
+
     const { dataFinder } = state;
     // const { dataSet } = state;
     
@@ -138,7 +141,7 @@ const appController = async () =>{
 
     //PRICE LEVEL
     // state.priceCatBoxChart.data = await dataFinder.getBoxPlotData()
-    createPriceLevelChart(boxPlotCat)
+    createPriceLevelChart(boxPlotSex)
 
     console.log(state.priceLevel);
 };
@@ -170,7 +173,7 @@ const createMinmaxSection = (data)=>{
 
 const createPriceLevelChart = (data) => {
 
-    const div = document.querySelector('#priceLevel__chartContainer');
+    const div = htmlElements.priceLevel.chartContainer;
     state.priceLevel.chart = new Boxplot('priceLevel','boxplot', div);
     const { chart, settings } = state.priceLevel;
     chart.renderChart(data, settings);
@@ -178,6 +181,8 @@ const createPriceLevelChart = (data) => {
 };
 
 
+//FUNCTIONS FOR EVENT LISTENERS
+//pie / breakdown
 const changeSelection = async (e)=>{
     //BASED OND USER CLICK FUNCTION CHANGE USER INTERFACE AND UPDATES CHARTS
 
@@ -257,11 +262,27 @@ const changeType = async (e)=>{
     }
 };
 
+//boxplot / pricelevel
+const changeVariables = async (e)=>{
 
+    if (e.target.matches('.radio__input')){
+
+        const data = boxPlotCat;
+
+        const { chart, settings } = state.priceLevel;
+        chart.updateChart(data, settings);
+    };
+
+};
+
+
+//EVENT LISTENERS
 const controllersOne = htmlElements.controllersOne;
 controllersOne.forEach((contr) => contr.addEventListener('click', changeSelection))
 controllersOne.forEach((contr) => contr.addEventListener('click', changeType))
 
+const variablesController = htmlElements.priceLevel.variablesController;
+variablesController.addEventListener('click', changeVariables);
 
 // "sex": "F",
 // "category": "klapki-i-sandaly",

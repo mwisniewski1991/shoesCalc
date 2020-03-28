@@ -19,6 +19,7 @@ export default class Boxplot {
             },
             boxplotWidth: 60,
             animationTime:{
+                updateTime: 300,
                 tooltipTime: 50,
             }
         };
@@ -43,11 +44,25 @@ export default class Boxplot {
         this.drawMedians();
         this.drawMinLines();
         this.drawMaxLines();
-
         this.drawOutliersMax();
 
         this.boxesTooltip()
     };
+
+    updateChart(data, { sortType }){
+        this.loadData(data);
+        this.sortData(data, sortType);
+
+        this.redrawXaxis()
+        this.redrawYaxis();
+
+        this.drawVertivalLine();
+        this.drawBoxes();
+        this.drawMedians();
+        this.drawMinLines();
+        this.drawMaxLines();
+        this.drawOutliersMax();
+    }
 
     loadData(data){
         this.data.rawData = data;
@@ -86,9 +101,8 @@ export default class Boxplot {
 
     //AXIS ------------------------
     createXaxis(){
-
         this.calcXscale();
-       
+
         const { bound, xScale } = this.elements;
         const { mainClass, dimension: {boundHeight} } = this.settings;
 
@@ -100,8 +114,16 @@ export default class Boxplot {
         this.elements.xAxis = xAxis;
     }
 
-    calcXscale(){
+    redrawXaxis(){
+        this.calcXscale();
 
+        const { elements: { xAxis, xScale }, settings:{ animationTime: { updateTime }} } = this;
+
+        xAxis.transition().duration(updateTime).call(d3.axisBottom(xScale))
+        this.elements.xAxis = xAxis;
+    }
+
+    calcXscale(){
         const { dimension:{ boundWidth } } = this.settings;
         const { rawData } = this.data;
 
@@ -118,12 +140,19 @@ export default class Boxplot {
         const { bound, yScale } = this.elements;
         const { mainClass } = this.settings;
 
-
         const yAxis = bound.append('g')
             .classed(`${mainClass}__yAxis`, true)
             .call(d3.axisLeft().scale(yScale));
 
+        this.elements.yAxis = yAxis;
+    }
 
+    redrawYaxis(){
+        this.calcYscale();
+
+        const { elements: { yAxis, yScale }, settings:{ animationTime: { updateTime } }  } = this; 
+
+        yAxis.transition().duration(updateTime).call(d3.axisLeft(yScale));
         this.elements.yAxis = yAxis;
     }
 
@@ -147,41 +176,41 @@ export default class Boxplot {
     }
 
     drawBoxes(){
-
-        const { bound, xScale, yScale } = this.elements;
-        const { mainClass, boxplotWidth } = this.settings;
-        const { rawData } = this.data;
+        const { elements:{ bound, xScale, yScale },
+                settings:{ mainClass, boxplotWidth, animationTime: { updateTime } },
+                data:{ rawData }
+        } = this;
 
         const className = `${mainClass}__rect`;
 
-
-        const boxes = bound.selectAll(`${className}`).data(rawData)
+        const boxes = bound.selectAll(`.${className}`).data(rawData)
             .join(
                 (enter) => enter
                     .append('rect')
-                    // .classed(`${className} ${d.key}`, true)
                     .attr('class', (d) => this.generateSexClass(d.key, 'rect', mainClass))
                     .attr('x', (d)=> xScale(d.key) - boxplotWidth/2)
                     .attr('y', (d)=> yScale(d.value.q3))
                     .attr('width', boxplotWidth)
                     .attr('height', (d)=> yScale(d.value.q1) - yScale(d.value.q3)),
-                (update) => update
+                (update) => update.call(
+                    (update)=> update.transition().duration(updateTime)
                     .attr('x', (d)=> xScale(d.key) - boxplotWidth/2)
                     .attr('y', (d)=> yScale(d.value.q3))
-                    .attr('width', boxplotWidth)
-                    .attr('height', (d)=> yScale(d.value.q1) - yScale(d.value.q3)),
+                    .attr('height', (d)=> yScale(d.value.q1) - yScale(d.value.q3))
+                ),
                 (exit) => exit.remove()
             )
         this.elements.boxes = boxes;
     };
 
     drawMedians(){
-        const { bound, xScale, yScale } = this.elements;
-        const { mainClass, boxplotWidth } = this.settings;
-        const { rawData } = this.data;
+        const { elements:{ bound, xScale, yScale },
+                settings:{ mainClass, boxplotWidth,animationTime: { updateTime } },
+                data:{ rawData }
+        } = this;       
         const className = `${mainClass}__median`;
 
-        const medians = bound.selectAll(className).data(rawData)
+        const medians = bound.selectAll(`.${className}`).data(rawData)
             .join(
                 (enter) => enter
                     .append('line')
@@ -191,23 +220,25 @@ export default class Boxplot {
                     .attr('y1', (d)=> yScale(d.value.median))
                     .attr('y2', (d)=> yScale(d.value.median)),
                 (update) => update
+                    .call((update)=>update.transition().duration(updateTime)
                     .attr('x1', (d)=> xScale(d.key) - boxplotWidth/2)
                     .attr('x2', (d)=> xScale(d.key) + boxplotWidth/2)
                     .attr('y1', (d)=> yScale(d.value.median))
-                    .attr('y2', (d)=> yScale(d.value.median)),
+                    .attr('y2', (d)=> yScale(d.value.median))
+                    ),
                 (exit) => exit.remove()
             );
         this.elements.medians = medians;                
     }       
 
     drawMinLines(){
-
-        const { bound, xScale, yScale } = this.elements;
-        const { mainClass, boxplotWidth } = this.settings;
-        const { rawData } = this.data;
+        const { elements:{ bound, xScale, yScale },
+                settings:{ mainClass, boxplotWidth, animationTime: { updateTime } },
+                data:{ rawData }
+        } = this;    
         const className = `${mainClass}__minLine`;
 
-        const minLines = bound.selectAll(className).data(rawData)
+        const minLines = bound.selectAll(`.${className}`).data(rawData)
             .join(
                 (enter) => enter
                     .append('line')
@@ -217,23 +248,25 @@ export default class Boxplot {
                     .attr("y1", (d)=> yScale(d.value.min))
                     .attr("y2", (d)=> yScale(d.value.min)),
                 (update) => update
-                    .attr('x1', (d)=> xScale(d.key) - boxplotWidth/2)
-                    .attr('x2', (d)=> xScale(d.key) + boxplotWidth/2)
-                    .attr("y1", (d)=> yScale(d.value.min))
-                    .attr("y2", (d)=> yScale(d.value.min)),
+                    .call((update)=> update.transition().duration(updateTime)
+                        .attr('x1', (d)=> xScale(d.key) - boxplotWidth/2)
+                        .attr('x2', (d)=> xScale(d.key) + boxplotWidth/2)
+                        .attr("y1", (d)=> yScale(d.value.min))
+                        .attr("y2", (d)=> yScale(d.value.min))
+                    ),
                 (exit) => exit.remove()
             );
         this.elements.minLines = minLines;
     };
 
     drawMaxLines(){
-
-        const { bound, xScale, yScale } = this.elements;
-        const { mainClass, boxplotWidth } = this.settings;
-        const { rawData } = this.data;
+        const { elements:{ bound, xScale, yScale },
+                settings:{ mainClass, boxplotWidth, animationTime: { updateTime } },
+                data:{ rawData }
+        } = this;    
         const className = `${mainClass}__maxLine`;
 
-        const maxLines = bound.selectAll(className).data(rawData)
+        const maxLines = bound.selectAll(`.${className}`).data(rawData)
         .join(
             (enter) => enter
                 .append('line')
@@ -243,22 +276,25 @@ export default class Boxplot {
                 .attr("y1", (d)=> yScale(d.value.max))
                 .attr("y2", (d)=> yScale(d.value.max)),
             (update) => update
-                .attr('x1', (d)=> xScale(d.key) - boxplotWidth/2)
-                .attr('x2', (d)=> xScale(d.key) + boxplotWidth/2)
-                .attr("y1", (d)=> yScale(d.value.max))
-                .attr("y2", (d)=> yScale(d.value.max)),
+                .call((update)=> update.transition().duration(updateTime)
+                    .attr('x1', (d)=> xScale(d.key) - boxplotWidth/2)
+                    .attr('x2', (d)=> xScale(d.key) + boxplotWidth/2)
+                    .attr("y1", (d)=> yScale(d.value.max))
+                    .attr("y2", (d)=> yScale(d.value.max))
+                ),
             (exit) => exit.remove()
         );
         this.elements.maxLines = maxLines;
     };
 
     drawVertivalLine(){
-        const { bound, xScale, yScale } = this.elements;
-        const { mainClass } = this.settings;
-        const { rawData } = this.data;
+        const { elements:{ bound, xScale, yScale },
+                settings:{ mainClass, animationTime: { updateTime } },
+                data:{ rawData }
+        } = this;   
         const className = `${mainClass}__verticalLine`;
 
-        const verticalLines = bound.selectAll(className).data(rawData)
+        const verticalLines = bound.selectAll(`.${className}`).data(rawData)
         .join(
             (enter) => enter
                 .append('line')
@@ -268,20 +304,22 @@ export default class Boxplot {
                 .attr('y1', (d)=> yScale(d.value.min))
                 .attr('y2', (d)=> yScale(d.value.max)),
             (update) => update
-                .attr('x1', (d)=> xScale(d.key))
-                .attr('x2', (d)=> xScale(d.key))
-                .attr('y1', (d)=> yScale(d.value.min))
-                .attr('y2', (d)=> yScale(d.value.max)),
+                .call((update) => update.transition().duration(updateTime)
+                    .attr('x1', (d)=> xScale(d.key))
+                    .attr('x2', (d)=> xScale(d.key))
+                    .attr('y1', (d)=> yScale(d.value.min))
+                    .attr('y2', (d)=> yScale(d.value.max))
+                ),
             (exit) => exit.remove()
         );
         this.elements.verticalLines = verticalLines;
     }
 
     drawOutliersMax(){
-
-        const { bound, xScale, yScale } = this.elements;
-        const { mainClass, boxplotWidth } = this.settings;
-        const { rawData } = this.data;
+        const { elements:{ bound, xScale, yScale },
+                settings:{ mainClass, boxplotWidth, animationTime:  { updateTime } },
+                data:{ rawData }
+        } = this;   
         const className = `${mainClass}__outlierMax`;
 
         //join arrays in one and add key
@@ -298,15 +336,21 @@ export default class Boxplot {
         //above can be in one line but it is too complicated                
         // const joinedArrData = rawData.reduce((total, keyObject)=> [...total, ...keyObject.value.outliersMaxArr.reduce((total, shoe)=>[...total, {...shoe, key: keyObject.key}],[])],[]);
 
-        const outliersMax = bound.selectAll(className).data(joinedArrData)
+        const outliersMax = bound.selectAll(`.${className}`).data(joinedArrData)
             .join(
                 (enter) => enter
                     .append('circle')
                     .attr('class', (d) => this.generateSexClass(d.sex, 'outlierMax', mainClass))
                     .attr('cx', (d)=> xScale(d.key) + (xScale.bandwidth()/2) - boxplotWidth/2 + Math.random()*boxplotWidth )
                     .attr('cy', (d)=> yScale(d.price))
-                    .attr('r', 10)
-        );
+                    .attr('r', 10),
+                (update) => update
+                    .call((update)=>update.transition().duration(updateTime)
+                        .attr('cx', (d)=> xScale(d.key) + (xScale.bandwidth()/2) - boxplotWidth/2 + Math.random()*boxplotWidth )
+                        .attr('cy', (d)=> yScale(d.price))
+                    ),
+                (exit) => exit.remove()
+            );
     }
 
     //INTERACTIVITY
