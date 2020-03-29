@@ -86,9 +86,11 @@ export const state = {
     },
     priceLevel: {
         chart: {},
+         //for subcategory chart must have diffrent settings in chart Class
         settings:{
+            selectedSubcategory: true,
             currentVariable: 'sex',
-            currentSort: 'median', 
+            currentSort: 'median',
         },
     },
 };
@@ -101,3 +103,6 @@ export const priceLevelSelectSort = (sortType) =>{
     state.priceLevel.settings.currentSort = sortType;
 };
 
+export const changeBoxplotselectedSubcategory = (newSelected)=>{
+    state.priceLevel.settings.selectedSubcategory = newSelected;
+};

@@ -14,14 +14,16 @@ export default class Boxplot {
                 boundWidth: {},
                 boundHeight: {},
                 margins:{
-                    left:60, right:20, top:20, bottom:40,
+                    left:60, right:20, top:20, bottom:60,
                 },
             },
-            boxplotWidth: 60,
             animationTime:{
                 updateTime: 300,
                 tooltipTime: 50,
-            }
+            },
+            boxplotWidth: 60,
+            circleR: 5,
+            xLabelRotate: false,
         };
 
         this.elements= {};
@@ -31,9 +33,10 @@ export default class Boxplot {
         };
     }
 
-    renderChart(data, { currentSort }){
+    renderChart(data, { currentSort, selectedSubcategory}){
         this.loadData(data);
         this.sortData(currentSort);
+        this.updateSettings(selectedSubcategory);
 
         this.createBound();
         this.createXaxis();
@@ -49,9 +52,10 @@ export default class Boxplot {
         this.boxesTooltip()
     };
 
-    updateChart(data, { currentSort }){
+    updateChart(data, { currentSort, selectedSubcategory}){
         this.loadData(data);
         this.sortData(currentSort);
+        this.updateSettings(selectedSubcategory);
 
         this.redrawXaxis()
         this.redrawYaxis();
@@ -79,6 +83,7 @@ export default class Boxplot {
         this.drawOutliersMax();
     }
 
+
     loadData(data){
         this.data.rawData = data;
     };
@@ -86,6 +91,14 @@ export default class Boxplot {
     sortData(currentSort){
         const { data: { rawData } } = this;
         rawData.sort((a,b) => b.value[currentSort]-a.value[currentSort]);
+    }
+
+    updateSettings(selectedSubcategory){
+
+        this.settings.boxplotWidth = selectedSubcategory === false ? 60 : 30; 
+        this.settings.circleR = selectedSubcategory === false ? 10 : 5; 
+        this.settings.xLabelRotate = selectedSubcategory === false ? false : true; 
+
     }
 
     createBound(){
@@ -120,22 +133,27 @@ export default class Boxplot {
         this.calcXscale();
 
         const { bound, xScale } = this.elements;
-        const { mainClass, dimension: {boundHeight} } = this.settings;
+        const { mainClass, dimension: {boundHeight}, xLabelRotate } = this.settings;
 
         const xAxis = bound.append('g')
             .classed(`${mainClass}__xAxis`, true)
             .attr('transform', `translate(0,${boundHeight})`)
-            .call(d3.axisBottom(xScale));
+            .call(d3.axisBottom(xScale))
+
+        if(xLabelRotate) xAxis.selectAll('text').attr("y", 15).attr("x", -20).attr('transform', "rotate(-45)");
 
         this.elements.xAxis = xAxis;
     }
 
     redrawXaxis(){
         this.calcXscale();
-
-        const { elements: { xAxis, xScale }, settings:{ animationTime: { updateTime }} } = this;
+        const { elements: { xAxis, xScale }, settings:{ animationTime: { updateTime }, xLabelRotate} } = this;
 
         xAxis.transition().duration(updateTime).call(d3.axisBottom(xScale))
+
+        if(xLabelRotate) xAxis.selectAll('text').attr("y", 15).attr("x", -20).attr('transform', "rotate(-45)");
+
+
         this.elements.xAxis = xAxis;
     }
 
@@ -333,7 +351,7 @@ export default class Boxplot {
 
     drawOutliersMax(){
         const { elements:{ bound, xScale, yScale },
-                settings:{ mainClass, boxplotWidth, animationTime:  { updateTime } },
+                settings:{ mainClass, boxplotWidth, circleR, animationTime:  { updateTime } },
                 data:{ rawData }
         } = this;   
         const className = `${mainClass}__outlierMax`;
@@ -359,12 +377,12 @@ export default class Boxplot {
                     .attr('class', (d) => this.generateSexClass(d.sex, 'outlierMax', mainClass))
                     .attr('cx', (d)=> xScale(d.key) + (xScale.bandwidth()/2) - boxplotWidth/2 + Math.random()*boxplotWidth )
                     .attr('cy', (d)=> yScale(d.price))
-                    .attr('r', 10),
+                    .attr('r', circleR),
                 (update) => update
                     .call((update)=>update.transition().duration(updateTime)
                         .attr('cx', (d)=> xScale(d.key) + (xScale.bandwidth()/2) - boxplotWidth/2 + Math.random()*boxplotWidth )
                         .attr('cy', (d)=> yScale(d.price))
-                    ),
+                        .attr('r', circleR)),
                 (exit) => exit.remove()
             );
 

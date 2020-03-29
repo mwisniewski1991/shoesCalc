@@ -11,6 +11,9 @@ import { htmlElements } from './UI/base';
 import { minmaxTestData } from './data/minmaxTestData';
 import { boxPlotSex, boxPlotCat, boxPlotSubcat} from './data/priceLevelTestData';
 
+// console.log(boxPlotSubcat.slice(0,20));
+// console.log(boxPlotSubcat.slice(20));
+
 
 const { state } = stateCtrl;
 
@@ -48,7 +51,7 @@ const appController = async () =>{
 
     //PRICE LEVEL
     // const priceLevelData = await dataFinder.getPriceLevelData('sex');
-    createPriceLevelChart(boxPlotSex)
+    createPriceLevelChart(boxPlotSubcat);
 
     // console.log(state.priceLevel);
 };
@@ -177,25 +180,31 @@ const changePriceLevelVariables = async (e)=>{
         const { priceLevel: {settings: { currentVariable }} } = state;
 
         if(currentVariable !== variable){
-            stateCtrl.priceLevelselectVariable(variable);
-
 
             let data = [];
+            let selectedSubcategory;
             switch(variable){
                 case 'sex':
                     data = boxPlotSex;
+                    selectedSubcategory = false;
                     break;
                 case 'category':
                     data = boxPlotCat;
+                    selectedSubcategory = false;
                     break;
                 case 'subcategoryOne':
-                    data = boxPlotSubcat.slice(0,10);
+                    data = boxPlotSubcat;
+                    selectedSubcategory = true;
                     break;
                 case 'subcategoryTwo':
-                    data = boxPlotSubcat.slice(10,20);
+                    data = boxPlotSubcat;
+                    selectedSubcategory = true;
                     break;
             };
             
+            stateCtrl.priceLevelselectVariable(variable);
+            stateCtrl.changeBoxplotselectedSubcategory(selectedSubcategory);
+
             const { priceLevel: { chart, settings }, dataFinder } = state;
             // const priceLevelData = await dataFinder.getPriceLevelData(variable);
 
@@ -234,10 +243,6 @@ variablesController.addEventListener('click', changePriceLevelVariables);
 const sortController = htmlElements.priceLevel.sortController;
 sortController.addEventListener('click', changePriceLevelSort)
 
-// "sex": "F",
-// "category": "klapki-i-sandaly",
-// "subcategory": "sandaly",
-// "priceCat": "Regular"
 
 const calcCategoryCounter = (data, select) => {
     const categories = Array.from(new Set(data.map((el)=>el[select])));
