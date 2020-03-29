@@ -21,7 +21,6 @@ const appController = async () =>{
     ui.breakdownLoaders('sexBreakdown');
     ui.breakdownLoaders('discountsBreakdown');
 
-
     state.dataFinder = new DataFinder();
 
     
@@ -32,7 +31,7 @@ const appController = async () =>{
     //BREAKDOWN
     // const sexBreakdownData = calcCategoryCounter(dataSet, 'sex'); //TEST DATA
     // const sexBreakdownData = await dataFinder.getCounterData('sexBreakdown','category','wszystkie');
-    // createSexDivideChart(sexBreakdownData); //rendering chart
+    // createSexDivideChart(sexBreakdownData); 
     ui.breakdownLoaders('sexBreakdown');
 
     // const discountsData = calcCategoryCounter(dataSet, 'priceCat'); //TEST DATA
@@ -48,10 +47,10 @@ const appController = async () =>{
 
 
     //PRICE LEVEL
-    // state.priceCatBoxChart.data = await dataFinder.getBoxPlotData()
+    // const priceLevelData = await dataFinder.getPriceLevelData('sex');
     createPriceLevelChart(boxPlotSex)
 
-    console.log(state.priceLevel);
+    // console.log(state.priceLevel);
 };
 
 const createSexDivideChart = (data) => {
@@ -197,7 +196,9 @@ const changePriceLevelVariables = async (e)=>{
                     break;
             };
             
-            const { chart, settings } = state.priceLevel;
+            const { priceLevel: { chart, settings }, dataFinder } = state;
+            // const priceLevelData = await dataFinder.getPriceLevelData(variable);
+
             chart.updateChart(data, settings);
         }
     };

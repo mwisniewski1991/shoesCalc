@@ -20,13 +20,12 @@ export default class DataFinder {
         return serverData
     };
 
-    async getBoxPlotData(){
+    async getPriceLevelData(variable){
 
-        const apiURL = `/total`;
+        const apiURL = `/priceLevel/${variable}`;
         const response = await fetch(apiURL);
         const serverData = await response.json();
         return serverData;
     }
-
 
 }

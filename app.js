@@ -15,48 +15,5 @@ app.use('/counter', breakdownRoute)
 const minmaxRoute = require('./routes/minmax');
 app.use('/minmax', minmaxRoute);
 
-
-app.get('/total', async(req,res)=>{
-
-  try{
-
-    const url = process.env.DB_CONNECTION
-    const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
-
-    client.connect( async (err) => {
-
-      const collection = client.db("test").collection("testCol");
-      // perform actions on the collection object
-
-      const queryMethod = {};
-      const cursor = collection.find(queryMethod);
-
-      const allValues = await cursor.toArray();
-
-      allValues.forEach((value) => {
-        delete value._id
-        delete value.link;
-        delete value.nameSecond;
-        delete value.nameFirst;
-        delete value.oldPrice;
-        delete value.timestamp;
-        delete value.discount;
-
-      })
-
-      res.json(allValues);
-      
-      if(err){
-        console.log(err)
-      };
-  
-      client.close();
-    });
-
-
-
-  }catch(err){
-    console.log(err);
-  }
-})
-
+const priceLevelRoute = require('./routes/priceLevel');
+app.use('/pricelevel', priceLevelRoute);

@@ -50,8 +50,8 @@ router.get('/:selectionType/:filterValue', async (req,res)=>{
     // }
     
     const url = process.env.DB_CONNECTION
-    const dbName = "shoesCalc";
-    const collectionName = "collection";
+    const dbName = process.env.DB_NAME;
+    const collectionName = process.env.DB_COLLECTION;
 
     let result = {};
 
