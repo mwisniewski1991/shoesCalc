@@ -88,7 +88,7 @@ export const state = {
         chart: {},
          //for subcategory chart must have diffrent settings in chart Class
         settings:{
-            selectedSubcategory: true,
+            selectedSubcategory: false,
             currentVariable: 'sex',
             currentSort: 'median',
         },

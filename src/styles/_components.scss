@@ -688,46 +688,6 @@
     }
 }
 
-.chart-boxplot{
-    display: block;
-    margin: 0 auto;   
-    position: relative;
-
-    &__rect{
-        fill: #fff;
-        stroke: #fff;
-        
-        &:hover{
-            cursor: pointer;
-            fill: lighten($color: #e84393, $amount: 5);
-        }
-
-        &--male{
-            fill: #0984e3,
-        }
-        &--female{
-            fill: #e84393;
-        }
-    }
-    
-    &__median, &__minLine, &__maxLine, &__verticalLine{
-        stroke: white;
-    }
-
-    &__outlierMax{
-        fill: #0984e3;
-        stroke: #fff;
-        opacity: .5;
-
-        &--male{
-            fill: #0984e3,
-        }
-        &--female{
-            fill: #e84393;
-        }
-    }
-}
-
 .boxplotTooltip{
     position: absolute;
     left: -150px;

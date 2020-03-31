@@ -51,7 +51,7 @@ const appController = async () =>{
 
     //PRICE LEVEL
     // const priceLevelData = await dataFinder.getPriceLevelData('sex');
-    createPriceLevelChart(boxPlotSubcat);
+    createPriceLevelChart(boxPlotSex);
 
     // console.log(state.priceLevel);
 };

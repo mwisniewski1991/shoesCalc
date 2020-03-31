@@ -33,14 +33,17 @@ export default class Boxplot {
         };
     }
 
+    //CONTROLLERS
     renderChart(data, { currentSort, selectedSubcategory}){
         this.loadData(data);
         this.sortData(currentSort);
         this.updateSettings(selectedSubcategory);
-
+        
         this.createBound();
         this.createXaxis();
         this.createYaxis();
+        this.createGradient();
+        this.createGradientLighten();
     
         this.drawVertivalLine();
         this.drawBoxes();
@@ -83,7 +86,7 @@ export default class Boxplot {
         this.drawOutliersMax();
     }
 
-
+    //MAIN ELEMENTS
     loadData(data){
         this.data.rawData = data;
     };
@@ -203,12 +206,6 @@ export default class Boxplot {
     }
 
     //DATA ELEMENTS
-    generateSexClass(key, type, mainClass){
-        const sexClass = key === 'M' ? '--male' : '--female'; 
-        
-        return `${mainClass}__${type} ${mainClass}__${type}${sexClass}`
-    }
-
     drawBoxes(){
         const { elements:{ bound, xScale, yScale },
                 settings:{ mainClass, boxplotWidth, animationTime: { updateTime } },
@@ -417,4 +414,64 @@ export default class Boxplot {
         })
     }
 
+    //ADDITIONAL
+    generateSexClass(key, type, mainClass){
+        const sexClass = key === 'M' ? '--male' : key==="F" ? '--female' : '--other'; 
+        
+        return `${mainClass}__${type} ${mainClass}__${type}${sexClass}`
+    }
+
+    createGradient(){
+
+        const { svg } = this.elements;
+        const defs = svg.append("defs");
+        
+        const gradient = defs.append("linearGradient")
+            .attr("id", "boxGradient")
+            .attr("x1", "0%")
+            .attr("x2", "100%")
+            .attr("y1", "20%")
+            .attr("y2", "80%");
+
+            gradient.append("stop")
+            .attr('class', 'start')
+            .attr("offset", "40%")
+            .attr("stop-color", "#0984e3")
+            .attr("stop-opacity", 1);
+
+            gradient.append("stop")
+            .attr('class', 'end')
+            .attr("offset", "60%")
+            .attr("stop-color", "#e84393")
+            .attr("stop-opacity", 1);
+
+        this.elements.gradient = defs;
+    }
+
+    createGradientLighten(){
+
+        const { svg } = this.elements;
+        const defs = svg.append("defs");
+        
+        const gradient = defs.append("linearGradient")
+            .attr("id", "boxGradientLighten")
+            .attr("x1", "0%")
+            .attr("x2", "100%")
+            .attr("y1", "20%")
+            .attr("y2", "80%");
+
+            gradient.append("stop")
+            .attr('class', 'start')
+            .attr("offset", "40%")
+            .attr("stop-color", "#1a96f6")
+            .attr("stop-opacity", 1);
+
+            gradient.append("stop")
+            .attr('class', 'end')
+            .attr("offset", "60%")
+            .attr("stop-color", "#ec63a5")
+            .attr("stop-opacity", 1);
+
+        this.elements.gradientLighten = defs;
+    }
 }

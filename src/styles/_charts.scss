@@ -39,3 +39,60 @@
     }
 
 }
+
+
+.chart-boxplot{
+    display: block;
+    margin: 0 auto;   
+    position: relative;
+
+    &__rect{
+        fill: #fff;
+        stroke: #fff;
+        
+        &:hover{
+            cursor: pointer;
+            fill: lighten($color: #e84393, $amount: 5);
+        }
+
+        &--male{
+            fill: #0984e3;
+
+            &:hover{
+                fill: lighten(#0984e3, 7);
+            }
+        }
+        &--female{
+            fill: #e84393;
+
+            &:hover{
+                fill: lighten(#e84393, 7);
+            }
+        }
+
+        &--other{
+            // fill: #7964bb;
+            fill: url('#boxGradient');
+            &:hover{
+                fill: url('#boxGradientLighten');
+            }
+        }
+    }
+    
+    &__median, &__minLine, &__maxLine, &__verticalLine{
+        stroke: white;
+    }
+
+    &__outlierMax{
+        fill: #0984e3;
+        stroke: #fff;
+        opacity: .5;
+
+        &--male{
+            fill: #0984e3,
+        }
+        &--female{
+            fill: #e84393;
+        }
+    }
+}
