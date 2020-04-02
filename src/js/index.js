@@ -176,39 +176,50 @@ const changeType = async (e)=>{
 const changePriceLevelVariables = async (e)=>{
 
     if (e.target.matches('.radio__input')){
-        const variable = e.target.dataset.variable;
-        const { priceLevel: {settings: { currentVariable }} } = state;
+        const selectedVariable = e.target.dataset.variable;
+        const { priceLevel: {settings: { variable }} } = state;
 
-        if(currentVariable !== variable){
+        //check if previous and nexy selection is category: if no then update new data, if not change current data in chart class
+        const selectedSubcategories = selectedVariable.slice(0,11) === variable.slice(0,11) ? true : false; 
+        //check from data in html which parat if subcategory user choose 
+        const newSubcategoryPart = selectedVariable.slice(11);
 
+        if(variable !== selectedVariable && !selectedSubcategories){
+
+            //TEST DATA
             let data = [];
-            let selectedSubcategory;
-            switch(variable){
+
+            //TEST DATA
+            switch(selectedVariable){
                 case 'sex':
                     data = boxPlotSex;
-                    selectedSubcategory = false;
                     break;
                 case 'category':
                     data = boxPlotCat;
-                    selectedSubcategory = false;
                     break;
                 case 'subcategoryOne':
                     data = boxPlotSubcat;
-                    selectedSubcategory = true;
                     break;
                 case 'subcategoryTwo':
                     data = boxPlotSubcat;
-                    selectedSubcategory = true;
                     break;
             };
             
-            stateCtrl.priceLevelselectVariable(variable);
-            stateCtrl.changeBoxplotselectedSubcategory(selectedSubcategory);
+            //check if current selection if subcategory
+            let selectedSubcategory = selectedVariable.slice(0,11) === "subcategory" ? true : false; 
+            stateCtrl.changeBoxplotSettings('selectedSubcategory', selectedSubcategory);
+            stateCtrl.changeBoxplotSettings('subcategoryPart', newSubcategoryPart);
+            stateCtrl.changeBoxplotSettings('variable', selectedVariable);
 
             const { priceLevel: { chart, settings }, dataFinder } = state;
-            // const priceLevelData = await dataFinder.getPriceLevelData(variable);
+            // const priceLevelData = await dataFinder.getPriceLevelData(selectedVariable);
 
-            chart.updateChart(data, settings);
+            chart.renderChart(data, settings);
+        }else{
+            const { chart, settings } = state.priceLevel;
+
+            stateCtrl.changeBoxplotSettings('subcategoryPart', newSubcategoryPart);
+            chart.sortChart(settings);
         }
     };
 
@@ -217,15 +228,12 @@ const changePriceLevelVariables = async (e)=>{
 const changePriceLevelSort = async (e) =>{
 
     if (e.target.matches('.radio__input')){
-        const sortType = e.target.dataset.sorttype;
-        const { priceLevel: { settings: { currentSort } } } = state;
+        const selectedSortType = e.target.dataset.sorttype;
+        const { priceLevel: { settings: { sortType } } } = state;
 
-
-        if(currentSort !== sortType){
-
-            stateCtrl.priceLevelSelectSort(sortType);
-
+        if(sortType !== selectedSortType){ //not sort if user clicked active button
             const { chart, settings } = state.priceLevel;
+            stateCtrl.changeBoxplotSettings('sortType', selectedSortType);
             chart.sortChart(settings);
         }
     }

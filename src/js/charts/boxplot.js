@@ -30,20 +30,34 @@ export default class Boxplot {
 
         this.data = {
             rawData: {},
+            mainData: {},
         };
     }
 
     //CONTROLLERS
-    renderChart(data, { currentSort, selectedSubcategory}){
+    renderChart(data, { sortType, selectedSubcategory, subcategoryPart}){
+        
+        if(!this.elements.svg){this.createBound();};
+
         this.loadData(data);
-        this.sortData(currentSort);
+        this.sortData(sortType);
+
+        this.selectData(selectedSubcategory, subcategoryPart)
         this.updateSettings(selectedSubcategory);
         
-        this.createBound();
-        this.createXaxis();
-        this.createYaxis();
-        this.createGradient();
-        this.createGradientLighten();
+        
+        if(!this.elements.xAxis){
+            this.createXaxis();
+            this.createYaxis();
+        }else{
+            this.redrawXaxis()
+            this.redrawYaxis();
+        };
+
+        if(!this.elements.gradient){
+            this.createGradient();
+            this.createGradientLighten();
+        };
     
         this.drawVertivalLine();
         this.drawBoxes();
@@ -51,32 +65,15 @@ export default class Boxplot {
         this.drawMinLines();
         this.drawMaxLines();
         this.drawOutliersMax();
-
         this.boxesTooltip()
     };
 
-    updateChart(data, { currentSort, selectedSubcategory}){
-        this.loadData(data);
-        this.sortData(currentSort);
-        this.updateSettings(selectedSubcategory);
-
+    sortChart({ sortType, selectedSubcategory, subcategoryPart }){
+        this.sortData(sortType);
+        this.selectData(selectedSubcategory, subcategoryPart)
+        
         this.redrawXaxis()
         this.redrawYaxis();
-
-        this.drawVertivalLine();
-        this.drawBoxes();
-        this.drawMedians();
-        this.drawMinLines();
-        this.drawMaxLines();
-        this.drawOutliersMax();
-
-        this.boxesTooltip()
-
-    }
-
-    sortChart({ currentSort }){
-        this.sortData(currentSort);
-        this.redrawXaxis()
 
         this.drawVertivalLine();
         this.drawBoxes();
@@ -91,9 +88,17 @@ export default class Boxplot {
         this.data.rawData = data;
     };
 
-    sortData(currentSort){
+    sortData(sortType){
         const { data: { rawData } } = this;
-        rawData.sort((a,b) => b.value[currentSort]-a.value[currentSort]);
+        this.data.sortedData = rawData.sort((a,b) => b.value[sortType]-a.value[sortType]);
+    }
+
+    selectData(selectedSubcategory, subcategoryPart){
+        if(selectedSubcategory){
+            this.data.mainData = subcategoryPart === "One" ? this.data.sortedData.slice(0,21) : this.data.sortedData.slice(21);
+        }else{
+            this.data.mainData = this.data.sortedData;
+        };
     }
 
     updateSettings(selectedSubcategory){
@@ -107,7 +112,7 @@ export default class Boxplot {
     createBound(){
         this.calcDimension();
 
-        const { mainClass, container, dimension:{width, height, margins},  } = this.settings;
+        const { mainClass, container, dimension:{ width, height, margins },  } = this.settings;
 
         const svg = d3.select(container).append('svg')
             .classed(`${mainClass}`, true)
@@ -162,10 +167,10 @@ export default class Boxplot {
 
     calcXscale(){
         const { dimension:{ boundWidth } } = this.settings;
-        const { rawData } = this.data;
+        const { mainData } = this.data;
 
         const xScale = d3.scaleBand().paddingInner(1).paddingOuter(.5)
-            .domain(rawData.map((el) => el.key))
+            .domain(mainData.map((el) => el.key))
             .range([0, boundWidth]);
 
         this.elements.xScale = xScale;
@@ -196,10 +201,10 @@ export default class Boxplot {
     calcYscale(){
 
         const { dimension:{boundHeight} } = this.settings;
-        const { rawData } = this.data;
+        const { mainData } = this.data;
 
         const yScale = d3.scaleLinear()
-            .domain([0, d3.max(rawData.map((el)=> el.value.outliersMax))])
+            .domain([0, d3.max(mainData.map((el)=> el.value.outliersMax))])
             .range([boundHeight,0])
 
         this.elements.yScale = yScale;
@@ -209,12 +214,12 @@ export default class Boxplot {
     drawBoxes(){
         const { elements:{ bound, xScale, yScale },
                 settings:{ mainClass, boxplotWidth, animationTime: { updateTime } },
-                data:{ rawData }
+                data:{ mainData }
         } = this;
 
         const className = `${mainClass}__rect`;
 
-        const boxes = bound.selectAll(`.${className}`).data(rawData, (d)=>d.key)
+        const boxes = bound.selectAll(`.${className}`).data(mainData, (d)=>d.key)
             .join(
                 (enter) => enter
                     .append('rect')
@@ -237,11 +242,11 @@ export default class Boxplot {
     drawMedians(){
         const { elements:{ bound, xScale, yScale },
                 settings:{ mainClass, boxplotWidth,animationTime: { updateTime } },
-                data:{ rawData }
+                data:{ mainData }
         } = this;       
         const className = `${mainClass}__median`;
 
-        const medians = bound.selectAll(`.${className}`).data(rawData, (d)=>d.key)
+        const medians = bound.selectAll(`.${className}`).data(mainData, (d)=>d.key)
             .join(
                 (enter) => enter
                     .append('line')
@@ -265,11 +270,11 @@ export default class Boxplot {
     drawMinLines(){
         const { elements:{ bound, xScale, yScale },
                 settings:{ mainClass, boxplotWidth, animationTime: { updateTime } },
-                data:{ rawData }
+                data:{ mainData }
         } = this;    
         const className = `${mainClass}__minLine`;
 
-        const minLines = bound.selectAll(`.${className}`).data(rawData, (d)=>d.key)
+        const minLines = bound.selectAll(`.${className}`).data(mainData, (d)=>d.key)
             .join(
                 (enter) => enter
                     .append('line')
@@ -293,11 +298,11 @@ export default class Boxplot {
     drawMaxLines(){
         const { elements:{ bound, xScale, yScale },
                 settings:{ mainClass, boxplotWidth, animationTime: { updateTime } },
-                data:{ rawData }
+                data:{ mainData }
         } = this;    
         const className = `${mainClass}__maxLine`;
 
-        const maxLines = bound.selectAll(`.${className}`).data(rawData, (d)=>d.key)
+        const maxLines = bound.selectAll(`.${className}`).data(mainData, (d)=>d.key)
         .join(
             (enter) => enter
                 .append('line')
@@ -321,11 +326,11 @@ export default class Boxplot {
     drawVertivalLine(){
         const { elements:{ bound, xScale, yScale },
                 settings:{ mainClass, animationTime: { updateTime } },
-                data:{ rawData }
+                data:{ mainData }
         } = this;   
         const className = `${mainClass}__verticalLine`;
 
-        const verticalLines = bound.selectAll(`.${className}`).data(rawData, (d)=>d.key)
+        const verticalLines = bound.selectAll(`.${className}`).data(mainData, (d)=>d.key)
         .join(
             (enter) => enter
                 .append('line')
@@ -349,12 +354,12 @@ export default class Boxplot {
     drawOutliersMax(){
         const { elements:{ bound, xScale, yScale },
                 settings:{ mainClass, boxplotWidth, circleR, animationTime:  { updateTime } },
-                data:{ rawData }
+                data:{ mainData }
         } = this;   
         const className = `${mainClass}__outlierMax`;
 
         //join arrays in one and add key
-        const joinedArrData = rawData.reduce((total, keyObject)=> {
+        const joinedArrData = mainData.reduce((total, keyObject)=> {
             //first reduce join arrays
             return [
                     ...total, 
@@ -365,7 +370,7 @@ export default class Boxplot {
             ]
         },[]);
         //above can be in one line but it is too complicated                
-        // const joinedArrData = rawData.reduce((total, keyObject)=> [...total, ...keyObject.value.outliersMaxArr.reduce((total, shoe)=>[...total, {...shoe, key: keyObject.key}],[])],[]);
+        // const joinedArrData = mainData.reduce((total, keyObject)=> [...total, ...keyObject.value.outliersMaxArr.reduce((total, shoe)=>[...total, {...shoe, key: keyObject.key}],[])],[]);
 
         const outliersMax = bound.selectAll(`.${className}`).data(joinedArrData, (d)=>d.key)
             .join(
