@@ -50,8 +50,9 @@ const appController = async () =>{
 
 
     //PRICE LEVEL
-    // const priceLevelData = await dataFinder.getPriceLevelData('sex');
-    createPriceLevelChart(boxPlotSex);
+    const priceLevelData = await dataFinder.getPriceLevelData('sex');
+    createPriceLevelChart(priceLevelData);
+    
 
     // console.log(state.priceLevel);
 };
@@ -176,7 +177,7 @@ const changeType = async (e)=>{
 const changePriceLevelVariables = async (e)=>{
 
     if (e.target.matches('.radio__input')){
-        const selectedVariable = e.target.dataset.variable;
+        let selectedVariable = e.target.dataset.variable;
         const { priceLevel: {settings: { variable }} } = state;
 
         //check if previous and nexy selection is category: if no then update new data, if not change current data in chart class
@@ -211,10 +212,12 @@ const changePriceLevelVariables = async (e)=>{
             stateCtrl.changeBoxplotSettings('subcategoryPart', newSubcategoryPart);
             stateCtrl.changeBoxplotSettings('variable', selectedVariable);
 
-            const { priceLevel: { chart, settings }, dataFinder } = state;
-            // const priceLevelData = await dataFinder.getPriceLevelData(selectedVariable);
+            if(selectedSubcategory){selectedVariable = selectedVariable.slice(0,11)};
 
-            chart.renderChart(data, settings);
+            const { priceLevel: { chart, settings }, dataFinder } = state;
+            const priceLevelData = await dataFinder.getPriceLevelData(selectedVariable);
+
+            chart.renderChart(priceLevelData, settings);
         }else{
             const { chart, settings } = state.priceLevel;
 

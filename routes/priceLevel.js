@@ -5,7 +5,6 @@ const d3 = require('d3');
 require('dotenv/config');
 
 const calcBoxPlotData = (data, x, y) =>{
-    // console.log(data);
     const transformedData = d3.nest()
     .key((d) => d[x])
     .rollup((d) => {
@@ -16,7 +15,7 @@ const calcBoxPlotData = (data, x, y) =>{
         const outliersMin = d3.min((d).map((g) => g[y]));
         const outliersMax = d3.max((d).map((g) => g[y]));
 
-        //count MAX and MIN withut outliers, need to count few values before calc
+        //count MAX and MIN without outliers, need to count few values before calc
         const interQuantileRange = q3 - q1;
         const minValues = q1 - 3 * interQuantileRange;
         const maxValues = q3 + 3 * interQuantileRange;
@@ -27,8 +26,8 @@ const calcBoxPlotData = (data, x, y) =>{
         const min = d3.min(d.slice(countMinOut).map((g)=>g[y]));
         const max = d3.max(d.slice(0, d.length-countMaxOut).map((g)=>g[y]));
 
-        const outliersMinArr = d.filter((g) => g[y] <= minValues).slice(0,20);
-        const outliersMaxArr = d.filter((g) => g[y] >= maxValues).slice(d.filter((g) => g[y] >= maxValues).length-20);
+        const outliersMinArr = d.filter((g) => g[y] <= minValues).slice(0,30);
+        const outliersMaxArr = d.filter((g) => g[y] >= maxValues).slice(d.filter((g) => g[y] >= maxValues).length-30);
 
         return { outliersMaxArr, outliersMax ,max, q3, median, q1, min, outliersMin, outliersMinArr };
     })
@@ -47,20 +46,16 @@ router.get('/:variable', async (req, res)=>{
         if(error){
             res(error);
         }else{
+            const projectionSettings = { _id:0, price:1, sex:1,}; //set-up field required for front 
+            projectionSettings[variable] = 1;
+
             const collection = client.db(dbName).collection(collectionName);
-            const cursor = collection.find({});
+            const cursor = collection.find({}).project(projectionSettings);
             const result = await cursor.toArray();
             client.close();
             
             const finalData = calcBoxPlotData(result, variable,'price');
-            finalData.forEach((key)=>{
-                key.value.outliersMaxArr.forEach((shoes)=>{
-                    delete shoes._id;
-                    delete shoes.imageLink;
-                    delete shoes.link;
-                })
-            });
-
+       
             res.json(finalData)
         }
     });
