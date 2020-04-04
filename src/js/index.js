@@ -186,11 +186,10 @@ const changePriceLevelVariables = async (e)=>{
         const newSubcategoryPart = selectedVariable.slice(11);
 
         if(variable !== selectedVariable && !selectedSubcategories){
-
+            console.log("UPDATE");
+            
             //TEST DATA
             let data = [];
-
-            //TEST DATA
             switch(selectedVariable){
                 case 'sex':
                     data = boxPlotSex;
@@ -219,6 +218,8 @@ const changePriceLevelVariables = async (e)=>{
 
             chart.renderChart(data, settings);
         }else{
+            console.log('SORT');
+
             const { chart, settings } = state.priceLevel;
 
             stateCtrl.changeBoxplotSettings('subcategoryPart', newSubcategoryPart);

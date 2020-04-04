@@ -33,6 +33,56 @@ export default class Boxplot {
             rawData: {},
             mainData: {},
         };
+        this.labelsName = {
+            'F':'F',
+            'M':'M',
+            'wszystkie':'Wszystkie',
+            'klapki-i-sandaly': 'Klapki/sandały', 
+            'polbuty': 'Pólbuty', 
+            'kozaki-i-inne': 'Kozaki i inne', 
+            'sportowe':'Sportowe',
+            "japonki":'Japonki',
+            "klapki":'Klapki',
+            "sandaly":'Sandały',
+            "kapcie":'Kapcie',
+            "codzienne":'Codzienne',
+            "wizytowe":'Wizytowe',
+            "glany":'Glany',
+            "trampki":'Trampki',
+            "buty-trekkingowe-i-trapery":'Trekkingowe',
+            "sneakersy":'Sneakersy',
+            "mokasyny":'Mokasyny',
+            "espadryle":'Espadryle',
+            "kalosze":'Kalosze',
+            "trekkingi-i-trapery":'Trapery',
+            "kozaki":'Kozaki',
+            "trzewiki":'Trzewiki',
+            "sztyblety":'Sztyblety',
+            "sniegowce":'Śniegowce',
+            "bieganie":'Do biegania',
+            "buty-do-wody":'Buty do wody',
+            "fitness":'Fitness',
+            "halowki":'Halówki',
+            "pilka-nozna":'Piłka nożna',
+            "koszykowka":'Koszykówka',
+            "tenis":'Tenis',
+            "koturny":'Koturny',
+            "na-obcasie":'Na obcasie',
+            "na-koturnie":'Na koturnie',
+            "baleriny":'Baleriny',
+            "szpilki":'Szpliki',
+            "lordsy":'Lordsy',
+            "eleganckie":'Eleganckie',
+            "plaskie":'Płaskie',
+            "oxfordy":"Oxfordy",
+            "botki":'Botki',
+            "emu":'Emu',
+            "ugg":'Ugg',
+            "oficerki":'Oficerki',
+            "muszkieterki":'Muszkieterki',
+            "kowbojki":'Kowbojki',
+            "trampki-i-tenisowki":'Trampki',
+        }
     }
 
     //CONTROLLERS
@@ -155,6 +205,7 @@ export default class Boxplot {
 
     };
 
+
     //AXIS ------------------------
     createXaxis(){
         this.calcXscale();
@@ -165,7 +216,9 @@ export default class Boxplot {
         const xAxis = bound.append('g')
             .classed(`${mainClass}__xAxis`, true)
             .attr('transform', `translate(0,${boundHeight})`)
-            .call(d3.axisBottom(xScale))
+            .call(d3.axisBottom(xScale));
+
+        xAxis.selectAll('text').text((d)=> this.labelsName[d]);
 
         if(xLabelRotate) xAxis.selectAll('text').attr("y", 15).attr("x", -20).attr('transform', "rotate(-45)");
 
@@ -177,11 +230,11 @@ export default class Boxplot {
         const { elements: {xAxis, xScale}, settings:{ animationTime: {resizeTime}, xLabelRotate, dimension: {boundHeight}} } = this;
 
         xAxis.transition().duration(resizeTime)
-            .attr('transform', `translate(0,${boundHeight})`).call(d3.axisBottom(xScale));
-
+            .attr('transform', `translate(0,${boundHeight})`)
+            .call(d3.axisBottom(xScale))
+            .selectAll('text').text((d)=> this.labelsName[d]);
+        
         if(xLabelRotate) xAxis.selectAll('text').attr("y", 15).attr("x", -20).attr('transform', "rotate(-45)");
-
-        this.elements.xAxis = xAxis;
     }
 
     calcXscale(){
@@ -214,7 +267,6 @@ export default class Boxplot {
         const { elements: { yAxis, yScale }, settings:{ animationTime: { resizeTime } }  } = this; 
 
         yAxis.transition().duration(resizeTime).call(d3.axisLeft(yScale));
-        this.elements.yAxis = yAxis;
     }
 
     calcYscale(){

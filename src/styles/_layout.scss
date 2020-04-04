@@ -232,10 +232,6 @@
         }
     }
 
-    &--priceLevel{
-        // height: 100vh;
-    }
-
     &__background{
         position: absolute;
         left: 0;
@@ -290,22 +286,5 @@
         }
     }
 
-    &__dataVisualization{
-        // height: 95%;
-        padding-top: 2rem;
-
-        &--half{
-            width: 50%;
-        }
-
-        &--long{
-            width: 100%;
-        }
-
-        @media screen and (max-width: $break-small){
-            width: 100%;
-        }
-
-    }
 }
 
