@@ -50,8 +50,8 @@ const appController = async () =>{
 
 
     //PRICE LEVEL
-    const priceLevelData = await dataFinder.getPriceLevelData('sex');
-    createPriceLevelChart(priceLevelData);
+    // const priceLevelData = await dataFinder.getPriceLevelData('sex');
+    createPriceLevelChart(boxPlotSex);
     
 
     // console.log(state.priceLevel);
@@ -215,9 +215,9 @@ const changePriceLevelVariables = async (e)=>{
             if(selectedSubcategory){selectedVariable = selectedVariable.slice(0,11)};
 
             const { priceLevel: { chart, settings }, dataFinder } = state;
-            const priceLevelData = await dataFinder.getPriceLevelData(selectedVariable);
+            // const priceLevelData = await dataFinder.getPriceLevelData(selectedVariable);
 
-            chart.renderChart(priceLevelData, settings);
+            chart.renderChart(data, settings);
         }else{
             const { chart, settings } = state.priceLevel;
 
@@ -242,6 +242,15 @@ const changePriceLevelSort = async (e) =>{
     }
 };
 
+const resizePriceLeve = () =>{
+
+    setTimeout(()=>{
+        const container = htmlElements.priceLevel.chartContainer;
+        const { chart } = state.priceLevel;
+
+        chart.resizeChart(container.offsetWidth, container.offsetHeight);
+    },500);
+};
 
 //EVENT LISTENERS
 const controllersOne = htmlElements.controllersOne;
@@ -254,13 +263,6 @@ variablesController.addEventListener('click', changePriceLevelVariables);
 const sortController = htmlElements.priceLevel.sortController;
 sortController.addEventListener('click', changePriceLevelSort)
 
+window.addEventListener('resize', resizePriceLeve);
 
-const calcCategoryCounter = (data, select) => {
-    const categories = Array.from(new Set(data.map((el)=>el[select])));
-    const finalObj = {};
-    categories.forEach((cat)=>{
-        finalObj[cat] = data.filter((el) => {return el[select] === cat}).length;
-    });
-    return finalObj;
-};
 appController();

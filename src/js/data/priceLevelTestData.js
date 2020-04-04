@@ -3066,7 +3066,7 @@ export const boxPlotSubcat = [
     "key": "buty-do-wody",
     "value": {
       "outliersMaxArr": [],
-      "outliersMax": 439,
+      "outliersMax": 0,
       "max": 439,
       "q3": 349,
       "median": 259,
@@ -3785,7 +3785,7 @@ export const boxPlotSubcat = [
     "key": "kapcie",
     "value": {
       "outliersMaxArr": [],
-      "outliersMax": 549,
+      "outliersMax": 0,
       "max": 549,
       "q3": 249,
       "median": 189,
@@ -6033,7 +6033,7 @@ export const boxPlotSubcat = [
     "key": "trampki-i-tenisowki",
     "value": {
       "outliersMaxArr": [],
-      "outliersMax": 399,
+      "outliersMax": 0,
       "max": 399,
       "q3": 279,
       "median": 234,
@@ -6084,7 +6084,7 @@ export const boxPlotSubcat = [
     "key": "buty-trekkingowe-i-trapery",
     "value": {
       "outliersMaxArr": [],
-      "outliersMax": 849,
+      "outliersMax": 0,
       "max": 849,
       "q3": 469,
       "median": 349,
@@ -6220,7 +6220,7 @@ export const boxPlotSubcat = [
     "key": "halowki",
     "value": {
       "outliersMaxArr": [],
-      "outliersMax": 229,
+      "outliersMax": 0,
       "max": 229,
       "q3": 199.495,
       "median": 169.99,
@@ -6234,7 +6234,7 @@ export const boxPlotSubcat = [
     "key": "koszykowka",
     "value": {
       "outliersMaxArr": [],
-      "outliersMax": 789,
+      "outliersMax": 0,
       "max": 789,
       "q3": 419,
       "median": 329,
@@ -6248,7 +6248,7 @@ export const boxPlotSubcat = [
     "key": "tenis",
     "value": {
       "outliersMaxArr": [],
-      "outliersMax": 749,
+      "outliersMax": 0,
       "max": 749,
       "q3": 459,
       "median": 359,
@@ -6299,7 +6299,7 @@ export const boxPlotSubcat = [
     "key": "glany",
     "value": {
       "outliersMaxArr": [],
-      "outliersMax": 879,
+      "outliersMax": 0,
       "max": 879,
       "q3": 699,
       "median": 474,
@@ -6313,7 +6313,7 @@ export const boxPlotSubcat = [
     "key": "ugg",
     "value": {
       "outliersMaxArr": [],
-      "outliersMax": 1259,
+      "outliersMax": 0,
       "max": 1259,
       "q3": 739,
       "median": 549,

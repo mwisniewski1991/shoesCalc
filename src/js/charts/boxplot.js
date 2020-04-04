@@ -20,6 +20,7 @@ export default class Boxplot {
             animationTime:{
                 updateTime: 300,
                 tooltipTime: 50,
+                resizeTime: 50,
             },
             boxplotWidth: 60,
             circleR: 5,
@@ -81,6 +82,24 @@ export default class Boxplot {
         this.drawMinLines();
         this.drawMaxLines();
         this.drawOutliersMax();
+        this.boxesTooltip()
+    };
+
+    resizeChart(offsetWidth, offsetHeight){
+
+        this.settings.dimension.width = offsetWidth;
+        this.settings.dimension.height = offsetHeight;
+        this.calcDimension();
+        this.redrawXaxis();
+        this.redrawYaxis()
+        
+        this.drawVertivalLine();
+        this.drawBoxes();
+        this.drawMedians();
+        this.drawMinLines();
+        this.drawMaxLines();
+        this.drawOutliersMax();
+        this.boxesTooltip()
     }
 
     //MAIN ELEMENTS
@@ -116,7 +135,7 @@ export default class Boxplot {
 
         const svg = d3.select(container).append('svg')
             .classed(`${mainClass}`, true)
-            .attr('width', width).attr('height',height);
+            // .attr('width', width).attr('height',height);
 
         const bound = svg.append('g')
             .classed(`${mainClass}__bound`, true)
@@ -155,12 +174,12 @@ export default class Boxplot {
 
     redrawXaxis(){
         this.calcXscale();
-        const { elements: { xAxis, xScale }, settings:{ animationTime: { updateTime }, xLabelRotate} } = this;
+        const { elements: {xAxis, xScale}, settings:{ animationTime: {resizeTime}, xLabelRotate, dimension: {boundHeight}} } = this;
 
-        xAxis.transition().duration(updateTime).call(d3.axisBottom(xScale))
+        xAxis.transition().duration(resizeTime)
+            .attr('transform', `translate(0,${boundHeight})`).call(d3.axisBottom(xScale));
 
         if(xLabelRotate) xAxis.selectAll('text').attr("y", 15).attr("x", -20).attr('transform', "rotate(-45)");
-
 
         this.elements.xAxis = xAxis;
     }
@@ -192,9 +211,9 @@ export default class Boxplot {
     redrawYaxis(){
         this.calcYscale();
 
-        const { elements: { yAxis, yScale }, settings:{ animationTime: { updateTime } }  } = this; 
+        const { elements: { yAxis, yScale }, settings:{ animationTime: { resizeTime } }  } = this; 
 
-        yAxis.transition().duration(updateTime).call(d3.axisLeft(yScale));
+        yAxis.transition().duration(resizeTime).call(d3.axisLeft(yScale));
         this.elements.yAxis = yAxis;
     }
 
@@ -325,7 +344,7 @@ export default class Boxplot {
 
     drawVertivalLine(){
         const { elements:{ bound, xScale, yScale },
-                settings:{ mainClass, animationTime: { updateTime } },
+                settings:{ mainClass, animationTime: { resizeTime } },
                 data:{ mainData }
         } = this;   
         const className = `${mainClass}__verticalLine`;
@@ -340,7 +359,7 @@ export default class Boxplot {
                 .attr('y1', (d)=> yScale(d.value.min))
                 .attr('y2', (d)=> yScale(d.value.max)),
             (update) => update
-                .call((update) => update.transition().duration(updateTime)
+                .call((update) => update.transition().duration(resizeTime)
                     .attr('x1', (d)=> xScale(d.key))
                     .attr('x2', (d)=> xScale(d.key))
                     .attr('y1', (d)=> yScale(d.value.min))
