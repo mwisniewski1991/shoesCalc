@@ -185,45 +185,45 @@ const changePriceLevelVariables = async (e)=>{
         //check from data in html which parat if subcategory user choose 
         const newSubcategoryPart = selectedVariable.slice(11);
 
-        if(variable !== selectedVariable && !selectedSubcategories){
-            console.log("UPDATE");
-            
-            //TEST DATA
-            let data = [];
-            switch(selectedVariable){
-                case 'sex':
-                    data = boxPlotSex;
-                    break;
-                case 'category':
-                    data = boxPlotCat;
-                    break;
-                case 'subcategoryOne':
-                    data = boxPlotSubcat;
-                    break;
-                case 'subcategoryTwo':
-                    data = boxPlotSubcat;
-                    break;
-            };
-            
-            //check if current selection if subcategory
-            let selectedSubcategory = selectedVariable.slice(0,11) === "subcategory" ? true : false; 
-            stateCtrl.changeBoxplotSettings('selectedSubcategory', selectedSubcategory);
-            stateCtrl.changeBoxplotSettings('subcategoryPart', newSubcategoryPart);
-            stateCtrl.changeBoxplotSettings('variable', selectedVariable);
+        if(variable !== selectedVariable){
+            if(!selectedSubcategories){
 
-            if(selectedSubcategory){selectedVariable = selectedVariable.slice(0,11)};
+                //TEST DATA
+                let data = [];
+                switch(selectedVariable){
+                    case 'sex':
+                        data = boxPlotSex;
+                        break;
+                    case 'category':
+                        data = boxPlotCat;
+                        break;
+                    case 'subcategoryOne':
+                        data = boxPlotSubcat;
+                        break;
+                    case 'subcategoryTwo':
+                        data = boxPlotSubcat;
+                        break;
+                };
+                
+                //check if current selection if subcategory
+                let selectedSubcategory = selectedVariable.slice(0,11) === "subcategory" ? true : false; 
+                stateCtrl.changeBoxplotSettings('selectedSubcategory', selectedSubcategory);
+                stateCtrl.changeBoxplotSettings('subcategoryPart', newSubcategoryPart);
+                stateCtrl.changeBoxplotSettings('variable', selectedVariable);
+    
+                if(selectedSubcategory){selectedVariable = selectedVariable.slice(0,11)};
+    
+                const { priceLevel: { chart, settings }, dataFinder } = state;
+                // const priceLevelData = await dataFinder.getPriceLevelData(selectedVariable);
+    
+                chart.renderChart(data, settings);
+            }else{
+                const { chart, settings } = state.priceLevel;
+                stateCtrl.changeBoxplotSettings('subcategoryPart', newSubcategoryPart);
+                stateCtrl.changeBoxplotSettings('variable', selectedVariable);
 
-            const { priceLevel: { chart, settings }, dataFinder } = state;
-            // const priceLevelData = await dataFinder.getPriceLevelData(selectedVariable);
-
-            chart.renderChart(data, settings);
-        }else{
-            console.log('SORT');
-
-            const { chart, settings } = state.priceLevel;
-
-            stateCtrl.changeBoxplotSettings('subcategoryPart', newSubcategoryPart);
-            chart.sortChart(settings);
+                chart.sortChart(settings);
+            }
         }
     };
 
