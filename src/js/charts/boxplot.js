@@ -23,7 +23,7 @@ export default class Boxplot {
                 resizeTime: 50,
             },
             boxplotWidth: 60,
-            circleR: 5,
+            circleR: 10,
             xLabelRotate: false,
         };
 
@@ -86,7 +86,7 @@ export default class Boxplot {
     }
 
     //CONTROLLERS
-    renderChart(data, { sortType, selectedSubcategory, subcategoryPart}){
+    renderChart(data, { sortType, selectedSubcategory, subcategoryPart, smallScreen}){
         
         if(!this.elements.svg){this.createBound();};
 
@@ -94,7 +94,7 @@ export default class Boxplot {
         this.sortData(sortType);
 
         this.selectData(selectedSubcategory, subcategoryPart)
-        this.updateSettings(selectedSubcategory);
+        this.updateSettings(selectedSubcategory, smallScreen);
         
         
         if(!this.elements.xAxis){
@@ -135,10 +135,11 @@ export default class Boxplot {
         this.boxesTooltip()
     };
 
-    resizeChart(offsetWidth, offsetHeight){
+    resizeChart(offsetWidth, offsetHeight, {selectedSubcategory, smallScreen}){
 
         this.settings.dimension.width = offsetWidth;
         this.settings.dimension.height = offsetHeight;
+        this.updateSettings(selectedSubcategory, smallScreen);
         this.calcDimension();
         this.redrawXaxis();
         this.redrawYaxis()
@@ -164,18 +165,24 @@ export default class Boxplot {
 
     selectData(selectedSubcategory, subcategoryPart){
         if(selectedSubcategory){
-            this.data.mainData = subcategoryPart === "One" ? this.data.sortedData.slice(0,21) : this.data.sortedData.slice(21);
+            // this.data.mainData = subcategoryPart === "One" ? this.data.sortedData.slice(0,21) : this.data.sortedData.slice(21);
+            this.data.mainData = subcategoryPart === "One" ? this.data.sortedData.slice(0,11) : this.data.sortedData.slice(11,21);
         }else{
             this.data.mainData = this.data.sortedData;
         };
     }
 
-    updateSettings(selectedSubcategory){
+    updateSettings(selectedSubcategory, smallScreen){
 
-        this.settings.boxplotWidth = selectedSubcategory === false ? 60 : 30; 
-        this.settings.circleR = selectedSubcategory === false ? 10 : 5; 
-        this.settings.xLabelRotate = selectedSubcategory === false ? false : true; 
-
+        if(smallScreen){
+            this.settings.boxplotWidth = selectedSubcategory === false ? 40 : 15; 
+            this.settings.circleR = selectedSubcategory === false ? 7 : 4; 
+            this.settings.xLabelRotate = selectedSubcategory === false ? false : true;
+        }else{
+            this.settings.boxplotWidth = selectedSubcategory === false ? 60 : 30; 
+            this.settings.circleR = selectedSubcategory === false ? 10 : 5; 
+            this.settings.xLabelRotate = selectedSubcategory === false ? false : true; 
+        }
     }
 
     createBound(){
@@ -304,6 +311,7 @@ export default class Boxplot {
                     .attr('x', (d)=> xScale(d.key) - boxplotWidth/2)
                     .attr('y', (d)=> yScale(d.value.q3))
                     .attr('height', (d)=> yScale(d.value.q1) - yScale(d.value.q3))
+                    .attr('width', boxplotWidth)
                 ),
                 (exit) => exit.remove()
             )

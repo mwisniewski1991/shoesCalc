@@ -91,6 +91,7 @@ export const state = {
             subcategoryPart: 'one', //on screen can be shown only half of data from subcategory
             variable: 'sex',
             sortType: 'median',
+            smallScreen: true,
         },
     },
 };

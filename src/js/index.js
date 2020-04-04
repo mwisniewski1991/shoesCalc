@@ -85,10 +85,12 @@ const createMinmaxSection = (data)=>{
 const createPriceLevelChart = (data) => {
 
     const div = htmlElements.priceLevel.chartContainer;
+
+    stateCtrl.changeBoxplotSettings('smallScreen', window.screen.width <= 480 ? true : false); //check on load if screen is big or small
     state.priceLevel.chart = new Boxplot('priceLevel','boxplot', div);
+
     const { chart, settings } = state.priceLevel;
     chart.renderChart(data, settings);
-
 };
 
 
@@ -243,15 +245,15 @@ const changePriceLevelSort = async (e) =>{
     }
 };
 
-const resizePriceLeve = () =>{
+const resizePriceLeve = ui.debounce(()=>{
+    stateCtrl.changeBoxplotSettings('smallScreen', window.screen.width <= 480 ? true : false);
+    const container = htmlElements.priceLevel.chartContainer;
+    const { chart, settings } = state.priceLevel;
 
-    setTimeout(()=>{
-        const container = htmlElements.priceLevel.chartContainer;
-        const { chart } = state.priceLevel;
+    chart.resizeChart(container.offsetWidth, container.offsetHeight, settings);
+},250)
 
-        chart.resizeChart(container.offsetWidth, container.offsetHeight);
-    },500);
-};
+
 
 //EVENT LISTENERS
 const controllersOne = htmlElements.controllersOne;
