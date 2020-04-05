@@ -123,7 +123,7 @@
             justify-content: center;
         }
     }
-    
+
     &__list{
         display: flex;
         list-style: none;
@@ -140,10 +140,12 @@
         cursor: pointer;
         transition: background-color $transitionTime;
 
-        &:hover{
-            background-color: rgba(31, 2, 2, 0.5);
+        @media screen and (min-width: $break-small){
+            &:hover{
+                background-color: rgba(31, 2, 2, 0.5);
+            }
         }
-
+     
         &--bigScreenOnly{
             @media screen and (max-width: $break-small){
                 display: none;
