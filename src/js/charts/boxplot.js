@@ -92,10 +92,9 @@ export default class Boxplot {
 
         this.loadData(data);
         this.sortData(sortType);
-
-        this.selectData(selectedSubcategory, subcategoryPart)
         this.updateSettings(selectedSubcategory, smallScreen);
-        
+        this.selectData(selectedSubcategory, subcategoryPart, smallScreen)
+
         
         if(!this.elements.xAxis){
             this.createXaxis();
@@ -119,9 +118,10 @@ export default class Boxplot {
         this.boxesTooltip()
     };
 
-    sortChart({ sortType, selectedSubcategory, subcategoryPart }){
+    sortChart({ sortType, selectedSubcategory, subcategoryPart, smallScreen }){
         this.sortData(sortType);
-        this.selectData(selectedSubcategory, subcategoryPart)
+        this.updateSettings(selectedSubcategory, smallScreen);
+        this.selectData(selectedSubcategory, subcategoryPart, smallScreen);
         
         this.redrawXaxis()
         this.redrawYaxis();
@@ -153,7 +153,7 @@ export default class Boxplot {
         this.boxesTooltip()
     }
 
-    //MAIN ELEMENTS
+    //DATA/SETTINGS MANIPULATION
     loadData(data){
         this.data.rawData = data;
     };
@@ -163,13 +163,35 @@ export default class Boxplot {
         this.data.sortedData = rawData.sort((a,b) => b.value[sortType]-a.value[sortType]);
     }
 
-    selectData(selectedSubcategory, subcategoryPart){
-        if(selectedSubcategory){
-            // this.data.mainData = subcategoryPart === "One" ? this.data.sortedData.slice(0,21) : this.data.sortedData.slice(21);
-            this.data.mainData = subcategoryPart === "One" ? this.data.sortedData.slice(0,11) : this.data.sortedData.slice(11,21);
+    selectData(selectedSubcategory, subcategoryPart, smallScreen){
+
+        if(smallScreen){
+            if(selectedSubcategory){
+                switch(subcategoryPart){
+                    case 'One':
+                        this.data.mainData = this.data.sortedData.slice(0,11);
+                        break;
+                    case 'Two':
+                        this.data.mainData = this.data.sortedData.slice(11,21);
+                        break;
+                    case 'Three':
+                        this.data.mainData = this.data.sortedData.slice(21,31);
+                        break;
+                    case 'Four':
+                        this.data.mainData = this.data.sortedData.slice(31);
+                        break;
+                }       
+
+            }else{
+                this.data.mainData = this.data.sortedData;
+            };
         }else{
-            this.data.mainData = this.data.sortedData;
-        };
+            if(selectedSubcategory){
+                this.data.mainData = subcategoryPart === "One" ? this.data.sortedData.slice(0,21) : this.data.sortedData.slice(21);
+            }else{
+                this.data.mainData = this.data.sortedData;
+            };
+        }
     }
 
     updateSettings(selectedSubcategory, smallScreen){
@@ -185,6 +207,7 @@ export default class Boxplot {
         }
     }
 
+    //MAIN ELEMENTS
     createBound(){
         this.calcDimension();
 
@@ -283,7 +306,7 @@ export default class Boxplot {
 
         const yScale = d3.scaleLinear()
             .domain([0, d3.max(mainData.map((el)=> el.value.outliersMax))])
-            .range([boundHeight,0])
+            .range([boundHeight,0]);
 
         this.elements.yScale = yScale;
     }

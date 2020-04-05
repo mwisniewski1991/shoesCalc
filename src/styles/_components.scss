@@ -663,7 +663,7 @@
     &__chartContainer{
         position: relative;
         width: 100%;
-        height: 70%;
+        height: 72%;
 
         @media screen and (max-width: $break-midmedium){
             height: 450px;
@@ -672,48 +672,44 @@
 
     &__controller{
         width: 100%;
-        height: 20%;   
+        height: 18%;   
 
         display: grid;
         grid-template-columns: 1fr 1fr;
 
 
         @media screen and (max-width: $break-midmedium){
-            height: 100px;   
+            height: 160px;   
         }
        
     }
 
     &__queryBox{
         display: grid;
-        grid-template-columns: repeat(2, 50%);
-        grid-template-rows: 39%  repeat(3, 30%);
-        grid-gap: .3rem;
-        grid-template-areas: 
-        "title title"
-        "sex category"
-        "subcategoryOne subcategoryTwo";
-
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 40% repeat(2, 30%);
         align-items: center;
         justify-items: center;
 
         &:nth-child(2){
             border-left: 1px dotted $colorWhite;
         }
-
+      
         @media screen and (max-width: $break-midmedium){
             justify-items: stretch;
+            grid-template-rows: 40px repeat(3, 40px);
         }
     };
 
     &__title{
-        font-size: 2rem;
+        grid-column: span 2;
         text-align: center;
-        grid-area: title;
+        font-size: 2rem;
     }
 
     &__radioBox{
         width: 55%;
+        padding: .2rem;
 
         @media screen and (max-width: $break-midmedium){
             width: 75%;
@@ -723,11 +719,13 @@
             width: 100%;
         }
         
-        &--one{grid-area: sex;}
-        &--two{grid-area: category;}
-        &--three{grid-area: subcategoryOne;}
-        &--four{grid-area: subcategoryTwo;}
+        &--smallScreenOnly{
+            display: none;
 
+            @media screen and (max-width: $break-midmedium){
+                display: block;
+            }
+        }
     }
 }
 

@@ -205,6 +205,12 @@ const changePriceLevelVariables = async (e)=>{
                     case 'subcategoryTwo':
                         data = boxPlotSubcat;
                         break;
+                    case 'subcategoryThree':
+                        data = boxPlotSubcat;
+                        break;
+                    case 'subcategoryFour':
+                        data = boxPlotSubcat;
+                        break;
                 };
                 
                 //check if current selection if subcategory
@@ -246,13 +252,12 @@ const changePriceLevelSort = async (e) =>{
 };
 
 const resizePriceLeve = ui.debounce(()=>{
-    stateCtrl.changeBoxplotSettings('smallScreen', window.screen.width <= 480 ? true : false);
+    stateCtrl.changeBoxplotSettings('smallScreen', window.screen.width <= 720 ? true : false);
     const container = htmlElements.priceLevel.chartContainer;
     const { chart, settings } = state.priceLevel;
 
     chart.resizeChart(container.offsetWidth, container.offsetHeight, settings);
 },250)
-
 
 
 //EVENT LISTENERS
