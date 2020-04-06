@@ -4,7 +4,7 @@
 ## Goal:
 Create app where user can check shoes data and play with them.
 
-### Data source
+## Data source
 Data has been scraped from online store. In order to do that I used python and 'beautifulsoup' libraries.
 MongoDB has been chosen as storage for this project.
 Database has 90 611 documents.
@@ -13,11 +13,11 @@ Fields in database:
 Not all fields has been used in project because I do not want to create too big project.
 
 ## Section in project.
-### Breakdown
+#### Breakdown
 
-### Minmax
+#### Minmax
 
-### PriceLevel
+#### PriceLevel
 Main object of this section is box plot. This chart show price diffrences between groups.Each group is on X axis, Price is on Y axis.
 The essence of this plot is in boxes. 
 Line in center of boxes show where is median for group, it means thah 50% of records is above this value and 50% is less. 
@@ -33,14 +33,14 @@ It is also possible to sort boxes acording to four option. Sort by median, min v
 
 
 ## Stack
-### Front-end
+#### Front-end
 SASS (SCSS)
 Vanilla JS
 JS libraries:
 - D3.js,
 Parcel bundler
 
-### Back-end
+#### Back-end
 Node.js
 Expess.js
 MongoDB
