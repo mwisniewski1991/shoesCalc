@@ -14,9 +14,9 @@ JS libraries:
 Parcel bundler
 
 #### Back-end
-Node.js
-Expess.js
-MongoDB
+Node.js\
+Expess.js\
+MongoDB\
 
 ## Data source
 Data has been scraped from online store. In order to do that I used python and 'beautifulsoup' libraries.
