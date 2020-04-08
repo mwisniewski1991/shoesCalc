@@ -188,13 +188,7 @@
             flex-direction: column;
         }
     }
-
-    &--minmax{
-        background-image: $mainGradient;
-        @media screen and (max-width: $break-medium){
-            height: auto;
-        }
-    }
+ 
 
     &__background{
         position: absolute;

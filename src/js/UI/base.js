@@ -11,12 +11,12 @@ export const htmlElements = {
         loader: document.querySelector('.chartBreakdown__loaderContainer--discountsBreakdown'),
     },
     minmax:{
-        controller: document.querySelector('.minmaxBlock__item--controller'),
+        controller: document.querySelector('.minmaxBox__item--controller'),
         elements:{
-            maleMax: document.querySelector('.minmaxBlock__item--maxMale'),
-            maleMin: document.querySelector('.minmaxBlock__item--minMale'),
-            femaleMax: document.querySelector('.minmaxBlock__item--maxFemale'),
-            femaleMin: document.querySelector('.minmaxBlock__item--minFemale'),
+            maleMax: document.querySelector('.minmaxBox__item--maxMale'),
+            maleMin: document.querySelector('.minmaxBox__item--minMale'),
+            femaleMax: document.querySelector('.minmaxBox__item--maxFemale'),
+            femaleMin: document.querySelector('.minmaxBox__item--minFemale'),
         },
         loaders: [...document.querySelectorAll('.shoesContainer__loaderContainer')],
     },

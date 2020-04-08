@@ -323,28 +323,42 @@
 }
 
 //MINMAX
-.minmaxBlock{
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 2fr 2fr;
-    grid-template-rows: 160px 200px 200px;
-    grid-template-areas: 
-    "ctrl male female"
-    "max maxMale maxFemale"
-    "min minMale minFemale";
+.minmaxBox{
+    background-image: $mainGradient;
+ 
 
-    @media screen and (max-width: $break-medium){
-        margin-top: 3rem;
-        grid-template-columns: 1fr 2fr;
-        grid-template-rows: 90px 65px 200px 200px 66px 200px 200px;
+    &__title{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__block{
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 2fr 2fr;
+        grid-template-rows: 160px 200px 200px;
         grid-template-areas: 
-            "ctrl ctrl"
-            "male male"
-            "max maxMale"
-            "min minMale"
-            "female female"
-            "maxTwo maxFemale"
-            "minTwo minFemale";
+        "ctrl male female"
+        "max maxMale maxFemale"
+        "min minMale minFemale";
+    
+        @media screen and (max-width: $break-medium){
+            margin-top: 3rem;
+            grid-template-columns: 1fr 2fr;
+            grid-template-rows: 90px 65px 200px 200px 66px 200px 200px;
+            grid-template-areas: 
+                "ctrl ctrl"
+                "male male"
+                "max maxMale"
+                "min minMale"
+                "female female"
+                "maxTwo maxFemale"
+                "minTwo minFemale";
+        }
+        
+
     }
 
     &__item{
@@ -408,6 +422,8 @@
         height: 100%;
         width: 100%;
     }
+
+
 }
 
 .minmaxCtrl{
