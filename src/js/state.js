@@ -49,25 +49,12 @@ export const state = {
         data: {},
         chart: {},
         category:{
-            currentSelection: true,
+            currentSelected: true,
             currentIndex: 1,
             maxIndex: 5,
         }, 
         subcategory:{
-            currentSelection: false,
-            currentIndex: 1,
-            maxIndex: 41,
-        },
-    },
-    discountsBreakdown: {
-        chart: {},
-        category:{
-            currentSelection: true,
-            currentIndex: 1,
-            maxIndex: 5,
-        }, 
-        subcategory:{
-            currentSelection: false,
+            currentSelected: false,
             currentIndex: 1,
             maxIndex: 41,
         },
@@ -94,6 +81,10 @@ export const state = {
             smallScreen: true,
         },
     },
+};
+
+export const changeSexbreakdownSettings = (selectionType, option, newValue) => {
+    state.sexBreakdown[selectionType][option] = newValue;
 };
 
 export const changeBoxplotSettings = (option, newValue) =>{

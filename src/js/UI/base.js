@@ -3,12 +3,7 @@ export const htmlElements = {
     sexBreakdown: {
         chartContainer: document.querySelector('#sexDivide__chartContainer'),
         controller: document.querySelector('#sexBreakdown__controller'),
-        loader: document.querySelector('.chartBreakdown__loaderContainer--sexBreakdown'),
-    },
-    discountsBreakdown: {
-        chartContainer: document.querySelector('#discountsBreakdown__chartContainer'),
-        controller: document.querySelector('#discountsBreakdown__controller'),
-        loader: document.querySelector('.chartBreakdown__loaderContainer--discountsBreakdown'),
+        loader: document.querySelector('.pieContainer__loaderContainer--sexBreakdown'),
     },
     minmax:{
         controller: document.querySelector('.minmaxBox__item--controller'),

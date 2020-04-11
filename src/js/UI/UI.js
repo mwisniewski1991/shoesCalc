@@ -18,7 +18,7 @@ export const debounce = (func, wait, immediate)=>{
 
 export const changeCatNumber = (chartType, type, newIndex)=>{
 
-    const controller = htmlElements[chartType].controller
+    const controller = htmlElements.sexBreakdown.controller
     const spanId = type === 'category' ? '.catNumber' : '.subcatNumber';
     const spanElement = controller.querySelector(spanId);
     spanElement.innerText = newIndex
@@ -59,7 +59,7 @@ export const createMinmaxElement = (DOMelement, shoesObject)=>{
 
 export const breakdownLoaders = (chartType) => {
     const loader = htmlElements[chartType].loader;
-    loader.classList.toggle('chartBreakdown__loaderContainer--hidden')
+    loader.classList.toggle('pieContainer__loaderContainer--hidden')
     const bigCircles = loader.querySelector('.loader');
     const smallCircles = [...loader.querySelectorAll('.loader__small')];
 

@@ -178,10 +178,9 @@
 .section{
     position: relative;
     padding: 5.5rem .5rem .5rem .5rem;
-    // height: 100vh;   
 
-    display: flex;
-    flex-wrap: wrap;
+    // display: flex;
+    // flex-wrap: wrap;
 
     &--breakdown{
         @media screen and (max-width: $break-small){
@@ -215,19 +214,7 @@
         }
     }
 
-    &__title{
-        // height: 5%;
-        width: 100%;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        &--blackFont{
-            // color: $colorBlack;
-        }
-    }
-   
+ 
     &__chartBlock{
 
         &--half{

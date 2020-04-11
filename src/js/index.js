@@ -7,13 +7,12 @@ import Boxplot from './charts/boxplot';
 import * as ui from './UI/UI';
 import { htmlElements } from './UI/base';
 
-// import { testData } from './data/testDataMinmax.js/testData';
+import { sexBreakdownTestData, sexBreakdownTestDataTwo } from './data/sexBreakdownTestData';
 import { minmaxTestData } from './data/minmaxTestData';
 import { boxPlotSex, boxPlotCat, boxPlotSubcat} from './data/priceLevelTestData';
 
 // console.log(boxPlotSubcat.slice(0,20));
 // console.log(boxPlotSubcat.slice(20));
-
 
 const { state } = stateCtrl;
 
@@ -22,7 +21,6 @@ const appController = async () =>{
     //START LOADERS
     ui.minmaxLoaders();
     ui.breakdownLoaders('sexBreakdown');
-    ui.breakdownLoaders('discountsBreakdown');
 
     state.dataFinder = new DataFinder();
 
@@ -34,13 +32,8 @@ const appController = async () =>{
     //BREAKDOWN
     // const sexBreakdownData = calcCategoryCounter(dataSet, 'sex'); //TEST DATA
     // const sexBreakdownData = await dataFinder.getCounterData('sexBreakdown','category','wszystkie');
-    // createSexDivideChart(sexBreakdownData); 
+    createSexDivideChart(sexBreakdownTestData); 
     ui.breakdownLoaders('sexBreakdown');
-
-    // const discountsData = calcCategoryCounter(dataSet, 'priceCat'); //TEST DATA
-    // const discountsData = await dataFinder.getCounterData('discountsBreakdown','category','wszystkie');
-    // createDiscountsChart(discountsData)
-    ui.breakdownLoaders('discountsBreakdown');
 
 
     //MINMAX SECTION
@@ -62,13 +55,6 @@ const createSexDivideChart = (data) => {
     const div = htmlElements.sexBreakdown.chartContainer;
     state.sexBreakdown.chart = new PieChart('sexDivide', 'pieChart', div);
     const { sexBreakdown : { chart } } = state;
-    chart.renderChart(data);
-};
-
-const createDiscountsChart = (data) => {
-    const div = htmlElements.discountsBreakdown.chartContainer;
-    state.discountsBreakdown.chart = new PieChart('discountsBreakdown', 'pieChart', div);
-    const { discountsBreakdown : { chart } } = state;
     chart.renderChart(data);
 };
 
@@ -95,10 +81,68 @@ const createPriceLevelChart = (data) => {
 
 
 //FUNCTIONS FOR EVENT LISTENERS
-//pie / breakdown
-const changeSelection = async (e)=>{
+//SEX BREAKDOWN
+const changeSexBreakdownSelection = async (e) =>{
     //BASED OND USER CLICK FUNCTION CHANGE USER INTERFACE AND UPDATES CHARTS
+    if (e.target.matches('.pieCtrl__button')){
+        const target = e.target;
+        const changeIndex = parseInt(target.value);
+        const selectionType = state.sexBreakdown.category.currentSelected === true ? 'category' : 'subcategory';
 
+        const { currentIndex, maxIndex } = state.sexBreakdown[selectionType];
+        const list = state.shoesList[selectionType];
+        const newIndex = currentIndex + changeIndex; 
+
+        
+        if(newIndex > 0 && newIndex <= maxIndex){
+            const { sexBreakdown:{chart}, dataFinder } = state;
+            const filter = list[newIndex-1]; //check what category has to been download from database
+
+            chart.updateChart(sexBreakdownTestDataTwo) //TEST
+            
+            stateCtrl.changeSexbreakdownSettings(selectionType, 'currentIndex', newIndex);
+            
+            // ui.breakdownLoaders('sexBreakdown');
+            ui.changeCatNumber('sexBreakdown',selectionType, newIndex);
+            ui.changeMainSpan('sexBreakdown', newIndex, list);
+
+            // const piechartData = await dataFinder.getCounterData('sexBreakdown',selectionType, filter);
+            // chart.updateChart(piechartData)
+
+            // ui.breakdownLoaders('sexBreakdown');
+        }
+    }
+};
+const changeSexBreakdownType = async (e) =>{
+    
+    if (e.target.matches('.radio__input')){
+
+        const { sexBreakdown:{ chart }, dataFinder } = state;
+        const selectionType = e.target.dataset.selectiontype
+        const { currentIndex } = state.sexBreakdown[selectionType];
+        const list = state.shoesList[selectionType];
+
+        stateCtrl.changeSexbreakdownSettings('category', 'currentSelected', false); //reset value in state
+        stateCtrl.changeSexbreakdownSettings('category', 'currentSelected', false); //reset value in state
+        stateCtrl.changeSexbreakdownSettings(selectionType, 'currentSelected', false); //set new value
+
+        ui.changeMainSpan('sexBreakdown', currentIndex, list)
+
+        // ui.breakdownLoaders('sexBreakdown');
+        // const filter = list[currentIndex-1];
+        // const piechartData = await dataFinder.getCounterData('sexBreakdown',selectionType, filter);
+        // chart.updateChart(piechartData)
+        // ui.breakdownLoaders('sexBreakdown');
+    }
+};
+const pieController = htmlElements.sexBreakdown.controller;
+pieController.addEventListener('click', changeSexBreakdownSelection)
+pieController.addEventListener('click', changeSexBreakdownType)
+
+
+//MINMAX
+const changeSelection = async (e)=>{
+    
     const target = e.target;
     const className = target.classList[0];
     
@@ -175,7 +219,8 @@ const changeType = async (e)=>{
     }
 };
 
-//boxplot / pricelevel
+
+//PRICE LEVEL
 const changePriceLevelVariables = async (e)=>{
 
     if (e.target.matches('.radio__input')){
@@ -259,12 +304,6 @@ const resizePriceLeve = ui.debounce(()=>{
     chart.resizeChart(container.offsetWidth, container.offsetHeight, settings);
 },250)
 
-
-//EVENT LISTENERS
-const controllersOne = htmlElements.controllersOne;
-controllersOne.forEach((contr) => contr.addEventListener('click', changeSelection))
-controllersOne.forEach((contr) => contr.addEventListener('click', changeType))
-
 const variablesController = htmlElements.priceLevel.variablesController;
 variablesController.addEventListener('click', changePriceLevelVariables);
 
@@ -272,5 +311,16 @@ const sortController = htmlElements.priceLevel.sortController;
 sortController.addEventListener('click', changePriceLevelSort)
 
 window.addEventListener('resize', resizePriceLeve);
+
+
+
+
+// const controllersOne = htmlElements.controllersOne;
+// controllersOne.forEach((contr) => contr.addEventListener('click', changeSelection))
+// controllersOne.forEach((contr) => contr.addEventListener('click', changeType))
+
+//PRICE LEVEL
+
+
 
 appController();
