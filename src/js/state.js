@@ -48,6 +48,9 @@ export const state = {
     sexBreakdown: {
         data: {},
         chart: {},
+        settings: {
+            smallScreen: false,
+        },
         category:{
             currentSelected: true,
             currentIndex: 1,

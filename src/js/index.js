@@ -48,16 +48,18 @@ const appController = async () =>{
     // createPriceLevelChart(priceLevelData);
     ui.priceLevelLoaders();
     
-
-    // console.log(state.priceLevel);
 };
 
 const createSexDivideChart = (data) => {
     //SEX DIVIDE CHART
     const div = htmlElements.sexBreakdown.chartContainer;
+
+    stateCtrl.changeSexbreakdownSettings('settings', 'smallScreen', window.screen.width <= 480 ? true : false);
     state.sexBreakdown.chart = new PieChart('sexDivide', 'pieChart', div);
-    const { sexBreakdown : { chart } } = state;
-    chart.renderChart(data);
+
+    const { sexBreakdown : { chart, settings } } = state;
+
+    chart.renderChart(data, settings);
 };
 
 const createMinmaxSection = (data)=>{
@@ -267,6 +269,7 @@ const changePriceLevelSort = async (e) =>{
 
 const resizePriceLeve = ui.debounce(()=>{
     stateCtrl.changeBoxplotSettings('smallScreen', window.screen.width <= 720 ? true : false);
+
     const container = htmlElements.priceLevel.chartContainer;
     const { chart, settings } = state.priceLevel;
 
@@ -274,14 +277,12 @@ const resizePriceLeve = ui.debounce(()=>{
 },250)
 
 const resizePieChart = ui.debounce(()=>{
+    stateCtrl.changeSexbreakdownSettings('settings', 'smallScreen', window.screen.width <= 480 ? true : false);
 
     const container = htmlElements.sexBreakdown.chartContainer;
-    const { chart } = state.sexBreakdown;
+    const { chart, settings } = state.sexBreakdown;
 
-    console.log(container.offsetWidth);
-    console.log(container.offsetHeight);
-
-    chart.resizeChart(container.offsetWidth, container.offsetHeight);
+    chart.resizeChart(container.offsetWidth, container.offsetHeight, settings);
 },250)
 
 

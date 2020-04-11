@@ -31,8 +31,7 @@ export default class PieChart{
     }
 
     //CONTROLLER ---------------------------------------------------------------------
-  
-    renderChart(data){
+    renderChart(data, { smallScreen }){
         this.createSvg();
         this.loadData(data);
 
@@ -44,7 +43,7 @@ export default class PieChart{
         this.addNumbersLabels();
         this.addMainNumber();
 
-        this.addHoverEffect();
+        this.addHoverEffect(smallScreen);
 
     }
     
@@ -60,8 +59,7 @@ export default class PieChart{
         this.updateMainNumber();
     }
 
-    resizeChart(newWidth, newHeight){
-        console.log("resize")
+    resizeChart(newWidth, newHeight, { smallScreen }){
         this.settings.dimension.width = newWidth;
         this.settings.dimension.height = newHeight;
         
@@ -70,8 +68,9 @@ export default class PieChart{
 
         this.repositionPieContainer()
         this.drawPie();
+
+        this.addHoverEffect(smallScreen);
     }
-    //CONTROLLER ---------------------------------------------------------------------
 
     //MAIN FUNCTION ---------------------------------------------------------------------
     loadData(data){
@@ -112,7 +111,6 @@ export default class PieChart{
         this.elements.pieContainer
             .attr('transform', `translate(${transformX}, ${transformY})`);
     }
-    //MAIN FUNCTION ---------------------------------------------------------------------
 
     //DATA CALCULATION
     calcPieData(){
@@ -122,20 +120,14 @@ export default class PieChart{
     }
 
     createArcGenerator(){
-        
         const { dimension: { width, height, margins } } = this.settings;
-        const innerRadius = width*0.13;
+        const innerRadius = 90;
         const outerRadius = Math.min(width, height) / 2 - margins.pieMargin;
-        
-        console.log(width)
-        console.log(width/6);
-        console.log(width*0.2);
 
         this.settings.arcGenerator = d3.arc()
             .innerRadius(innerRadius)
             .outerRadius(outerRadius)
     }
-    //DATA CALCULATION
 
     //PIE/DONUT  ------------------------------------------------------------------------------------
     drawPie(){
@@ -191,7 +183,6 @@ export default class PieChart{
             .attr("transform", (d) => `translate(${arcGenerator.centroid(d)})`)
             .each(function(d){ this._current = d;});
     }
-    
 
     updateLabels(){
         const { pieData } = this.data;
@@ -288,23 +279,15 @@ export default class PieChart{
         .style('opacity', 1)
         .text(sum)
     }
-    //PIE/DONUT  -----------------------------------------------------------------------------------
  
     //ADDITIONAL -----------------------------------------------------------------------------------
     changeName(name){
-
         switch(name){
             case 'F':
                 return 'Damskie'
                 break;
             case 'M':
                 return 'Męskie'
-                break;
-            case 'Regular':
-                return 'Standardowa'
-                break;
-            case 'Special':
-                return 'Przecena'
                 break;
         }
     };
@@ -321,50 +304,48 @@ export default class PieChart{
         const transY = arcGenerator.centroid(d)[1] + 25
         return `translate(${transX}, ${transY})`
     };
-    //ADDITIONAL ----------------------------------------------------------------------------------- 
 
     //INTERACTIVITY -----------------------------------------------------------------------------------
-    addHoverEffect(){
-
+    addHoverEffect(smallScreen){
         const { pieContainer } = this.elements;
         const { mainClass, arcGenerator } = this.settings;
-        const slicesGroup = pieContainer.selectAll(`.${mainClass}__slicesGroup`)
+        const slicesGroup = pieContainer.selectAll(`.${mainClass}__slicesGroup`);
 
-        slicesGroup.on('mouseover', (d,i,nodes)=>{
+        if(!smallScreen){
+            slicesGroup.on('mouseover', (d,i,nodes)=>{
 
-            pieContainer.selectAll(`.${mainClass}__slices--${d.data.key}`)
-            .style('opacity', 1)
-            .style('transform', 'scale(1.05)')
-            
-            const xModify = i === 1 ? -10 : 10 
-            const transX = arcGenerator.centroid(d)[0] + xModify
-            const transY = arcGenerator.centroid(d)[1]
-
-            pieContainer.selectAll(`.${mainClass}__labels--${i}`)
-                .transition().duration(300)
-                .attr("transform", `translate(${transX}, ${transY}) scale(1.2)`)
-
-
-            pieContainer.selectAll(`.${mainClass}__numLabels--${i}`)
-                .transition().delay(200).duration(300)
+                pieContainer.selectAll(`.${mainClass}__slices--${d.data.key}`)
                 .style('opacity', 1)
+                .style('transform', 'scale(1.05)')
+                
+                const xModify = i === 1 ? 8 : -8 
+                const transX = arcGenerator.centroid(d)[0] + xModify
+                const transY = arcGenerator.centroid(d)[1]
 
-        })
+                pieContainer.selectAll(`.${mainClass}__labels--${i}`)
+                    .transition().duration(300)
+                    .attr("transform", `translate(${transX}, ${transY}) scale(1.2)`)
 
-        slicesGroup.on('mouseout', (d,i,nodes)=>{
+                pieContainer.selectAll(`.${mainClass}__numLabels--${i}`)
+                    .transition().delay(200).duration(300)
+                    .style('opacity', 1)
+            });
+            slicesGroup.on('mouseout', (d,i,nodes)=>{
+                pieContainer.selectAll(`.${mainClass}__slices--${d.data.key}`)
+                    .style('opacity', .5)
+                    .style('transform','scale(1)')
 
-            pieContainer.selectAll(`.${mainClass}__slices--${d.data.key}`)
-                .style('opacity', .5)
-                .style('transform','scale(1)')
+                pieContainer.selectAll(`.${mainClass}__labels--${i}`)
+                    .transition().duration(300)
+                    .attr("transform", (d) => `translate(${arcGenerator.centroid(d)})`)
 
-            pieContainer.selectAll(`.${mainClass}__labels--${i}`)
-                .transition().duration(300)
-                .attr("transform", (d) => `translate(${arcGenerator.centroid(d)})`)
-
-            pieContainer.selectAll(`.${mainClass}__numLabels--${i}`)
-                .transition().delay(200).duration(300)
-                .style('opacity', 0)
-        })
+                pieContainer.selectAll(`.${mainClass}__numLabels--${i}`)
+                    .transition().delay(200).duration(300)
+                    .style('opacity', 0)
+            });
+        }else{
+            slicesGroup.on('mouseover', (d,i,nodes)=>{});
+            slicesGroup.on('mouseout', (d,i,nodes)=>{});
+        }
     }
-    //INTERACTIVITY -----------------------------------------------------------------------------------
 }
