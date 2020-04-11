@@ -1,12 +1,11 @@
 export const htmlElements = {
-    controllersOne: [...document.querySelectorAll('.controllerOne')],
     sexBreakdown: {
         chartContainer: document.querySelector('#sexDivide__chartContainer'),
         controller: document.querySelector('#sexBreakdown__controller'),
         loader: document.querySelector('.pieContainer__loaderContainer--sexBreakdown'),
     },
     minmax:{
-        controller: document.querySelector('.minmaxBox__item--controller'),
+        controller: document.querySelector('#minmax__controller'),
         elements:{
             maleMax: document.querySelector('.minmaxBox__item--maxMale'),
             maleMin: document.querySelector('.minmaxBox__item--minMale'),

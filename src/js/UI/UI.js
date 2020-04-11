@@ -17,12 +17,10 @@ export const debounce = (func, wait, immediate)=>{
 };
 
 export const changeCatNumber = (chartType, type, newIndex)=>{
-
-    const controller = htmlElements.sexBreakdown.controller
+    const controller = htmlElements[chartType].controller
     const spanId = type === 'category' ? '.catNumber' : '.subcatNumber';
     const spanElement = controller.querySelector(spanId);
     spanElement.innerText = newIndex
-
 };  
 
 export const changeMainSpan = (chartType, newIndex, list)=>{

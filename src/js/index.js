@@ -10,6 +10,7 @@ import { htmlElements } from './UI/base';
 import { sexBreakdownTestData, sexBreakdownTestDataTwo } from './data/sexBreakdownTestData';
 import { minmaxTestData } from './data/minmaxTestData';
 import { boxPlotSex, boxPlotCat, boxPlotSubcat} from './data/priceLevelTestData';
+import { html } from 'd3';
 
 // console.log(boxPlotSubcat.slice(0,20));
 // console.log(boxPlotSubcat.slice(20));
@@ -83,141 +84,111 @@ const createPriceLevelChart = (data) => {
 //FUNCTIONS FOR EVENT LISTENERS
 //SEX BREAKDOWN
 const changeSexBreakdownSelection = async (e) =>{
-    //BASED OND USER CLICK FUNCTION CHANGE USER INTERFACE AND UPDATES CHARTS
     if (e.target.matches('.pieCtrl__button')){
         const target = e.target;
         const changeIndex = parseInt(target.value);
         const selectionType = state.sexBreakdown.category.currentSelected === true ? 'category' : 'subcategory';
-
         const { currentIndex, maxIndex } = state.sexBreakdown[selectionType];
-        const list = state.shoesList[selectionType];
         const newIndex = currentIndex + changeIndex; 
 
-        
         if(newIndex > 0 && newIndex <= maxIndex){
             const { sexBreakdown:{chart}, dataFinder } = state;
+            const list = state.shoesList[selectionType];
             const filter = list[newIndex-1]; //check what category has to been download from database
 
-            chart.updateChart(sexBreakdownTestDataTwo) //TEST
-            
+            // chart.updateChart(sexBreakdownTestDataTwo) //TEST
             stateCtrl.changeSexbreakdownSettings(selectionType, 'currentIndex', newIndex);
-            
-            // ui.breakdownLoaders('sexBreakdown');
             ui.changeCatNumber('sexBreakdown',selectionType, newIndex);
             ui.changeMainSpan('sexBreakdown', newIndex, list);
-
+        
+            // ui.breakdownLoaders('sexBreakdown');
             // const piechartData = await dataFinder.getCounterData('sexBreakdown',selectionType, filter);
             // chart.updateChart(piechartData)
-
             // ui.breakdownLoaders('sexBreakdown');
         }
     }
 };
+
 const changeSexBreakdownType = async (e) =>{
     
     if (e.target.matches('.radio__input')){
 
-        const { sexBreakdown:{ chart }, dataFinder } = state;
+        const { sexBreakdown: { chart }, dataFinder } = state;
         const selectionType = e.target.dataset.selectiontype
         const { currentIndex } = state.sexBreakdown[selectionType];
         const list = state.shoesList[selectionType];
+        const filter = list[currentIndex-1];
 
         stateCtrl.changeSexbreakdownSettings('category', 'currentSelected', false); //reset value in state
-        stateCtrl.changeSexbreakdownSettings('category', 'currentSelected', false); //reset value in state
-        stateCtrl.changeSexbreakdownSettings(selectionType, 'currentSelected', false); //set new value
-
+        stateCtrl.changeSexbreakdownSettings('subcategory', 'currentSelected', false); //reset value in state
+        stateCtrl.changeSexbreakdownSettings(selectionType, 'currentSelected', true); //set new value
         ui.changeMainSpan('sexBreakdown', currentIndex, list)
 
         // ui.breakdownLoaders('sexBreakdown');
-        // const filter = list[currentIndex-1];
         // const piechartData = await dataFinder.getCounterData('sexBreakdown',selectionType, filter);
         // chart.updateChart(piechartData)
         // ui.breakdownLoaders('sexBreakdown');
     }
 };
+
 const pieController = htmlElements.sexBreakdown.controller;
 pieController.addEventListener('click', changeSexBreakdownSelection)
 pieController.addEventListener('click', changeSexBreakdownType)
 
 
 //MINMAX
-const changeSelection = async (e)=>{
+const changeMinmaxSelection = async (e)=>{
     
-    const target = e.target;
-    const className = target.classList[0];
-    
-    if(className === "breakdownCtrl__button" || className==='minmaxCtrl__button'){
-        const changeIndex = parseInt(target.value);
-        const sectionType = target.dataset.sectiontype
-        const selectionType = state[sectionType].category.currentSelection === true ? 'category' : 'subcategory';
+    if (e.target.matches('.minmaxCtrl__button')){
 
-        const { currentIndex, maxIndex } = state[sectionType][selectionType];
-        const list = state.shoesList[selectionType];
+        const changeIndex = parseInt(e.target.value);
+        const selectionType = state.minmax.category.currentSelected === true ? 'category' : 'subcategory';
+        const { currentIndex, maxIndex } = state.minmax[selectionType];
         const newIndex = currentIndex + changeIndex; 
 
         if(newIndex > 0 && newIndex <= maxIndex){
+            const { dataFinder } = state;
+            const list = state.shoesList[selectionType];
+            const filter = list[newIndex-1];
 
-            state[sectionType][selectionType].currentIndex = newIndex //UPDATE STATE WITH NEW INDEX THEN CHANGE UI AND CHARTS
-      
-            ui.changeCatNumber(sectionType, selectionType, newIndex)
-            ui.changeMainSpan(sectionType, newIndex, list)
+            stateCtrl.changeMinmaxSettings(selectionType, 'currentIndex', newIndex);
+            ui.changeCatNumber('minmax', selectionType, newIndex)
+            ui.changeMainSpan('minmax', newIndex, list)
 
-            if(sectionType === 'minmax'){
-                ui.minmaxLoaders()
-                const { dataFinder } = state;
-                const filter = list[newIndex-1];
-                const minmaxData = await dataFinder.getminmaxData(selectionType,filter);
-                createMinmaxSection(minmaxData);
-                ui.minmaxLoaders()
-
-            }else{
-                ui.breakdownLoaders(sectionType);
-                const filter = list[newIndex-1];
-                const { chart } = state[sectionType];
-                const { dataFinder } = state;
-                const piechartData = await dataFinder.getCounterData(sectionType,selectionType,filter);
-                chart.updateChart(piechartData)
-                ui.breakdownLoaders(sectionType);
-            }
+            // ui.minmaxLoaders()
+            // const minmaxData = await dataFinder.getminmaxData(selectionType,filter);
+            // createMinmaxSection(minmaxData);
+            // ui.minmaxLoaders()
         }
     }
 };
  
-const changeType = async (e)=>{
-    const target = e.target;
-    const className = target.classList[0];
-    
-    if(className === 'radio__input'){
-        const sectionType = target.dataset.sectiontype
-        const selectionType = target.dataset.selectiontype
+const changeMinmaxType = async (e)=>{
 
-        state[sectionType].category.currentSelection = false; //reset 
-        state[sectionType].subcategory.currentSelection = false; //reset
-        state[sectionType][selectionType].currentSelection = true;
-
-        const { currentIndex } = state[sectionType][selectionType];
+    if (e.target.matches('.radio__input')){
+        const { dataFinder } = state;
+        const selectionType = e.target.dataset.selectiontype
+        const { currentIndex } = state.minmax[selectionType];
         const list = state.shoesList[selectionType];
-        ui.changeMainSpan(sectionType, currentIndex, list)
+        const filter = list[currentIndex-1];
 
-        if(sectionType === 'minmax'){
-            ui.minmaxLoaders()
-            const { dataFinder } = state;
-            const filter = list[currentIndex-1];
-            const minmaxData = await dataFinder.getminmaxData(selectionType,filter);
-            createMinmaxSection(minmaxData);
-            ui.minmaxLoaders()
-
-        }else{
-            ui.breakdownLoaders(sectionType);
-            const filter = list[currentIndex-1];
-            const { chart } = state[sectionType];
-            const { dataFinder } = state;
-            const piechartData = await dataFinder.getCounterData(sectionType,selectionType,filter);
-            chart.updateChart(piechartData)
-            ui.breakdownLoaders(sectionType);
-        }
+        stateCtrl.changeMinmaxSettings('category', 'currentSelected', false); //reset value in state
+        stateCtrl.changeMinmaxSettings('subcategory', 'currentSelected', false); //reset value in state
+        stateCtrl.changeMinmaxSettings(selectionType, 'currentSelected', true); //set new value
+        ui.changeMainSpan('minmax', currentIndex, list)
+        
+        // ui.minmaxLoaders()
+        // const minmaxData = await dataFinder.getminmaxData(selectionType,filter);
+        // createMinmaxSection(minmaxData);
+        // ui.minmaxLoaders()
     }
 };
+
+
+const minmaxController = htmlElements.minmax.controller;
+minmaxController.addEventListener('click', changeMinmaxSelection);
+minmaxController.addEventListener('click', changeMinmaxType);
+
 
 
 //PRICE LEVEL

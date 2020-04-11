@@ -61,12 +61,12 @@ export const state = {
     },
     minmax:{
         category:{
-            currentSelection: true,
+            currentSelected: true,
             currentIndex: 1,
             maxIndex: 5,
         }, 
         subcategory:{
-            currentSelection: false,
+            currentSelected: false,
             currentIndex: 1,
             maxIndex: 41,
         },
@@ -85,6 +85,10 @@ export const state = {
 
 export const changeSexbreakdownSettings = (selectionType, option, newValue) => {
     state.sexBreakdown[selectionType][option] = newValue;
+};
+
+export const changeMinmaxSettings = (selectionType, option, newValue) =>{
+    state.minmax[selectionType][option] = newValue;
 };
 
 export const changeBoxplotSettings = (option, newValue) =>{
