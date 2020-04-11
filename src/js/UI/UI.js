@@ -62,7 +62,6 @@ export const breakdownLoaders = (chartType) => {
     const smallCircles = [...loader.querySelectorAll('.loader__small')];
 
     //ACTIVTA-DISACTIVATE LOADERS
-
     bigCircles.classList.toggle('loader--stoped');
     smallCircles.forEach(smallCircle => smallCircle.classList.toggle('loader__small--stoped'))
 };
@@ -80,4 +79,17 @@ export const minmaxLoaders = () => {
         bigCircles.classList.toggle('loader--stoped');
         smallCircles.forEach(smallCircle => smallCircle.classList.toggle('loader__small--stoped'))
     };
+};
+
+export const priceLevelLoaders = () => {
+
+    const loader = htmlElements.priceLevel.loader;
+    loader.classList.toggle('priceLevelBox__loaderContainer--hidden')
+    
+    const bigCircles = loader.querySelector('.loader');
+    const smallCircles = [...loader.querySelectorAll('.loader__small')];
+
+    //ACTIVTA-DISACTIVATE LOADERS
+    bigCircles.classList.toggle('loader--stoped');
+    smallCircles.forEach(smallCircle => smallCircle.classList.toggle('loader__small--stoped'))
 };

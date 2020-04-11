@@ -20,32 +20,33 @@ const { state } = stateCtrl;
 const appController = async () =>{
 
     //START LOADERS
-    ui.minmaxLoaders();
     ui.breakdownLoaders('sexBreakdown');
+    ui.minmaxLoaders();
+    ui.priceLevelLoaders();
 
     state.dataFinder = new DataFinder();
-
-    
 
     const { dataFinder } = state;
     // const { dataSet } = state;
     
     //BREAKDOWN
-    // const sexBreakdownData = calcCategoryCounter(dataSet, 'sex'); //TEST DATA
+    createSexDivideChart(sexBreakdownTestData); //TEST
     // const sexBreakdownData = await dataFinder.getCounterData('sexBreakdown','category','wszystkie');
-    createSexDivideChart(sexBreakdownTestData); 
+    // createSexDivideChart(sexBreakdownData); 
     ui.breakdownLoaders('sexBreakdown');
 
 
     //MINMAX SECTION
+    createMinmaxSection(minmaxTestData); //TEST
     // const minmaxData = await dataFinder.getminmaxData('category','wszystkie');
-    createMinmaxSection(minmaxTestData);
+    // createMinmaxSection(minmaxData);
     ui.minmaxLoaders()
 
-
     //PRICE LEVEL
+    createPriceLevelChart(boxPlotSex); //TEST
     // const priceLevelData = await dataFinder.getPriceLevelData('sex');
-    createPriceLevelChart(boxPlotSex);
+    // createPriceLevelChart(priceLevelData);
+    ui.priceLevelLoaders();
     
 
     // console.log(state.priceLevel);
@@ -101,14 +102,13 @@ const changeSexBreakdownSelection = async (e) =>{
             ui.changeCatNumber('sexBreakdown',selectionType, newIndex);
             ui.changeMainSpan('sexBreakdown', newIndex, list);
         
-            // ui.breakdownLoaders('sexBreakdown');
-            // const piechartData = await dataFinder.getCounterData('sexBreakdown',selectionType, filter);
-            // chart.updateChart(piechartData)
-            // ui.breakdownLoaders('sexBreakdown');
+            ui.breakdownLoaders('sexBreakdown');
+            const piechartData = await dataFinder.getCounterData('sexBreakdown',selectionType, filter);
+            chart.updateChart(piechartData)
+            ui.breakdownLoaders('sexBreakdown');
         }
     }
 };
-
 const changeSexBreakdownType = async (e) =>{
     
     if (e.target.matches('.radio__input')){
@@ -124,10 +124,10 @@ const changeSexBreakdownType = async (e) =>{
         stateCtrl.changeSexbreakdownSettings(selectionType, 'currentSelected', true); //set new value
         ui.changeMainSpan('sexBreakdown', currentIndex, list)
 
-        // ui.breakdownLoaders('sexBreakdown');
-        // const piechartData = await dataFinder.getCounterData('sexBreakdown',selectionType, filter);
-        // chart.updateChart(piechartData)
-        // ui.breakdownLoaders('sexBreakdown');
+        ui.breakdownLoaders('sexBreakdown');
+        const piechartData = await dataFinder.getCounterData('sexBreakdown',selectionType, filter);
+        chart.updateChart(piechartData)
+        ui.breakdownLoaders('sexBreakdown');
     }
 };
 
@@ -155,14 +155,13 @@ const changeMinmaxSelection = async (e)=>{
             ui.changeCatNumber('minmax', selectionType, newIndex)
             ui.changeMainSpan('minmax', newIndex, list)
 
-            // ui.minmaxLoaders()
-            // const minmaxData = await dataFinder.getminmaxData(selectionType,filter);
-            // createMinmaxSection(minmaxData);
-            // ui.minmaxLoaders()
+            ui.minmaxLoaders()
+            const minmaxData = await dataFinder.getminmaxData(selectionType,filter);
+            createMinmaxSection(minmaxData);
+            ui.minmaxLoaders()
         }
     }
 };
- 
 const changeMinmaxType = async (e)=>{
 
     if (e.target.matches('.radio__input')){
@@ -177,18 +176,16 @@ const changeMinmaxType = async (e)=>{
         stateCtrl.changeMinmaxSettings(selectionType, 'currentSelected', true); //set new value
         ui.changeMainSpan('minmax', currentIndex, list)
         
-        // ui.minmaxLoaders()
-        // const minmaxData = await dataFinder.getminmaxData(selectionType,filter);
-        // createMinmaxSection(minmaxData);
-        // ui.minmaxLoaders()
+        ui.minmaxLoaders()
+        const minmaxData = await dataFinder.getminmaxData(selectionType,filter);
+        createMinmaxSection(minmaxData);
+        ui.minmaxLoaders()
     }
 };
-
 
 const minmaxController = htmlElements.minmax.controller;
 minmaxController.addEventListener('click', changeMinmaxSelection);
 minmaxController.addEventListener('click', changeMinmaxType);
-
 
 
 //PRICE LEVEL
@@ -205,6 +202,7 @@ const changePriceLevelVariables = async (e)=>{
 
         if(variable !== selectedVariable){
             if(!selectedSubcategories){
+                const { priceLevel: { chart, settings }, dataFinder } = state;
 
                 //TEST DATA
                 let data = [];
@@ -237,10 +235,11 @@ const changePriceLevelVariables = async (e)=>{
     
                 if(selectedSubcategory){selectedVariable = selectedVariable.slice(0,11)};
     
-                const { priceLevel: { chart, settings }, dataFinder } = state;
-                // const priceLevelData = await dataFinder.getPriceLevelData(selectedVariable);
-    
-                chart.renderChart(data, settings);
+                ui.priceLevelLoaders();
+                const priceLevelData = await dataFinder.getPriceLevelData(selectedVariable);
+                chart.renderChart(priceLevelData, settings);
+                ui.priceLevelLoaders();
+
             }else{
                 const { chart, settings } = state.priceLevel;
                 stateCtrl.changeBoxplotSettings('subcategoryPart', newSubcategoryPart);
@@ -252,7 +251,6 @@ const changePriceLevelVariables = async (e)=>{
     };
 
 };
- 
 const changePriceLevelSort = async (e) =>{
 
     if (e.target.matches('.radio__input')){
@@ -275,13 +273,27 @@ const resizePriceLeve = ui.debounce(()=>{
     chart.resizeChart(container.offsetWidth, container.offsetHeight, settings);
 },250)
 
+const resizePieChart = ui.debounce(()=>{
+
+    const container = htmlElements.sexBreakdown.chartContainer;
+    const { chart } = state.sexBreakdown;
+
+    console.log(container.offsetWidth);
+    console.log(container.offsetHeight);
+
+    chart.resizeChart(container.offsetWidth, container.offsetHeight);
+},250)
+
+
 const variablesController = htmlElements.priceLevel.variablesController;
 variablesController.addEventListener('click', changePriceLevelVariables);
 
 const sortController = htmlElements.priceLevel.sortController;
 sortController.addEventListener('click', changePriceLevelSort)
 
-window.addEventListener('resize', resizePriceLeve);
+
+//RESIZE CHART
+window.addEventListener('resize', resizePieChart);
 
 
 

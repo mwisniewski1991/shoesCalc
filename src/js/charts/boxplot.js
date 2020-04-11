@@ -132,10 +132,10 @@ export default class Boxplot {
         this.boxesTooltip()
     };
 
-    resizeChart(offsetWidth, offsetHeight, {selectedSubcategory, smallScreen}){
+    resizeChart(newWidth, newheight, {selectedSubcategory, smallScreen}){
 
-        this.settings.dimension.width = offsetWidth;
-        this.settings.dimension.height = offsetHeight;
+        this.settings.dimension.width = newWidth;
+        this.settings.dimension.height = newheight;
         this.updateSettings(selectedSubcategory, smallScreen, true);
         this.calcDimension();
         this.redrawXaxis();
@@ -210,12 +210,11 @@ export default class Boxplot {
         const { mainClass, container, dimension:{ width, height, margins },  } = this.settings;
 
         const svg = d3.select(container).append('svg')
-            .classed(`${mainClass}`, true)
-            // .attr('width', width).attr('height',height);
+            .classed(`${mainClass}`, true);
 
         const bound = svg.append('g')
             .classed(`${mainClass}__bound`, true)
-            .attr('transform', `translate(${margins.left},${margins.top})`)
+            .attr('transform', `translate(${margins.left},${margins.top})`);
 
         this.elements.svg = svg;
         this.elements.bound = bound;

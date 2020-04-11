@@ -78,9 +78,13 @@ export const state = {
             subcategoryPart: 'one', //on screen can be shown only half of data from subcategory
             variable: 'sex',
             sortType: 'median',
-            smallScreen: true,
+            smallScreen: false,
         },
     },
+};
+
+export const changeSexbreakdownScreen = (newValue) => {
+    state.sexBreakdown.smallScreen = newValue;
 };
 
 export const changeSexbreakdownSettings = (selectionType, option, newValue) => {

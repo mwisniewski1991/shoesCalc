@@ -59,6 +59,18 @@ export default class PieChart{
         this.updateNumberLabels();
         this.updateMainNumber();
     }
+
+    resizeChart(newWidth, newHeight){
+        console.log("resize")
+        this.settings.dimension.width = newWidth;
+        this.settings.dimension.height = newHeight;
+        
+        this.calcMainDimension();
+        this.createArcGenerator()
+
+        this.repositionPieContainer()
+        this.drawPie();
+    }
     //CONTROLLER ---------------------------------------------------------------------
 
     //MAIN FUNCTION ---------------------------------------------------------------------
@@ -80,9 +92,7 @@ export default class PieChart{
         const { mainClass, dimension: { width, height, margins }  } = this.settings;
         this.elements.svg  = d3.select(container)
             .append('svg')
-            .attr('class', mainClass)
-            .attr('width', width)
-            .attr('height', height)
+            .attr('class', mainClass);
 
         //GROUP 
         const transformX = width/2 - margins.left;
@@ -92,6 +102,15 @@ export default class PieChart{
             .append('g')
                 .attr('class', classNameGroup)
                 .attr('transform', `translate(${transformX}, ${transformY})`);
+    }
+
+    repositionPieContainer(){
+        const { dimension: { width, height, margins }  } = this.settings;
+        const transformX = width/2 - margins.left;
+        const transformY = height/2 - margins.top;
+
+        this.elements.pieContainer
+            .attr('transform', `translate(${transformX}, ${transformY})`);
     }
     //MAIN FUNCTION ---------------------------------------------------------------------
 
@@ -103,9 +122,14 @@ export default class PieChart{
     }
 
     createArcGenerator(){
+        
         const { dimension: { width, height, margins } } = this.settings;
-        const innerRadius = width/6.5;
+        const innerRadius = width*0.13;
         const outerRadius = Math.min(width, height) / 2 - margins.pieMargin;
+        
+        console.log(width)
+        console.log(width/6);
+        console.log(width*0.2);
 
         this.settings.arcGenerator = d3.arc()
             .innerRadius(innerRadius)
@@ -121,14 +145,19 @@ export default class PieChart{
         const slicesClass = `${mainClass}__slices ${mainClass}__slices--`;
         const groupClass = `${mainClass}__slicesGroup ${mainClass}__slicesGroup--`;
 
-        pieContainer.selectAll(`.${mainClass}__slices`).data(pieData).enter()
-            .append('g')
-            .attr('class', (d,i)=> `${groupClass}${i}`)
-            .append('path')
-            .attr('class', (d,i)=> `${slicesClass}${d.data.key}`)
-            .attr('d', arcGenerator)
-            .style("stroke", "white")
-            .each(function(d){ this._current = d;})
+        pieContainer.selectAll(`.${mainClass}__slices`).data(pieData)
+            .join(
+                (enter) => enter
+                    .append('g')
+                    .attr('class', (d,i)=> `${groupClass}${i}`)
+                    .append('path')
+                    .attr('class', (d,i)=> `${slicesClass}${d.data.key}`)
+                    .attr('d', arcGenerator)
+                    .style("stroke", "white")
+                    .each(function(d){ this._current = d;}),
+                (update) => update
+                    .attr('d', arcGenerator),
+            )
     }
 
     updatePie(){
@@ -162,7 +191,6 @@ export default class PieChart{
             .attr("transform", (d) => `translate(${arcGenerator.centroid(d)})`)
             .each(function(d){ this._current = d;});
     }
-
     
 
     updateLabels(){

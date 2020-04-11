@@ -18,6 +18,7 @@ export const htmlElements = {
         chartContainer: document.querySelector('#priceLevel__chartContainer'),
         variablesController: document.querySelector('#priceLevel__variablesQueryController'),
         sortController: document.querySelector('#priceLevel__sortQueryController'),
+        loader: document.querySelector('.priceLevelBox__loaderContainer'),
     }
 };
 
