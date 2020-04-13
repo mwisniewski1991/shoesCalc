@@ -7,13 +7,11 @@ import Boxplot from './charts/boxplot';
 import * as ui from './UI/UI';
 import { htmlElements } from './UI/base';
 
+//TEST
 import { sexBreakdownTestData, sexBreakdownTestDataTwo } from './data/sexBreakdownTestData';
 import { minmaxTestData } from './data/minmaxTestData';
 import { boxPlotSex, boxPlotCat, boxPlotSubcat} from './data/priceLevelTestData';
-import { html } from 'd3';
 
-// console.log(boxPlotSubcat.slice(0,20));
-// console.log(boxPlotSubcat.slice(20));
 
 const { state } = stateCtrl;
 
@@ -267,44 +265,35 @@ const changePriceLevelSort = async (e) =>{
     }
 };
 
-const resizePriceLeve = ui.debounce(()=>{
+const variablesController = htmlElements.priceLevel.variablesController;
+variablesController.addEventListener('click', changePriceLevelVariables);
+const sortController = htmlElements.priceLevel.sortController;
+sortController.addEventListener('click', changePriceLevelSort);
+
+//RESIZE CHARTS
+const resizePriceLeve = ()=>{
     stateCtrl.changeBoxplotSettings('smallScreen', window.screen.width <= 720 ? true : false);
 
     const container = htmlElements.priceLevel.chartContainer;
     const { chart, settings } = state.priceLevel;
 
     chart.resizeChart(container.offsetWidth, container.offsetHeight, settings);
-},250)
+};
 
-const resizePieChart = ui.debounce(()=>{
+const resizePieChart = ()=>{
     stateCtrl.changeSexbreakdownSettings('settings', 'smallScreen', window.screen.width <= 480 ? true : false);
 
     const container = htmlElements.sexBreakdown.chartContainer;
     const { chart, settings } = state.sexBreakdown;
 
     chart.resizeChart(container.offsetWidth, container.offsetHeight, settings);
-},250)
+};
 
 
-const variablesController = htmlElements.priceLevel.variablesController;
-variablesController.addEventListener('click', changePriceLevelVariables);
-
-const sortController = htmlElements.priceLevel.sortController;
-sortController.addEventListener('click', changePriceLevelSort)
-
-
-//RESIZE CHART
-window.addEventListener('resize', resizePieChart);
-
-
-
-
-// const controllersOne = htmlElements.controllersOne;
-// controllersOne.forEach((contr) => contr.addEventListener('click', changeSelection))
-// controllersOne.forEach((contr) => contr.addEventListener('click', changeType))
-
-//PRICE LEVEL
-
+window.addEventListener('resize', ui.debounce(()=>{
+    resizePriceLeve();
+    resizePieChart();
+},250));
 
 
 appController();
