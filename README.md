@@ -1,18 +1,18 @@
-# Shoes Calc
-###### Buty w liczbach
+# Shoes Calc (Buty w liczbach) 
+#### Live: http://butywliczbach.m-wisniewski.usermd.net
 
 ## Goal
-Create app where user can check shoes data and play with them.\
-Learn to create charts in D3.js, learn to read data from MongoDB on back-end and send them to fron-end.  
+Create app where user can check shoes data and *play* with them.
+
+Learn how to create charts in D3.js, read data from MongoDB on back-end and send them to front-end.  
 
 ## Stack
 #### Front-end
 SASS (SCSS)\
 Vanilla JS\
 JS libraries:
-- D3.js,\
-
-Parcel bundler
+- D3.js
+- Parcel bundler
 
 #### Back-end
 Node.js\
@@ -20,30 +20,43 @@ Expess.js\
 MongoDB
 
 ## Data source
-Data has been scraped from online store. In order to do that I used python and 'beautifulsoup' libraries.\
+Data has been scraped from online store. In order to do that I use python and *beautifulsoup* libraries.\
 MongoDB has been chosen as storage for this project.\
-Database has 90 611 documents.\
+Database has **90 611** documents.
+
 Fields in database:\
-'sex, category, subcategory, priceCat, price, oldPrice, discount, nameFirst, nameSecond, link, imageLink'.\
-Not all fields has been used in project because I do not want to create too big project.
+*'sex, category, subcategory, priceCat, price, oldPrice, discount, nameFirst, nameSecond, link, imageLink'.*\
+Not all fields has been used in project because I did not want to create too complicated project.
 
-## Section in project.
-#### Breakdown
+## Sections in project.
+### Breakdown
+In this section user can check numbers of male or female shoes in every category. Main element of this part of app is pie chart. 
 
-#### Minmax
-Section created od grid layout. This section show shoes with maximum price and minimum price for man's and women's shoes. User can choose category or subacategy and check shoes for each of them. In shoe box user can find: name, category, sucategory, price and image. 
+### Minmax
+Section created od grid layout. This section show shoes with maximum price and minimum price for man's and women's shoes. User can choose category or subacategy and check shoes for each of them. In *shoe container* user can find: *name, category, sucategory, price and image.*
 
-#### PriceLevel
-Main object of this section is box plot. This chart show price diffrences between groups.Each group is on X axis, Price is on Y axis.
+### PriceLevel
+Main object of this section is box plot. This chart show price diffrences between groups.\
+Groups are on X axis, price is on Y axis.
 The essence of plot is in boxes.
-- Line in center of boxes show where is median for group, it means thah 50% of records is above this value and 50% is less.
-- Top part of box show third quartile (Q3), it means that 25% of records is above this value and 75% is beneath.
-- Bottom part of box show first quartile (Q1), it means that 75% of records is above this value and 25% is beneath.
+- Line in center of boxes show where is median for group, it means that 50% of records ate above this value and 50% are below.
+- Top part of box show third quartile (Q3), it means that 25% of records are above this value and 75% are below.
+- Bottom part of box show first quartile (Q1), it means that 75% of records are above this value and 25% are below.
 - Line above box show max value.
 - Line under box show min value.
-- Circles show extremes value for each group.\
+- Circles show extremes value for each group.
 
 For more information regarding this kind of chart please check statistics books or websites.
 
-User on app can select variable for x Axis sex, category or subcategory. Because there are 41 types of subcategory on chart user can see only part of it. Show 42 boxes will not readable for user.\
-It is also possible to sort boxes acording to four option. Sort by median, min value, max value and max extreme value.
+User on app can select variable for X Axis: *sex, category or subcategory*.\
+Because there are 41 types of subcategory on chart user can see only part of it. Show 42 boxes will not be readable for user.\
+It is also possible to sort boxes acording to four option. Sort by: *median, min value, max value* and *max extreme value*.
+
+## Developer:
+**Mateusz Wiśniewski**
+##### My Goal
+I like to create app based on data. So I want to learn how to create online charts and dashboards.\
+I think it is easier to remember what data bring to us when it is possibility to *touch* data and *play* with them. Web is perfect place to do this.
+
+Check my other repositories:
+https://github.com/mwisniewski1991?tab=repositories
