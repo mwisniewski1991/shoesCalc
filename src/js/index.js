@@ -132,8 +132,8 @@ const changeSexBreakdownType = async (e) =>{
 };
 
 const pieController = htmlElements.sexBreakdown.controller;
-pieController.addEventListener('click', changeSexBreakdownSelection)
-pieController.addEventListener('click', changeSexBreakdownType)
+pieController.addEventListener('click', changeSexBreakdownSelection);
+pieController.addEventListener('click', changeSexBreakdownType);
 
 
 //MINMAX

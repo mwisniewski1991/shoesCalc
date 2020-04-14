@@ -179,57 +179,8 @@
     position: relative;
     padding: 5.5rem .5rem .5rem .5rem;
 
-    // display: flex;
-    // flex-wrap: wrap;
-
-    &--breakdown{
-        @media screen and (max-width: $break-small){
-            flex-direction: column;
-        }
+    @media screen and (max-width: $break-midmedium){
+        padding: .5rem;
     }
- 
-
-    &__background{
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-
-        background-size: cover;
-        background-position: center;
-        z-index: -1;
-
-        &--breakdown{
-            background-image: url(('../images/backOne.jpg'));
-            // Photo by Jakob Owens on Unsplash
-            filter: blur(2px);
-            z-index: -1;
-        }
-
-        &--priceLevel{
-            background-image: url(('../images/backTwo.jpg'));
-            // Photo by Md. Zahid Hasan Joy on Unsplash
-            filter: blur(2px) brightness(.45);
-        }
-    }
-
- 
-    &__chartBlock{
-
-        &--half{
-            width: 50%;
-        }
-
-        &--long{
-            width: 100%;
-            background-color: rgba(#000, .75);
-        }
-
-        @media screen and (max-width: $break-small){
-            width: 100%;
-        }
-    }
-
 }
 
