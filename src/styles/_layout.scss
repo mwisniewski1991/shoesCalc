@@ -104,20 +104,20 @@
     justify-content: space-between;
     align-items: center;
  
-    @media screen and (max-width: $break-small){
+    @media screen and (max-width: $break-midmedium){
         position: absolute;
         padding: 0;
     }
 
     &__title{
-        @media screen and (max-width: $break-small){
+        @media screen and (max-width: $break-midmedium){
             opacity: 0;
             width: 0;
         }
     }
     
     &__nav{
-        @media screen and (max-width: $break-small){
+        @media screen and (max-width: $break-midmedium){
             width: 100%;
             display: flex;
             justify-content: center;
@@ -128,7 +128,7 @@
         display: flex;
         list-style: none;
 
-        @media screen and (max-width: $break-small){
+        @media screen and (max-width: $break-midmedium){
             width: 100%;
             justify-content: space-around;
         }
@@ -147,7 +147,7 @@
         }
      
         &--bigScreenOnly{
-            @media screen and (max-width: $break-small){
+            @media screen and (max-width: $break-midmedium){
                 display: none;
             }
         }
@@ -164,6 +164,10 @@
         text-align: center;
         line-height: 5rem;
         font-size: 1.6rem;
+
+        @media screen and (max-width: $break-small){
+            font-size: 2rem;
+        }
 
         &:focus{
             outline: auto;

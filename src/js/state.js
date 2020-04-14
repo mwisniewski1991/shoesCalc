@@ -1,5 +1,4 @@
 export const state = {
-    // dataSet: testData,
     shoesList: {
         category: ['wszystkie','klapki-i-sandaly', 'polbuty', 'kozaki-i-inne', 'sportowe'],
         subcategory: [

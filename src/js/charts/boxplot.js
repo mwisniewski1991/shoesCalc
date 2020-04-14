@@ -136,6 +136,7 @@ export default class Boxplot {
 
         this.settings.dimension.width = newWidth;
         this.settings.dimension.height = newheight;
+        
         this.updateSettings(selectedSubcategory, smallScreen, true);
         this.calcDimension();
         this.redrawXaxis();

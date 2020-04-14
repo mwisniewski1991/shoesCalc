@@ -33,12 +33,12 @@ export default class PieChart{
     //CONTROLLER ---------------------------------------------------------------------
     renderChart(data, { smallScreen }){
         this.createSvg();
+
         this.loadData(data);
-
         this.calcPieData();
-        this.createArcGenerator();
-        this.drawPie();
+        this.createArcGenerator(smallScreen);
 
+        this.drawPie();
         this.addLabels();
         this.addNumbersLabels();
         this.addMainNumber();
@@ -49,11 +49,10 @@ export default class PieChart{
     
     updateChart(data){
         this.loadData(data);
-
         this.calcPieData();
-        this.createArcGenerator()
-        this.updatePie();
+        this.createArcGenerator(smallScreen)
 
+        this.drawPie();
         this.updateLabels();
         this.updateNumberLabels();
         this.updateMainNumber();
@@ -64,10 +63,13 @@ export default class PieChart{
         this.settings.dimension.height = newHeight;
         
         this.calcMainDimension();
-        this.createArcGenerator()
+        this.createArcGenerator(smallScreen)
 
         this.repositionPieContainer()
         this.drawPie();
+        this.updateLabels();
+        this.updateNumberLabels();
+        this.updateMainNumber();
 
         this.addHoverEffect(smallScreen);
     }
@@ -119,14 +121,15 @@ export default class PieChart{
         this.data.pieData = pieGenerator(d3.entries(data));
     }
 
-    createArcGenerator(){
+    createArcGenerator(smallScreen){
         const { dimension: { width, height, margins } } = this.settings;
-        const innerRadius = 90;
+        const innerRadius = smallScreen === false ? 90 : 75;
+
         const outerRadius = Math.min(width, height) / 2 - margins.pieMargin;
 
         this.settings.arcGenerator = d3.arc()
             .innerRadius(innerRadius)
-            .outerRadius(outerRadius)
+            .outerRadius(outerRadius);
     }
 
     //PIE/DONUT  ------------------------------------------------------------------------------------
@@ -136,6 +139,14 @@ export default class PieChart{
         const { mainClass,  arcGenerator  } = this.settings;
         const slicesClass = `${mainClass}__slices ${mainClass}__slices--`;
         const groupClass = `${mainClass}__slicesGroup ${mainClass}__slicesGroup--`;
+
+        const arcTween = function(a){
+            const i = d3.interpolate(this._current, a);
+            this._current = i(0);
+            return function(t) {
+              return arcGenerator(i(t));
+            };
+        }
 
         pieContainer.selectAll(`.${mainClass}__slices`).data(pieData)
             .join(
@@ -148,28 +159,9 @@ export default class PieChart{
                     .style("stroke", "white")
                     .each(function(d){ this._current = d;}),
                 (update) => update
-                    .attr('d', arcGenerator),
-            )
+                    .transition().duration(500).attrTween('d', arcTween)
+            );
     }
-
-    updatePie(){
-        const { pieData } = this.data;
-        const { pieContainer } = this.elements;
-        const { mainClass, arcGenerator} = this.settings;
-
-        pieContainer.selectAll(`.${mainClass}__slicesGroup`).data(pieData)
-        const slices = pieContainer.selectAll(`.${mainClass}__slices`).data(pieData)
-
-        const arcTween = function(a){
-            const i = d3.interpolate(this._current, a);
-            this._current = i(0);
-            return function(t) {
-              return arcGenerator(i(t));
-            };
-        }
-
-        slices.transition().duration(500).attrTween('d', arcTween)
-    };
 
     addLabels(){
         const { pieContainer } = this.elements;
@@ -291,12 +283,6 @@ export default class PieChart{
                 break;
         }
     };
-
-    createColorScale(){
-        this.elements.scales.colorScale = d3.scaleOrdinal()
-            .domain((data) => data.city)
-            .range(d3.schemeSet2);
-    }
     
     calcTransform(d){
         const { arcGenerator } = this.settings;
@@ -312,15 +298,20 @@ export default class PieChart{
         const slicesGroup = pieContainer.selectAll(`.${mainClass}__slicesGroup`);
 
         if(!smallScreen){
+            //d3 controlls DOM and overwrite css it is neccesery to add style in case user change screen size. Without this line resizinz does not work propery.
+            //Same thing below in else.
+            pieContainer.selectAll(`.${mainClass}__numLabels`).style('opacity', 0); 
+
             slicesGroup.on('mouseover', (d,i,nodes)=>{
 
                 pieContainer.selectAll(`.${mainClass}__slices--${d.data.key}`)
                 .style('opacity', 1)
                 .style('transform', 'scale(1.05)')
                 
-                const xModify = i === 1 ? 8 : -8 
-                const transX = arcGenerator.centroid(d)[0] + xModify
-                const transY = arcGenerator.centroid(d)[1]
+                //calc correct position of labels
+                const xModify = i === 1 ? 8 : -8 ;
+                const transX = arcGenerator.centroid(d)[0] + xModify;
+                const transY = arcGenerator.centroid(d)[1];
 
                 pieContainer.selectAll(`.${mainClass}__labels--${i}`)
                     .transition().duration(300)
@@ -328,7 +319,7 @@ export default class PieChart{
 
                 pieContainer.selectAll(`.${mainClass}__numLabels--${i}`)
                     .transition().delay(200).duration(300)
-                    .style('opacity', 1)
+                    .style('opacity', 1);
             });
             slicesGroup.on('mouseout', (d,i,nodes)=>{
                 pieContainer.selectAll(`.${mainClass}__slices--${d.data.key}`)
@@ -344,8 +335,11 @@ export default class PieChart{
                     .style('opacity', 0)
             });
         }else{
+            pieContainer.selectAll(`.${mainClass}__numLabels`).style('opacity', 1);
+
             slicesGroup.on('mouseover', (d,i,nodes)=>{});
             slicesGroup.on('mouseout', (d,i,nodes)=>{});
+
         }
     }
 }

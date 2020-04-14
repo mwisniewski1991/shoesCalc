@@ -97,11 +97,12 @@ const changeSexBreakdownSelection = async (e) =>{
             const list = state.shoesList[selectionType];
             const filter = list[newIndex-1]; //check what category has to been download from database
 
-            // chart.updateChart(sexBreakdownTestDataTwo) //TEST
             stateCtrl.changeSexbreakdownSettings(selectionType, 'currentIndex', newIndex);
             ui.changeCatNumber('sexBreakdown',selectionType, newIndex);
             ui.changeMainSpan('sexBreakdown', newIndex, list);
         
+
+            // chart.updateChart(sexBreakdownTestDataTwo) //TEST
             ui.breakdownLoaders('sexBreakdown');
             const piechartData = await dataFinder.getCounterData('sexBreakdown',selectionType, filter);
             chart.updateChart(piechartData)
@@ -109,6 +110,7 @@ const changeSexBreakdownSelection = async (e) =>{
         }
     }
 };
+
 const changeSexBreakdownType = async (e) =>{
     
     if (e.target.matches('.radio__input')){
@@ -271,7 +273,7 @@ const sortController = htmlElements.priceLevel.sortController;
 sortController.addEventListener('click', changePriceLevelSort);
 
 //RESIZE CHARTS
-const resizePriceLeve = ()=>{
+const resizePriceLevel = ()=>{
     stateCtrl.changeBoxplotSettings('smallScreen', window.screen.width <= 720 ? true : false);
 
     const container = htmlElements.priceLevel.chartContainer;
@@ -281,7 +283,7 @@ const resizePriceLeve = ()=>{
 };
 
 const resizePieChart = ()=>{
-    stateCtrl.changeSexbreakdownSettings('settings', 'smallScreen', window.screen.width <= 480 ? true : false);
+    stateCtrl.changeSexbreakdownSettings('settings', 'smallScreen', window.screen.width <= 720 ? true : false);
 
     const container = htmlElements.sexBreakdown.chartContainer;
     const { chart, settings } = state.sexBreakdown;
@@ -291,7 +293,7 @@ const resizePieChart = ()=>{
 
 
 window.addEventListener('resize', ui.debounce(()=>{
-    resizePriceLeve();
+    resizePriceLevel();
     resizePieChart();
 },250));
 
