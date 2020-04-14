@@ -71,8 +71,12 @@
      font-size: 1.5rem;
      transition: transform $transitionTime;
 
-     @media screen and (max-width: $break-small){
-        font-size: 1.8rem;
+    @media screen and (max-width: $break-medium){
+        font-size: 1.5rem;
+    }
+
+    @media screen and (max-width: $break-small){
+        font-size: 2.0rem;
     }
 
      &:hover{
@@ -201,7 +205,6 @@
         justify-content: center;
         align-items: center;
     }
-
 }
 
 .pieContainer{
@@ -257,7 +260,7 @@
 
 .pieCtrl{
     margin: 0 auto;
-    width: 90%;
+    width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 40px 40px;
@@ -271,12 +274,17 @@
         grid-template-rows: 40px 35px;
     }
     @media screen and (max-width: $break-midmedium){
+        width: 80%;
         grid-template-rows: 60px 35px;
     }
     @media screen and (max-width: $break-small){
-        grid-template-rows: 30px 30px;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 30px 30px 30px;
         grid-row-gap: .5rem;
-        // justify-items: center;
+        grid-template-areas: 
+        "catInput subcatInput" 
+        "leftButton rightButton"
+        "centerText centerText";
     }
 
     &__button{
@@ -332,6 +340,8 @@
         }
 
         @media screen and (max-width: $break-small){
+            width: 80%;
+            margin: auto;
             flex-direction: row;
             justify-content: space-between;
         }
@@ -544,17 +554,17 @@
         }
 
         @media screen and (max-width: $break-medium){
-            width: 50%;
+            width: 65%;
             margin: 0 auto;
             flex-direction: row;
         }
 
         @media screen and (max-width: $break-midmedium){
-            width: 75%;
+            width: 80%;
         }
 
         @media screen and (max-width: $break-small){
-            width: 90%;
+            width: 100%;
         }
     }
 
@@ -570,14 +580,6 @@
             grid-area: subcatInput;
         }
    
-    }
-
-    &__radioBox .radio__label{
-        font-size: 1.2rem;
-
-        @media screen and (max-width: $break-medium){
-            font-size: 1.5rem;
-        }
     }
 
     &__counter{
@@ -766,7 +768,7 @@
             justify-items: stretch;
             grid-template-rows: 40px repeat(3, 40px);
         }
-    };
+    }
 
     &__title{
         grid-column: span 2;
@@ -792,6 +794,14 @@
             @media screen and (max-width: $break-midmedium){
                 display: block;
             }
+        }
+    }
+
+    &__radioBox .radio__label{
+        font-size: 1.2rem;
+
+        @media screen and (max-width: $break-small){
+            font-size: 1.7rem;
         }
     }
 }
