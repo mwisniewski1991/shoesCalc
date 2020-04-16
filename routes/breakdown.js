@@ -3,8 +3,6 @@ const router = express.Router();
 const MongoClient = require('mongodb').MongoClient;
 require('dotenv/config');
 
-
-//GET DATA FOR BREAKDOWN SECTION
 router.get('/:chartType/:selectionType/:filterValue', async (req, res) => {
 
     const chartType = req.params.chartType;

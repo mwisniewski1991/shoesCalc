@@ -47,7 +47,7 @@ export default class PieChart{
 
     }
     
-    updateChart(data){
+    updateChart(data, { smallScreen }){
         this.loadData(data);
         this.calcPieData();
         this.createArcGenerator(smallScreen)
@@ -160,6 +160,7 @@ export default class PieChart{
                     .each(function(d){ this._current = d;}),
                 (update) => update
                     .transition().duration(500).attrTween('d', arcTween)
+                    .each(function(d){ this._current = d;}),
             );
     }
 
@@ -170,7 +171,7 @@ export default class PieChart{
 
         pieContainer.selectAll(`.${mainClass}__slicesGroup`)
             .append('text')
-            .attr('class', (d,i) => `${className}${i}`)
+            .attr('class', (d,i) => `${className}${i} ${d.data.key}`)
             .text((d) => this.changeName(d.data.key))
             .attr("transform", (d) => `translate(${arcGenerator.centroid(d)})`)
             .each(function(d){ this._current = d;});
@@ -307,15 +308,11 @@ export default class PieChart{
                 pieContainer.selectAll(`.${mainClass}__slices--${d.data.key}`)
                 .style('opacity', 1)
                 .style('transform', 'scale(1.05)')
-                
-                //calc correct position of labels
-                const xModify = i === 1 ? 8 : -8 ;
-                const transX = arcGenerator.centroid(d)[0] + xModify;
-                const transY = arcGenerator.centroid(d)[1];
-
+     
+                const currentLabelTranslate = pieContainer.selectAll(`.${mainClass}__labels--${i}`).attr('transform')
                 pieContainer.selectAll(`.${mainClass}__labels--${i}`)
                     .transition().duration(300)
-                    .attr("transform", `translate(${transX}, ${transY}) scale(1.2)`)
+                    .attr("transform", `${currentLabelTranslate} scale(1.3)`);
 
                 pieContainer.selectAll(`.${mainClass}__numLabels--${i}`)
                     .transition().delay(200).duration(300)

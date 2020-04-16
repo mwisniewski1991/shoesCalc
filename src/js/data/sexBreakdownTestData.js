@@ -1,10 +1,10 @@
 export const sexBreakdownTestData = {
-    "M": 50,
-    "F": 60,
+    "M": 30,
+    "F": 40,
 };
 
 export const sexBreakdownTestDataTwo = {
-    "M": 30,
-    "F": 80,
+    "M": 40,
+    "F": 30,
 };
 

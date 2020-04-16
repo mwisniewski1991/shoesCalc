@@ -93,7 +93,7 @@ const changeSexBreakdownSelection = async (e) =>{
         const newIndex = currentIndex + changeIndex; 
 
         if(newIndex > 0 && newIndex <= maxIndex){
-            const { sexBreakdown:{chart}, dataFinder } = state;
+            const { sexBreakdown:{chart, settings}, dataFinder } = state;
             const list = state.shoesList[selectionType];
             const filter = list[newIndex-1]; //check what category has to been download from database
 
@@ -102,11 +102,11 @@ const changeSexBreakdownSelection = async (e) =>{
             ui.changeMainSpan('sexBreakdown', newIndex, list);
         
 
-            // chart.updateChart(sexBreakdownTestDataTwo) //TEST
-            ui.breakdownLoaders('sexBreakdown');
-            const piechartData = await dataFinder.getCounterData('sexBreakdown',selectionType, filter);
-            chart.updateChart(piechartData)
-            ui.breakdownLoaders('sexBreakdown');
+            chart.updateChart(sexBreakdownTestDataTwo, settings); //TEST
+            // ui.breakdownLoaders('sexBreakdown');
+            // const piechartData = await dataFinder.getCounterData('sexBreakdown',selectionType, filter);
+            // chart.updateChart(piechartData, settings);
+            // ui.breakdownLoaders('sexBreakdown');
         }
     }
 };
@@ -115,7 +115,7 @@ const changeSexBreakdownType = async (e) =>{
     
     if (e.target.matches('.radio__input')){
 
-        const { sexBreakdown: { chart }, dataFinder } = state;
+        const { sexBreakdown: { chart, settings }, dataFinder } = state;
         const selectionType = e.target.dataset.selectiontype
         const { currentIndex } = state.sexBreakdown[selectionType];
         const list = state.shoesList[selectionType];
@@ -128,7 +128,7 @@ const changeSexBreakdownType = async (e) =>{
 
         ui.breakdownLoaders('sexBreakdown');
         const piechartData = await dataFinder.getCounterData('sexBreakdown',selectionType, filter);
-        chart.updateChart(piechartData)
+        chart.updateChart(piechartData, settings)
         ui.breakdownLoaders('sexBreakdown');
     }
 };
