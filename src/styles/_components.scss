@@ -155,6 +155,7 @@
  //LOADER
 .loader{
     margin: 0 auto;
+    @include loaderStyle;
     
     &--breakdown{
         width: 170px;
@@ -176,21 +177,22 @@
         }
     }
 
-    @include loaderStyle;
-
     &--stoped{
         animation-play-state: paused;
     }
     
-    & div{
-      height: 100%;
-    }
-    
     &__small{
+        height: 100%;
         @include loaderStyle;
 
         &--stoped{
             animation-play-state: paused;
+        }
+
+        &--onlyBigscreen{
+            @media screen and (max-width: $break-small){
+                display: none;
+            }
         }
     }
 }
@@ -687,7 +689,6 @@
         z-index: 2;
 
         &--hidden{
-            // visibility: hidden;
             display: none;
         }
 
