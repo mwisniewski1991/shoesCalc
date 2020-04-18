@@ -274,15 +274,6 @@ const sortController = htmlElements.priceLevel.sortController;
 sortController.addEventListener('click', changePriceLevelSort);
 
 //RESIZE CHARTS
-const resizePriceLevel = ()=>{
-    stateCtrl.changeBoxplotSettings('smallScreen', window.screen.width <= 720 ? true : false);
-
-    const container = htmlElements.priceLevel.chartContainer;
-    const { chart, settings } = state.priceLevel;
-
-    chart.resizeChart(container.offsetWidth, container.offsetHeight, settings);
-};
-
 const resizePieChart = ()=>{
     stateCtrl.changeSexbreakdownSettings('settings', 'smallScreen', window.screen.width <= 720 ? true : false);
 
@@ -292,10 +283,29 @@ const resizePieChart = ()=>{
     chart.resizeChart(container.offsetWidth, container.offsetHeight, settings);
 };
 
+const resizeBoxplot= ()=>{
+    stateCtrl.changeBoxplotSettings('smallScreen', window.screen.width <= 720 ? true : false);
+
+    const { chartContainer, variablesController } = htmlElements.priceLevel;
+    const { chart, settings  } = state.priceLevel;
+    const { subcategoryPart, smallScreen } = state.priceLevel.settings;
+
+    //if user change screen from small to big subcategory 3 and 4 disapear and app has to change to 2
+    if(subcategoryPart==='Three' && smallScreen===false || subcategoryPart==='Four' && smallScreen===false
+     ){
+        variablesController.querySelector('#priceLevel__input--subcategoryTwo').checked = true;
+        stateCtrl.changeBoxplotSettings('subcategoryPart','Two');
+        stateCtrl.changeBoxplotSettings('variable','subcategoryTwo');
+    };
+
+    chart.resizeChart(chartContainer.offsetWidth, chartContainer.offsetHeight, settings);
+};
+
+
 
 window.addEventListener('resize', ui.debounce(()=>{
-    resizePriceLevel();
     resizePieChart();
+    resizeBoxplot();
 },250));
 
 
