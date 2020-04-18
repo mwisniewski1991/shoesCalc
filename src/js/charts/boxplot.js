@@ -9,7 +9,7 @@ export default class Boxplot {
             mainClass: `chart-${className}`,
             container: div,
             dimension: {
-                width: div.offsetWidth,
+                width: div.offsetWidth / 2,
                 height: div.offsetHeight,
                 boundWidth: {},
                 boundHeight: {},
@@ -21,15 +21,19 @@ export default class Boxplot {
                 updateTime: 300,
                 tooltipTime: 50,
             },
+            svgWidth: '50%',
             boxplotWidth: 60,
             circleR: 10,
             xLabelRotate: false,
         };
+
         this.elements= {};
+
         this.data = {
             rawData: {},
             mainData: {},
         };
+
         this.labelsName = {
             'F':'F',
             'M':'M',
@@ -85,13 +89,14 @@ export default class Boxplot {
     //CONTROLLERS
     renderChart(data, { sortType, selectedSubcategory, subcategoryPart, smallScreen}){
         
-        if(!this.elements.svg){this.createBound();};
+        this.updateSettings(selectedSubcategory, smallScreen, false);
+
+        if(!this.elements.svg){this.createBound();
+        }else{ this.updateBound(); }
 
         this.loadData(data);
         this.sortData(sortType);
-        this.updateSettings(selectedSubcategory, smallScreen, false);
         this.selectData(selectedSubcategory, subcategoryPart, smallScreen)
-
         
         if(!this.elements.xAxis){
             this.createXaxis();
@@ -106,52 +111,55 @@ export default class Boxplot {
             this.createGradientLighten();
         };
     
-        this.drawVertivalLine();
-        this.drawBoxes();
-        this.drawMedians();
-        this.drawMinLines();
-        this.drawMaxLines();
-        this.drawOutliersMax();
-        this.boxesTooltip()
+        this.drawDataElements();
     };
 
     sortChart({ sortType, selectedSubcategory, subcategoryPart, smallScreen }){
-        this.sortData(sortType);
         this.updateSettings(selectedSubcategory, smallScreen, false);
+        this.sortData(sortType);
         this.selectData(selectedSubcategory, subcategoryPart, smallScreen);
         
         this.redrawXaxis()
         this.redrawYaxis();
-
-        this.drawVertivalLine();
-        this.drawBoxes();
-        this.drawMedians();
-        this.drawMinLines();
-        this.drawMaxLines();
-        this.drawOutliersMax();
-        this.boxesTooltip()
+        this.drawDataElements();
     };
 
-    resizeChart(newWidth, newheight, {selectedSubcategory, smallScreen}){
-
+    resizeChart(newWidth, newheight, {sortType, selectedSubcategory, subcategoryPart, smallScreen}){
         this.settings.dimension.width = newWidth;
         this.settings.dimension.height = newheight;
-        
         this.updateSettings(selectedSubcategory, smallScreen, true);
-        this.calcDimension();
+        this.updateBound()
+
+        this.sortData(sortType);
+        this.selectData(selectedSubcategory, subcategoryPart, smallScreen);
+
         this.redrawXaxis();
         this.redrawYaxis()
-        
-        this.drawVertivalLine();
-        this.drawBoxes();
-        this.drawMedians();
-        this.drawMinLines();
-        this.drawMaxLines();
-        this.drawOutliersMax();
-        this.boxesTooltip()
+        this.drawDataElements();
     }
 
     //DATA/SETTINGS MANIPULATION
+    updateSettings(selectedSubcategory, smallScreen, resizeChart){
+        const { container } = this.settings;
+
+        if(smallScreen){
+            this.settings.boxplotWidth = selectedSubcategory === false ? 40 : 15; 
+            this.settings.circleR = selectedSubcategory === false ? 7 : 4; 
+            this.settings.svgWidth = '100%';
+            this.settings.dimension.width = container.offsetWidth;  
+        }else{
+            this.settings.boxplotWidth = selectedSubcategory === false ? 60 : 30; 
+            this.settings.circleR = selectedSubcategory === false ? 10 : 5;
+            this.settings.svgWidth = selectedSubcategory === false ? '50%' : '100%';
+            this.settings.dimension.width = selectedSubcategory === false ? container.offsetWidth / 2 : container.offsetWidth;   
+        };
+        this.settings.xLabelRotate = selectedSubcategory === false ? false : true;
+        this.settings.dimension.margins.bottom = selectedSubcategory === false ? 60 : 120; 
+
+        const newTime = resizeChart === true ? 10 : 300;
+        this.settings.animationTime.updateTime = newTime;
+    }
+
     loadData(data){
         this.data.rawData = data;
     };
@@ -188,29 +196,14 @@ export default class Boxplot {
     
     }
 
-    updateSettings(selectedSubcategory, smallScreen, resizeChart){
-
-        if(smallScreen){
-            this.settings.boxplotWidth = selectedSubcategory === false ? 40 : 15; 
-            this.settings.circleR = selectedSubcategory === false ? 7 : 4; 
-            this.settings.xLabelRotate = selectedSubcategory === false ? false : true;
-        }else{
-            this.settings.boxplotWidth = selectedSubcategory === false ? 60 : 30; 
-            this.settings.circleR = selectedSubcategory === false ? 10 : 5; 
-            this.settings.xLabelRotate = selectedSubcategory === false ? false : true; 
-        };
-
-        const newTime = resizeChart === true ? 10 : 300;
-        this.settings.animationTime.updateTime = newTime;
-    }
-
     //MAIN ELEMENTS
     createBound(){
         this.calcDimension();
 
-        const { mainClass, container, dimension:{ width, height, margins },  } = this.settings;
+        const { mainClass, container, dimension:{ width, height, margins }, svgWidth  } = this.settings;
 
         const svg = d3.select(container).append('svg')
+            .attr('width', svgWidth)
             .classed(`${mainClass}`, true);
 
         const bound = svg.append('g')
@@ -222,15 +215,20 @@ export default class Boxplot {
         
     };
 
+    updateBound(){
+        this.calcDimension();
+        const { elements:{ bound, svg }, settings:{ dimension:{ margins }, svgWidth } } = this;
+
+        svg.attr('width', svgWidth)
+        bound.attr('transform', `translate(${margins.left},${margins.top})`);
+    }
+
     calcDimension(){
         const { width, height, margins } = this.settings.dimension;
 
         this.settings.dimension.boundWidth = width - margins.left - margins.right;
         this.settings.dimension.boundHeight = height - margins.top - margins.bottom;
-
-
     };
-
 
     //AXIS ------------------------
     createXaxis(){
@@ -246,7 +244,8 @@ export default class Boxplot {
 
         xAxis.selectAll('text').text((d)=> this.labelsName[d]);
 
-        if(xLabelRotate) xAxis.selectAll('text').attr("y", 15).attr("x", -20).attr('transform', "rotate(-45)");
+        if(xLabelRotate) xAxis.selectAll('text').attr("y", 15).attr("x", -20).attr('transform', `translate(0, 20) rotate(-45)`);
+
 
         this.elements.xAxis = xAxis;
     }
@@ -260,7 +259,7 @@ export default class Boxplot {
             .call(d3.axisBottom(xScale))
             .selectAll('text').text((d)=> this.labelsName[d]);
         
-        if(xLabelRotate) xAxis.selectAll('text').attr("y", 15).attr("x", -20).attr('transform', "rotate(-45)");
+        if(xLabelRotate) xAxis.selectAll('text').attr("y", 15).attr("x", -20).attr('transform', 'translate(0, 20) rotate(-45)');
     }
 
     calcXscale(){
@@ -308,6 +307,16 @@ export default class Boxplot {
     }
 
     //DATA ELEMENTS
+    drawDataElements(){
+        this.drawVertivalLine();
+        this.drawBoxes();
+        this.drawMedians();
+        this.drawMinLines();
+        this.drawMaxLines();
+        this.drawOutliersMax();
+        this.boxesTooltip()
+    }
+
     drawBoxes(){
         const { elements:{ bound, xScale, yScale },
                 settings:{ mainClass, boxplotWidth, animationTime: { updateTime } },

@@ -63,7 +63,7 @@
     margin: 0 auto;   
     position: relative;
 
-    width: 100%;
+    // width: 50%;
     height: 100%;
 
     &__rect{
@@ -114,5 +114,13 @@
         &--female{
             fill: #e84393;
         }
+    }
+
+    &__yAxis{
+        font-size: 1.4rem;
+    }
+
+    &__xAxis{
+        font-size: 1.6rem;
     }
 }
