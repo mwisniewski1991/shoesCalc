@@ -2,26 +2,73 @@
     position: relative;
     height: 100vh;
     background-color: $blackBackground;
+    padding: 5rem 5rem 0 5rem;
     // background-image: $mainGradient;
 
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
+    
 
     @media screen and (max-width: $break-midmedium){
-        height: auto;
-        padding: 2.5rem 0;
+        height: 550px;
+        padding: 2rem 2rem 2rem 2rem;
     }
 
-    &__centerBox{
-        width: 95%;
-        height: 75%;
-
-        position: relative;
+    &__titleBox{
         display: flex;
-        flex-wrap: wrap;
+
+        @media screen and (max-width: $break-midmedium){
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+    
+    &__title{
+        opacity: 1;
+
+        &:nth-child(1){
+            margin-right: 30px;
+        }
+
+        &--female{
+            color: $colorFemale;
+            text-shadow: 2px 2px 10px $colorBlack;
+        }
+    
+        &--male{
+            color: $colorMale;
+            text-shadow: 2px 2px 10px $colorBlack;
+        }
     }
 
+    &__secondPart{
+        display: flex;
+
+        @media screen and (max-width: $break-midmedium){
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
+
+    &__text{
+        font-size: 2rem;
+        text-align: center;
+
+        display: flex;
+        flex-direction: column;
+
+        &--quotation{
+            font-size: 3rem;
+
+            & span{
+                font-size: 4rem;
+            }
+        }
+    }
+  
     &__block{
         width: 50%;
         height: 50%;
@@ -40,23 +87,6 @@
             &--four{order: 3;}
         }
      
-    }
-
-    &__title{
-        opacity: 1;
-        // opacity: 0;
-        // animation: entryAnimation__text 1s forwards 1s;
-
-
-        &--female{
-            color: $colorFemale;
-            text-shadow: 2px 2px 10px $colorBlack;
-        }
-    
-        &--male{
-            color: $colorMale;
-            text-shadow: 2px 2px 10px $colorBlack;
-        }
     }
 
     &__image{
@@ -141,14 +171,14 @@
         }
 
         &--male{
+            fill: $colorMale;
             transform: translateY(8px);
-            fill: $colorFemale;
             -webkit-filter: drop-shadow( 3px 3px 2px $colorBlack);
             filter: drop-shadow( 3px 3px 2px $colorBlack);
         }
 
         &--female{
-            fill: $colorMale;
+            fill: $colorFemale;
             -webkit-filter: drop-shadow( 3px 3px 2px $colorBlack);
             filter: drop-shadow( 3px 3px 2px $colorBlack);
         }   
