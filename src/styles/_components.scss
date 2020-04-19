@@ -139,16 +139,21 @@
     z-index: -1;
 
     &--breakdown{
-        background-image: url(('../images/backOne.jpg'));
+        background-image: url(('../images/backgroundImages/backOne.jpg'));
         // Photo by Jakob Owens on Unsplash
         filter: blur(2px);
         z-index: -1;
     }
 
     &--priceLevel{
-        background-image: url(('../images/backTwo.jpg'));
+        background-image: url(('../images/backgroundImages/backTwo.jpg'));
         // Photo by Md. Zahid Hasan Joy on Unsplash
         filter: blur(2px) brightness(.45);
+    }
+
+    &--minmax{
+        background-image: url(('../images/backgroundImages/backThree.jpg'));
+        filter: blur(2px);
     }
 
     // Photo by Hermes Rivera on Unsplash
@@ -204,6 +209,7 @@
 //BREAKDOWN
 .breakdownBox{
     position: relative;
+    background-color: $blackBackground;
     
     &__title{
         width: 100%;
@@ -378,8 +384,8 @@
 
 //MINMAX
 .minmaxBox{
-    background-image: $mainGradient;
- 
+    position: relative;
+    background-color: $blackBackground;
 
     &__title{
         width: 100%;
