@@ -138,6 +138,12 @@
     background-position: center;
     z-index: -1;
 
+    &--header{
+        background-image: url(('../images/backgroundImages/backTestTwo.jpg'));
+        // Photo by Camila Damásio on Unsplash
+        filter: blur(2px);
+    }
+
     &--breakdown{
         background-image: url(('../images/backgroundImages/backOne.jpg'));
         // Photo by Jakob Owens on Unsplash
@@ -153,12 +159,13 @@
 
     &--minmax{
         background-image: url(('../images/backgroundImages/backThree.jpg'));
+        // Photo by Camila Damásio on Unsplash
         filter: blur(2px);
     }
 
+    // background-image: url(('../images/backgroundImages/backThree.jpg'));
     // Photo by Hermes Rivera on Unsplash
 
-    // Photo by Camila Damásio on Unsplash
  }
 
  //LOADER
@@ -846,5 +853,15 @@
 
     &__label, &__value{
         font-size: 12px;
+    }
+}
+
+//TEXT SECTION
+.textSection{
+    height: 50vh;
+    background-image: $mainGradientAlpha;   
+
+    &__text{
+
     }
 }

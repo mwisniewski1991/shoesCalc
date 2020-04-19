@@ -1,6 +1,8 @@
 //COLORS AMERICAN PALLET
 $colorMale: #0984e3;
 $colorFemale:#e84393;
+$colorMaleAlpha: rgba(9, 133, 227, .85);
+$colorFemaleAlpha:rgba(232, 67, 147, .85);
 
 $colorFont: #ffeaa7;
 
@@ -8,9 +10,11 @@ $colorGrey: #b2bec3;
 $colorBlack:#2d3436;
 $colorWhite: #dfe6e9;
 
-
 $mainGradient: linear-gradient(105deg, $colorMale 40%, $colorFemale 60%);
 $mainGradientReverse: linear-gradient(105deg, $colorFemale 40%, $colorMale 60%);
+$mainGradientAlpha: linear-gradient(105deg, $colorFemaleAlpha 40%, $colorMaleAlpha 60%);
+$mainGradientReverseAlpha: linear-gradient(105deg, $colorFemaleAlpha 40%, $colorMaleAlpha 60%);
+
 $blackBackground: rgba($color: #000000, $alpha: .5);
 
 $textShadow: 1px 1px 2px $colorBlack;

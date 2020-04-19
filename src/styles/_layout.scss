@@ -1,7 +1,8 @@
 .header{
     position: relative;
     height: 100vh;
-    background-image: $mainGradient;
+    background-color: $blackBackground;
+    // background-image: $mainGradient;
 
     display: flex;
     justify-content: center;
@@ -109,13 +110,51 @@
         padding: 0;
     }
 
+    //title and images    
     &__title{
+        display: flex;
+        align-items: center;
+
         @media screen and (max-width: $break-midmedium){
             opacity: 0;
             width: 0;
         }
     }
+
+    &__shoesBox{
+        width: 50px;   
+        margin-left: 10px;
+    }
+
+    &__shoesImage{
+        display: block;
+        width: 100%;
+        height: 100%;
+
+        @media screen and (max-width: $break-medium){
+            width: 85%;
+            height: 85%;
+        }
+
+        @media screen and (max-width: $break-midmedium){
+            width: 45%;
+        }
+
+        &--male{
+            transform: translateY(8px);
+            fill: $colorFemale;
+            -webkit-filter: drop-shadow( 3px 3px 2px $colorBlack);
+            filter: drop-shadow( 3px 3px 2px $colorBlack);
+        }
+
+        &--female{
+            fill: $colorMale;
+            -webkit-filter: drop-shadow( 3px 3px 2px $colorBlack);
+            filter: drop-shadow( 3px 3px 2px $colorBlack);
+        }   
+    }
     
+    //navigation    
     &__nav{
         @media screen and (max-width: $break-midmedium){
             width: 100%;
@@ -177,7 +216,7 @@
             transform: translate(0, 2px);
         }
     }
-}
+}    
 
 .section{
     position: relative;
