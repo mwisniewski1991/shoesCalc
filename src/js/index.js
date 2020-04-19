@@ -41,10 +41,10 @@ const appController = async () =>{
     ui.minmaxLoaders()
 
     //PRICE LEVEL
-    // stateCtrl.changeBoxplotSettings('selectedSubcategory', true)
-    // createPriceLevelChart(boxPlotSubcat); //TEST
-    const priceLevelData = await dataFinder.getPriceLevelData('sex');
-    createPriceLevelChart(priceLevelData);
+    stateCtrl.changeBoxplotSettings('selectedSubcategory', true)
+    createPriceLevelChart(boxPlotSubcat); //TEST
+    // const priceLevelData = await dataFinder.getPriceLevelData('sex');
+    // createPriceLevelChart(priceLevelData);
     ui.priceLevelLoaders();
     
 };

@@ -150,6 +150,10 @@
         // Photo by Md. Zahid Hasan Joy on Unsplash
         filter: blur(2px) brightness(.45);
     }
+
+    // Photo by Hermes Rivera on Unsplash
+
+    // Photo by Camila Damásio on Unsplash
  }
 
  //LOADER
@@ -755,14 +759,20 @@
     }
 
     &__queryBox{
+        margin: 0 auto;   
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(200px, 300px));
         grid-template-rows: 40% repeat(2, 30%);
         align-items: center;
         justify-items: center;
 
         &:nth-child(2){
             border-left: 1px dotted $colorWhite;
+        }
+
+        @media screen and (max-width: $break-medium){
+            width: 100%;   
+            grid-template-columns: repeat(2, 1fr);
         }
       
         @media screen and (max-width: $break-midmedium){
@@ -799,11 +809,7 @@
     }
 
     &__radioBox .radio__label{
-        font-size: 1.2rem;
-
-        @media screen and (max-width: $break-small){
-            font-size: 1.7rem;
-        }
+        font-size: 1.8rem;
     }
 }
 
