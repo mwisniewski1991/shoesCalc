@@ -316,28 +316,36 @@
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 40px 40px;
+    grid-template-rows: 40px 40px 40px;
     align-items: center;
 
     grid-template-areas: 
     "catInput . subcatInput" 
-    "leftButton centerText rightButton";
+    "leftButton centerText rightButton"
+    ". list .";
 
     @media screen and (max-width: $break-medium){
-        grid-template-rows: 40px 35px;
+        grid-template-rows: 40px 35px 35px;
     }
     @media screen and (max-width: $break-midmedium){
         width: 80%;
         grid-template-rows: 60px 35px;
-    }
-    @media screen and (max-width: $break-small){
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 30px 30px 30px;
-        grid-row-gap: .5rem;
+
         grid-template-areas: 
-        "catInput subcatInput" 
-        "leftButton rightButton"
-        "centerText centerText";
+            "catInput list subcatInput" 
+            "leftButton centerText rightButton";
+    }
+
+    @media screen and (max-width: $break-small){
+        width: 90%;
+        grid-template-columns: 2fr 1fr 2fr;
+        grid-template-rows: 30px 30px 30px 30px;
+        grid-row-gap: .5rem;
+
+        grid-template-areas: 
+        "catInput list subcatInput" 
+        "leftButton . rightButton"
+        "centerText centerText centerText";
     }
 
     &__button{
@@ -356,6 +364,7 @@
     }
 
     &__selection{
+        position: relative;
         grid-area: centerText;
         margin: 4px;
 
@@ -363,8 +372,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-
-
     }
 
     &__mainSpan{
@@ -376,7 +383,7 @@
     }
 
     &__typeCtrl{
-
+        position: relative; 
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -395,7 +402,7 @@
         }
 
         @media screen and (max-width: $break-small){
-            width: 80%;
+            width: 100%;
             margin: auto;
             flex-direction: row;
             justify-content: space-between;
@@ -421,6 +428,37 @@
 
     &__smallSpan{
         font-size: 1.4rem;
+    }
+
+    &__hamburger{
+        margin: 0 auto;   
+    }
+
+    &__listContainer{
+        position: relative;
+        grid-area: list;
+        width: 100%;
+        z-index: 1;
+    }
+
+    &__scrollableList{
+        position: absolute;  
+        width: 100%;
+        margin: 0 auto;
+        font-size: 1.4rem;
+
+        @media screen and (max-width: $break-medium){
+            font-size: 1.6rem;
+            width: 120%;
+            transform: translate(-8%, 0);
+        }
+
+        @media screen and (max-width: $break-small){
+            font-size: 2rem;
+            width: 240%;
+            transform: translate(-29%, 0);
+        }
+       
     }
 
 }

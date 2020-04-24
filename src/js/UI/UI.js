@@ -1,5 +1,6 @@
 import { htmlElements, uiLabels } from './base';
 import image from '../../images/shoesImg/lackShoesThree.png';
+import { html } from 'd3';
 
 export const debounce = (func, wait, immediate)=>{
 	let timeout;
@@ -55,6 +56,23 @@ export const createMinmaxElement = (DOMelement, shoesObject)=>{
     }
 };
 
+export const createSexbreakdownList = (subcategoryList) =>{
+
+    const list = htmlElements.sexBreakdown.list.querySelector("ul");
+
+    subcategoryList.forEach((subcategory) => {
+        const itemHTML = `
+            <li class="scrollableList__item">
+                <button class="scrollableList__button" data-selectionType="${subcategory}">
+                    ${uiLabels[subcategory]}
+                </button>
+            </li>
+        `;
+        list.insertAdjacentHTML('beforeend', itemHTML);
+    });
+};
+
+//LOADERS
 export const breakdownLoaders = (chartType) => {
     const loader = htmlElements[chartType].loader;
     loader.classList.toggle('pieContainer__loaderContainer--hidden')

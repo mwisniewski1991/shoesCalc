@@ -11,6 +11,7 @@ import { htmlElements } from './UI/base';
 import { sexBreakdownTestData, sexBreakdownTestDataTwo } from './data/sexBreakdownTestData';
 import { minmaxTestData } from './data/minmaxTestData';
 import { boxPlotSex, boxPlotCat, boxPlotSubcat} from './data/priceLevelTestData';
+import { html } from 'd3';
 
 
 const { state } = stateCtrl;
@@ -33,6 +34,7 @@ const appController = async () =>{
     // createSexDivideChart(sexBreakdownData); 
     ui.breakdownLoaders('sexBreakdown');
 
+    ui.createSexbreakdownList(state.shoesList.subcategory);
 
     //MINMAX SECTION
     createMinmaxSection(minmaxTestData); //TEST
@@ -134,10 +136,20 @@ const changeSexBreakdownType = async (e) =>{
     }
 };
 
+const showSexbreakdownList = (e) =>{
+    const listButton = htmlElements.sexBreakdown.listButton;
+    const list = htmlElements.sexBreakdown.list;
+
+    listButton.classList.toggle('hamburger--active');
+    list.classList.toggle('scrollableList--hidden');
+
+};
+
 const pieController = htmlElements.sexBreakdown.controller;
 pieController.addEventListener('click', changeSexBreakdownSelection);
 pieController.addEventListener('click', changeSexBreakdownType);
-
+const listButton = htmlElements.sexBreakdown.listButton;
+listButton.addEventListener('click', showSexbreakdownList);
 
 //MINMAX
 const changeMinmaxSelection = async (e)=>{

@@ -3,6 +3,8 @@ export const htmlElements = {
         chartContainer: document.querySelector('#sexDivide__chartContainer'),
         controller: document.querySelector('#sexBreakdown__controller'),
         loader: document.querySelector('.pieContainer__loaderContainer--sexBreakdown'),
+        listButton: document.querySelector('.hamburger--sexbreakdownList'),
+        list: document.querySelector('.scrollableList--sexbreakdownList'),
     },
     minmax:{
         controller: document.querySelector('#minmax__controller'),

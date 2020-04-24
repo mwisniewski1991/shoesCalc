@@ -79,10 +79,8 @@
     <section class="section section--breakdown breakdownBox" id="section section--breakdown">
         <div class="backgroundImage backgroundImage--breakdown"></div>
 
-        
         <div class="breakdownBox__title"><h3 class="heading--three">Podział danych</h3></div>
 
-        <!-- FIRST ------------------------------------------------------------------------------------------------------- -->
         <div class="breakdownBox__pieContainer pieContainer">
 
             <div class="pieContainer__title"><h4 class="heading--four">Podział danych ze względu na płeć</h4></div>
@@ -108,6 +106,8 @@
                 </div>
                 
                 <div class="pieCtrl__typeCtrl">
+
+                
                     <div class="pieCtrl__radioBox radio">
                         <input class="radio__input" 
                                 type="radio" 
@@ -127,11 +127,29 @@
                         id="sexBreakdown__leftButton" 
                         value="-1"> << Zmień</button>
                         
-                <div class="pieCtrl__selection"><span class="pieCtrl__mainSpan mainSpan">Wszystkie</span></div>
+                <div class="pieCtrl__selection">
+                    <span class="pieCtrl__mainSpan mainSpan">Wszystkie</span>
+                </div>
 
                 <button class="pieCtrl__button pieCtrl__button--right button button--right" 
                         id="sexBreakdown__rightButton" 
-                        value="1">Zmień >> </button>
+                        value="1">Zmień >></button>
+
+                <div class="pieCtrl__listContainer">
+
+                    <button class="pieCtrl__hamburger hamburger hamburger--sexbreakdownList">
+                        <span class="hamburger__box">
+                          <span class="hamburger__inner"></span>
+                        </span>
+                    </button>
+
+                    <div class="pieCtrl__scrollableList scrollableList scrollableList--hidden scrollableList--sexbreakdownList">
+                        <ul class="scrollableList__box">
+                            <!-- <li class="scrollableList__item"><button class="scrollableList__button">OPTIONS</button></li> -->
+                        </ul>
+                    </div>
+
+                </div>
 
             </div>
 
