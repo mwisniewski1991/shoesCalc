@@ -72,6 +72,12 @@ export const createSexbreakdownList = (subcategoryList) =>{
     });
 };
 
+export const showSexbreakdownListbutton = () =>{
+    const listButton = htmlElements.sexBreakdown.listButton;
+    listButton.classList.toggle("pieCtrl__hamburger--hidden");
+};
+
+
 //LOADERS
 export const breakdownLoaders = (chartType) => {
     const loader = htmlElements[chartType].loader;

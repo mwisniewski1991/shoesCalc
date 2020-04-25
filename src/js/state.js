@@ -49,6 +49,7 @@ export const state = {
         chart: {},
         settings: {
             smallScreen: false,
+            type: 'category',
         },
         category:{
             currentSelected: true,

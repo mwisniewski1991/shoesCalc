@@ -11,11 +11,9 @@ import { htmlElements } from './UI/base';
 import { sexBreakdownTestData, sexBreakdownTestDataTwo } from './data/sexBreakdownTestData';
 import { minmaxTestData } from './data/minmaxTestData';
 import { boxPlotSex, boxPlotCat, boxPlotSubcat} from './data/priceLevelTestData';
-import { html } from 'd3';
 
 
 const { state } = stateCtrl;
-
 const appController = async () =>{
 
     //START LOADERS
@@ -29,11 +27,10 @@ const appController = async () =>{
     // const { dataSet } = state;
     
     //BREAKDOWN
-    createSexDivideChart(sexBreakdownTestData); //TEST
-    // const sexBreakdownData = await dataFinder.getCounterData('sexBreakdown','category','wszystkie');
-    // createSexDivideChart(sexBreakdownData); 
+    // createSexDivideChart(sexBreakdownTestData); //TEST
+    const sexBreakdownData = await dataFinder.getCounterData('sexBreakdown','category','wszystkie');
+    createSexDivideChart(sexBreakdownData); 
     ui.breakdownLoaders('sexBreakdown');
-
     ui.createSexbreakdownList(state.shoesList.subcategory);
 
     //MINMAX SECTION
@@ -91,48 +88,54 @@ const changeSexBreakdownSelection = async (e) =>{
     if (e.target.matches('.pieCtrl__button')){
         const target = e.target;
         const changeIndex = parseInt(target.value);
-        const selectionType = state.sexBreakdown.category.currentSelected === true ? 'category' : 'subcategory';
-        const { currentIndex, maxIndex } = state.sexBreakdown[selectionType];
+        const currentType = state.sexBreakdown.category.currentSelected === true ? 'category' : 'subcategory';
+        const { currentIndex, maxIndex } = state.sexBreakdown[currentType];
         const newIndex = currentIndex + changeIndex; 
 
         if(newIndex > 0 && newIndex <= maxIndex){
+            ui.breakdownLoaders('sexBreakdown');
+
             const { sexBreakdown:{chart, settings}, dataFinder } = state;
-            const list = state.shoesList[selectionType];
+            const list = state.shoesList[currentType];
             const filter = list[newIndex-1]; //check what category has to been download from database
+            const piechartData = await dataFinder.getCounterData('sexBreakdown',currentType, filter);
 
-            stateCtrl.changeSexbreakdownSettings(selectionType, 'currentIndex', newIndex);
-            ui.changeCatNumber('sexBreakdown',selectionType, newIndex);
+            stateCtrl.changeSexbreakdownSettings(currentType, 'currentIndex', newIndex);
+            ui.changeCatNumber('sexBreakdown',currentType, newIndex);
             ui.changeMainSpan('sexBreakdown', newIndex, list);
-        
 
-            chart.updateChart(sexBreakdownTestDataTwo, settings); //TEST
-            // ui.breakdownLoaders('sexBreakdown');
-            // const piechartData = await dataFinder.getCounterData('sexBreakdown',selectionType, filter);
-            // chart.updateChart(piechartData, settings);
-            // ui.breakdownLoaders('sexBreakdown');
+            chart.updateChart(piechartData, settings);
+            ui.breakdownLoaders('sexBreakdown');
+
+            // chart.updateChart(sexBreakdownTestDataTwo, settings); //TEST
         }
     }
 };
 
 const changeSexBreakdownType = async (e) =>{
-    
     if (e.target.matches('.radio__input')){
+        const selectedType = e.target.dataset.selectiontype
+        const currentType = state.sexBreakdown.settings.type;
 
-        const { sexBreakdown: { chart, settings }, dataFinder } = state;
-        const selectionType = e.target.dataset.selectiontype
-        const { currentIndex } = state.sexBreakdown[selectionType];
-        const list = state.shoesList[selectionType];
-        const filter = list[currentIndex-1];
+        if( selectedType !== currentType ){
+            ui.breakdownLoaders('sexBreakdown');
 
-        stateCtrl.changeSexbreakdownSettings('category', 'currentSelected', false); //reset value in state
-        stateCtrl.changeSexbreakdownSettings('subcategory', 'currentSelected', false); //reset value in state
-        stateCtrl.changeSexbreakdownSettings(selectionType, 'currentSelected', true); //set new value
-        ui.changeMainSpan('sexBreakdown', currentIndex, list)
-
-        ui.breakdownLoaders('sexBreakdown');
-        const piechartData = await dataFinder.getCounterData('sexBreakdown',selectionType, filter);
-        chart.updateChart(piechartData, settings)
-        ui.breakdownLoaders('sexBreakdown');
+            const { sexBreakdown: { chart, settings }, dataFinder } = state;
+            const { currentIndex } = state.sexBreakdown[selectedType];
+            const list = state.shoesList[selectedType];
+            const filter = list[currentIndex-1];
+            const piechartData = await dataFinder.getCounterData('sexBreakdown',selectedType, filter);
+    
+            stateCtrl.changeSexbreakdownSettings('settings', 'type', selectedType); //reset value in state
+            stateCtrl.changeSexbreakdownSettings('category', 'currentSelected', false); //reset value in state
+            stateCtrl.changeSexbreakdownSettings('subcategory', 'currentSelected', false); //reset value in state
+            stateCtrl.changeSexbreakdownSettings(selectedType, 'currentSelected', true); //set new value
+    
+            ui.showSexbreakdownListbutton();
+            ui.changeMainSpan('sexBreakdown', currentIndex, list)
+            chart.updateChart(piechartData, settings)
+            ui.breakdownLoaders('sexBreakdown');
+        }
     }
 };
 
@@ -142,14 +145,42 @@ const showSexbreakdownList = (e) =>{
 
     listButton.classList.toggle('hamburger--active');
     list.classList.toggle('scrollableList--hidden');
+};
 
+const changeSexBreakdownSelectionList = async (e) => {
+    if (e.target.matches('.scrollableList__button')){
+        const selectedName = e.target.dataset.selectiontype;
+        const selectionType = 'subcategory';
+        const list = state.shoesList[selectionType];
+
+        const newIndex = list.indexOf(selectedName) + 1;
+        const { currentIndex } = state.sexBreakdown[selectionType];
+
+        if(newIndex !== currentIndex){
+            ui.breakdownLoaders('sexBreakdown');
+
+            const { sexBreakdown:{ chart, settings }, dataFinder } = state;
+            const piechartData = await dataFinder.getCounterData('sexBreakdown',selectionType, selectedName);
+
+            stateCtrl.changeSexbreakdownSettings(selectionType, 'currentIndex', newIndex);
+            ui.changeCatNumber('sexBreakdown',selectionType, newIndex);
+            ui.changeMainSpan('sexBreakdown', newIndex, list);
+            chart.updateChart(piechartData, settings);
+            ui.breakdownLoaders('sexBreakdown');
+            
+            // chart.updateChart(sexBreakdownTestDataTwo, settings); //TEST
+        }
+       
+    }
 };
 
 const pieController = htmlElements.sexBreakdown.controller;
+const listButton = htmlElements.sexBreakdown.listButton;
+const sexBreakdownList = htmlElements.sexBreakdown.list;
 pieController.addEventListener('click', changeSexBreakdownSelection);
 pieController.addEventListener('click', changeSexBreakdownType);
-const listButton = htmlElements.sexBreakdown.listButton;
 listButton.addEventListener('click', showSexbreakdownList);
+sexBreakdownList.addEventListener('click', changeSexBreakdownSelectionList)
 
 //MINMAX
 const changeMinmaxSelection = async (e)=>{
@@ -285,6 +316,7 @@ variablesController.addEventListener('click', changePriceLevelVariables);
 const sortController = htmlElements.priceLevel.sortController;
 sortController.addEventListener('click', changePriceLevelSort);
 
+
 //RESIZE CHARTS
 const resizePieChart = ()=>{
     stateCtrl.changeSexbreakdownSettings('settings', 'smallScreen', window.screen.width <= 720 ? true : false);
@@ -312,8 +344,6 @@ const resizeBoxplot= ()=>{
 
     chart.resizeChart(chartContainer.offsetWidth, chartContainer.offsetHeight, settings);
 };
-
-
 
 window.addEventListener('resize', ui.debounce(()=>{
     resizePieChart();

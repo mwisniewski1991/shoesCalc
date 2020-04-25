@@ -432,6 +432,10 @@
 
     &__hamburger{
         margin: 0 auto;   
+
+        &--hidden{
+            transform: scaleY(0);
+        }
     }
 
     &__listContainer{
