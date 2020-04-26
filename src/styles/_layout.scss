@@ -313,7 +313,7 @@
 
 .pieCtrl{
     margin: 0 auto;
-    width: 100%;
+    width: 85%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 40px 40px 40px;
@@ -325,6 +325,7 @@
     ". list .";
 
     @media screen and (max-width: $break-medium){
+        width: 100%;
         grid-template-rows: 40px 35px 35px;
     }
     @media screen and (max-width: $break-midmedium){
@@ -878,22 +879,24 @@
     }
 
     &__radioBox{
+        display: flex;   
         width: 55%;
         padding: .2rem;
 
-        @media screen and (max-width: $break-midmedium){
-            width: 75%;
+        
+        @media screen and (max-width: $break-medium){
+            width: 85%;
         }
 
-        @media screen and (max-width: $break-small){
+        @media screen and (max-width: $break-midmedium){
             width: 100%;
         }
-        
+
         &--smallScreenOnly{
             display: none;
 
             @media screen and (max-width: $break-midmedium){
-                display: block;
+                display: flex;
             }
         }
     }

@@ -60,7 +60,6 @@
 }
 
 .radio{
-    display: flex;
    
    &__input{display: none;}
    
@@ -72,7 +71,7 @@
      transition: transform $transitionTime;
 
     @media screen and (max-width: $break-medium){
-        font-size: 1.5rem;
+        font-size: 1.7rem;
     }
 
     @media screen and (max-width: $break-small){

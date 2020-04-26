@@ -134,9 +134,7 @@ export default class PieChart{
 
     //PIE/DONUT  ------------------------------------------------------------------------------------
     drawPie(){
-        const { pieData } = this.data;
-        const { pieContainer } = this.elements;
-        const { mainClass,  arcGenerator  } = this.settings;
+        const { data:{ pieData }, elements: { pieContainer }, settings: { mainClass, arcGenerator} } = this;
         const slicesClass = `${mainClass}__slices ${mainClass}__slices--`;
         const groupClass = `${mainClass}__slicesGroup ${mainClass}__slicesGroup--`;
 
@@ -157,16 +155,18 @@ export default class PieChart{
                     .attr('class', (d,i)=> `${slicesClass}${d.data.key}`)
                     .attr('d', arcGenerator)
                     .style("stroke", "white")
-                    .each(function(d){ this._current = d;}),
+                    .each(function(d){ this._current = d;})
+                    .attr('stroke-width', (d) => this.opacityValue(d.data.value)),
                 (update) => update
                     .transition().duration(500).attrTween('d', arcTween)
-                    .each(function(d){ this._current = d;}),
+                    .attr('stroke-width', (d) => this.opacityValue(d.data.value)),
+        
             );
     }
 
     addLabels(){
-        const { pieContainer } = this.elements;
-        const { mainClass, arcGenerator } = this.settings;
+        const { elements:{ pieContainer}, settings: { mainClass, arcGenerator }} = this;
+
         const className = `${mainClass}__labels ${mainClass}__labels--`;
 
         pieContainer.selectAll(`.${mainClass}__slicesGroup`)
@@ -174,16 +174,15 @@ export default class PieChart{
             .attr('class', (d,i) => `${className}${i} ${d.data.key}`)
             .text((d) => this.changeName(d.data.key))
             .attr("transform", (d) => `translate(${arcGenerator.centroid(d)})`)
+            .style('opacity', (d) => this.opacityValue(d.data.value))
             .each(function(d){ this._current = d;});
     }
 
     updateLabels(){
-        const { pieData } = this.data;
-        const { pieContainer } = this.elements;
-        const { mainClass, arcGenerator } = this.settings;
+        const { data: { pieData }, elements: { pieContainer }, settings: { mainClass, arcGenerator }} = this;  
 
         const labels = pieContainer.selectAll(`.${mainClass}__labels`).data(pieData)
-
+        
         function labelarcTween(a) {
             var i = d3.interpolate(this._current, a);
             this._current = i(0);
@@ -192,12 +191,13 @@ export default class PieChart{
             };
         }
 
-          labels.transition().duration(500).attrTween("transform", labelarcTween);
+          labels.transition().duration(500)
+            .style('opacity', (d) => this.opacityValue(d.data.value))
+            .attrTween("transform", labelarcTween);
     }
 
     addNumbersLabels(){
-        const { pieContainer } = this.elements;
-        const { mainClass } = this.settings;
+        const { elements: { pieContainer }, settings: { mainClass } } = this;
         const className = `${mainClass}__numLabels ${mainClass}__numLabels--`;
 
         pieContainer.selectAll(`.${mainClass}__slicesGroup`)
@@ -208,10 +208,7 @@ export default class PieChart{
     };
 
     updateNumberLabels(){
-        const { pieData } = this.data;
-        const { pieContainer } = this.elements;
-        const { mainClass, arcGenerator } = this.settings;
-
+        const { data:{ pieData }, elements: { pieContainer }, settings:{ mainClass, arcGenerator } } = this;
         const numberLabels = pieContainer.selectAll(`.${mainClass}__numLabels`).data(pieData)
 
         function labelarcTween(a) {
@@ -222,16 +219,14 @@ export default class PieChart{
             };
         }
 
-        numberLabels
-            .transition().duration(500)
-            .text((d) => `${d.data.value} pcs`)
+        numberLabels.transition().duration(500)
+            .text((d) => `${d.data.value} szt.`)
+            .style('opacity', (d) => this.opacityValue(d.data.value))
             .attrTween("transform", labelarcTween);
     }
 
     addMainNumber(){
-        const { rawData } = this.data;  
-        const { mainClass } = this.settings;
-        const { pieContainer } = this.elements;
+        const { data: { rawData }, elements:{ pieContainer }, settings: { mainClass} } = this;
 
         let sum = 0;
         for(const key in rawData){sum = sum + rawData[key];};
@@ -256,9 +251,7 @@ export default class PieChart{
     }
 
     updateMainNumber(){
-        const { rawData } = this.data;  
-        const { mainClass } = this.settings;
-        const { pieContainer } = this.elements;
+        const { data: { rawData }, elements:{ pieContainer }, settings: { mainClass} } = this;
 
         let sum = 0;
         for(const key in rawData){sum = sum + rawData[key];};
@@ -292,10 +285,17 @@ export default class PieChart{
         return `translate(${transX}, ${transY})`
     };
 
+    opacityValue(value){
+        if(value === 0){
+            return 0;
+        }else{
+            return 1;
+        };
+    }
+
     //INTERACTIVITY -----------------------------------------------------------------------------------
     addHoverEffect(smallScreen){
-        const { pieContainer } = this.elements;
-        const { mainClass, arcGenerator } = this.settings;
+        const { elements: { pieContainer }, settings:{ mainClass, arcGenerator } } = this;
         const slicesGroup = pieContainer.selectAll(`.${mainClass}__slicesGroup`);
 
         if(!smallScreen){
@@ -303,7 +303,7 @@ export default class PieChart{
             //Same thing below in else.
             pieContainer.selectAll(`.${mainClass}__numLabels`).style('opacity', 0); 
 
-            slicesGroup.on('mouseover', (d,i,nodes)=>{
+            slicesGroup.on('mouseover', (d,i)=>{
 
                 pieContainer.selectAll(`.${mainClass}__slices--${d.data.key}`)
                 .style('opacity', 1)
@@ -318,7 +318,7 @@ export default class PieChart{
                     .transition().delay(200).duration(300)
                     .style('opacity', 1);
             });
-            slicesGroup.on('mouseout', (d,i,nodes)=>{
+            slicesGroup.on('mouseout', (d,i)=>{
                 pieContainer.selectAll(`.${mainClass}__slices--${d.data.key}`)
                     .style('opacity', .5)
                     .style('transform','scale(1)')

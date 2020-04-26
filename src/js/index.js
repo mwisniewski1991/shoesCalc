@@ -8,7 +8,7 @@ import * as ui from './UI/UI';
 import { htmlElements } from './UI/base';
 
 //TEST
-import { sexBreakdownTestData, sexBreakdownTestDataTwo } from './data/sexBreakdownTestData';
+import { sexBreakdownTestData, sexBreakdownTestDataTwo, randomSexBreakdownTestData } from './data/sexBreakdownTestData';
 import { minmaxTestData } from './data/minmaxTestData';
 import { boxPlotSex, boxPlotCat, boxPlotSubcat} from './data/priceLevelTestData';
 
@@ -27,7 +27,7 @@ const appController = async () =>{
     // const { dataSet } = state;
     
     //BREAKDOWN
-    // createSexDivideChart(sexBreakdownTestData); //TEST
+    // createSexDivideChart(randomSexBreakdownTestData()); //TEST
     const sexBreakdownData = await dataFinder.getCounterData('sexBreakdown','category','wszystkie');
     createSexDivideChart(sexBreakdownData); 
     ui.breakdownLoaders('sexBreakdown');
@@ -85,6 +85,7 @@ const createPriceLevelChart = (data) => {
 //FUNCTIONS FOR EVENT LISTENERS
 //SEX BREAKDOWN
 const changeSexBreakdownSelection = async (e) =>{
+
     if (e.target.matches('.pieCtrl__button')){
         const target = e.target;
         const changeIndex = parseInt(target.value);
@@ -107,7 +108,7 @@ const changeSexBreakdownSelection = async (e) =>{
             chart.updateChart(piechartData, settings);
             ui.breakdownLoaders('sexBreakdown');
 
-            // chart.updateChart(sexBreakdownTestDataTwo, settings); //TEST
+            // chart.updateChart(randomSexBreakdownTestData(), settings); //TEST
         }
     }
 };
