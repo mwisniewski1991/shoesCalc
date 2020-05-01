@@ -59,6 +59,7 @@ export const createMinmaxElement = (DOMelement, shoesObject)=>{
 export const createSexbreakdownList = (subcategoryList) =>{
 
     const list = htmlElements.sexBreakdown.list.querySelector("ul");
+    list.innerHTML = ''; 
 
     subcategoryList.forEach((subcategory) => {
         const itemHTML = `

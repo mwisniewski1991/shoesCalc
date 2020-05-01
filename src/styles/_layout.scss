@@ -316,13 +316,12 @@
     width: 85%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 40px 40px 40px;
+    grid-template-rows: 40px 40px;
     align-items: center;
 
     grid-template-areas: 
-    "catInput . subcatInput" 
-    "leftButton centerText rightButton"
-    ". list .";
+    "catInput centerText subcatInput" 
+    "leftButton list rightButton";
 
     @media screen and (max-width: $break-medium){
         width: 100%;
@@ -435,7 +434,7 @@
         margin: 0 auto;   
 
         &--hidden{
-            transform: scaleY(0);
+            // transform: scaleY(0);
         }
     }
 

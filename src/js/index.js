@@ -27,11 +27,11 @@ const appController = async () =>{
     // const { dataSet } = state;
     
     //BREAKDOWN
-    // createSexDivideChart(randomSexBreakdownTestData()); //TEST
-    const sexBreakdownData = await dataFinder.getCounterData('sexBreakdown','category','wszystkie');
-    createSexDivideChart(sexBreakdownData); 
+    createSexDivideChart(randomSexBreakdownTestData()); //TEST
+    // const sexBreakdownData = await dataFinder.getCounterData('sexBreakdown','category','wszystkie');
+    // createSexDivideChart(sexBreakdownData); 
     ui.breakdownLoaders('sexBreakdown');
-    ui.createSexbreakdownList(state.shoesList.subcategory);
+    ui.createSexbreakdownList(state.shoesList.category);
 
     //MINMAX SECTION
     createMinmaxSection(minmaxTestData); //TEST
@@ -99,16 +99,16 @@ const changeSexBreakdownSelection = async (e) =>{
             const { sexBreakdown:{chart, settings}, dataFinder } = state;
             const list = state.shoesList[currentType];
             const filter = list[newIndex-1]; //check what category has to been download from database
-            const piechartData = await dataFinder.getCounterData('sexBreakdown',currentType, filter);
+            // const piechartData = await dataFinder.getCounterData('sexBreakdown',currentType, filter);
 
             stateCtrl.changeSexbreakdownSettings(currentType, 'currentIndex', newIndex);
             ui.changeCatNumber('sexBreakdown',currentType, newIndex);
             ui.changeMainSpan('sexBreakdown', newIndex, list);
 
-            chart.updateChart(piechartData, settings);
+            // chart.updateChart(piechartData, settings);
             ui.breakdownLoaders('sexBreakdown');
 
-            // chart.updateChart(randomSexBreakdownTestData(), settings); //TEST
+            chart.updateChart(randomSexBreakdownTestData(), settings); //TEST
         }
     }
 };
@@ -121,20 +121,22 @@ const changeSexBreakdownType = async (e) =>{
         if( selectedType !== currentType ){
             ui.breakdownLoaders('sexBreakdown');
 
-            const { sexBreakdown: { chart, settings }, dataFinder } = state;
+            const { sexBreakdown: { chart, settings }, dataFinder, shoesList } = state;
             const { currentIndex } = state.sexBreakdown[selectedType];
-            const list = state.shoesList[selectedType];
+            const list = shoesList[selectedType];
             const filter = list[currentIndex-1];
-            const piechartData = await dataFinder.getCounterData('sexBreakdown',selectedType, filter);
+            // const piechartData = await dataFinder.getCounterData('sexBreakdown',selectedType, filter);
     
             stateCtrl.changeSexbreakdownSettings('settings', 'type', selectedType); //reset value in state
             stateCtrl.changeSexbreakdownSettings('category', 'currentSelected', false); //reset value in state
             stateCtrl.changeSexbreakdownSettings('subcategory', 'currentSelected', false); //reset value in state
             stateCtrl.changeSexbreakdownSettings(selectedType, 'currentSelected', true); //set new value
     
-            ui.showSexbreakdownListbutton();
-            ui.changeMainSpan('sexBreakdown', currentIndex, list)
-            chart.updateChart(piechartData, settings)
+            ui.createSexbreakdownList(shoesList[selectedType]);
+            ui.changeMainSpan('sexBreakdown', currentIndex, list);
+
+            // chart.updateChart(piechartData, settings)
+            chart.updateChart(randomSexBreakdownTestData(), settings) //TEST
             ui.breakdownLoaders('sexBreakdown');
         }
     }
@@ -150,26 +152,26 @@ const showSexbreakdownList = (e) =>{
 
 const changeSexBreakdownSelectionList = async (e) => {
     if (e.target.matches('.scrollableList__button')){
+        const { sexBreakdown, shoesList } = state;
         const selectedName = e.target.dataset.selectiontype;
-        const selectionType = 'subcategory';
-        const list = state.shoesList[selectionType];
-
+        const selectionType = sexBreakdown.settings.type;
+        const list = shoesList[selectionType];
         const newIndex = list.indexOf(selectedName) + 1;
-        const { currentIndex } = state.sexBreakdown[selectionType];
+        const { currentIndex } = sexBreakdown[selectionType];
 
         if(newIndex !== currentIndex){
             ui.breakdownLoaders('sexBreakdown');
 
             const { sexBreakdown:{ chart, settings }, dataFinder } = state;
-            const piechartData = await dataFinder.getCounterData('sexBreakdown',selectionType, selectedName);
+            // const piechartData = await dataFinder.getCounterData('sexBreakdown',selectionType, selectedName);
 
             stateCtrl.changeSexbreakdownSettings(selectionType, 'currentIndex', newIndex);
             ui.changeCatNumber('sexBreakdown',selectionType, newIndex);
             ui.changeMainSpan('sexBreakdown', newIndex, list);
-            chart.updateChart(piechartData, settings);
+            // chart.updateChart(piechartData, settings);
             ui.breakdownLoaders('sexBreakdown');
             
-            // chart.updateChart(sexBreakdownTestDataTwo, settings); //TEST
+            chart.updateChart(randomSexBreakdownTestData(), settings); //TEST
         }
        
     }
