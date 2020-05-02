@@ -15,7 +15,7 @@ $mainGradientReverse: linear-gradient(105deg, $colorFemale 40%, $colorMale 60%);
 $mainGradientAlpha: linear-gradient(105deg, $colorMaleAlpha 40%, $colorFemaleAlpha 60%);
 $mainGradientReverseAlpha: linear-gradient(105deg, $colorFemaleAlpha 40%, $colorMaleAlpha 60%);
 
-$blackBackground: rgba($color: #000000, $alpha: .5);
+$blackBackground: rgba($color: #000000, $alpha: .75);
 
 $textShadow: 1px 1px 2px $colorBlack;
 $borderRadius: 7px;

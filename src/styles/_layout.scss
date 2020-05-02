@@ -330,10 +330,6 @@
     @media screen and (max-width: $break-midmedium){
         width: 80%;
         grid-template-rows: 60px 35px;
-
-        grid-template-areas: 
-            "catInput list subcatInput" 
-            "leftButton centerText rightButton";
     }
 
     @media screen and (max-width: $break-small){
@@ -462,7 +458,6 @@
             width: 240%;
             transform: translate(-29%, 0);
         }
-       
     }
 
 }
@@ -483,7 +478,7 @@
         width: 100%;
         display: grid;
         grid-template-columns: 1fr 2fr 2fr;
-        grid-template-rows: 160px 200px 200px;
+        grid-template-rows: 200px 200px 200px;
         grid-template-areas: 
         "ctrl male female"
         "max maxMale maxFemale"
@@ -491,7 +486,7 @@
     
         @media screen and (max-width: $break-medium){
             grid-template-columns: 1fr 2fr;
-            grid-template-rows: 90px 65px 200px 200px 66px 200px 200px;
+            grid-template-rows: 110px 65px 200px 200px 66px 200px 200px;
             grid-template-areas: 
                 "ctrl ctrl"
                 "male male"
@@ -571,25 +566,27 @@
 }
 
 .minmaxCtrl{
+    position: relative;
     width: 100%;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 50px 50px 50px;
+    grid-template-rows: 60px 50px 40px 40px;
     align-items: center;
-    grid-template-areas: 
+    grid-template-areas:
     "catInput subcatInput" 
     "leftButton rightButton"
-    "centerText centerText";
+    "centerText centerText"
+    "hamburger hamburger";
     
 
     @media screen and (max-width: $break-medium){
         grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 35px 35px;
+        grid-template-rows: 45px 45px;
 
         grid-template-areas: 
         "catInput centerText leftButton"
-        "subcatInput centerText rightButton";
+        "subcatInput hamburger rightButton";
     }
    
 
@@ -657,10 +654,6 @@
         }
 
         @media screen and (max-width: $break-midmedium){
-            width: 80%;
-        }
-
-        @media screen and (max-width: $break-small){
             width: 100%;
         }
     }
@@ -668,6 +661,12 @@
     &__radioBox{
         margin-left: -7px;
         margin-bottom: 4px;
+        font-size: 1.2rem;  
+
+        @media screen and (max-width: $break-medium){
+            font-size: 1.6rem;  
+        }
+
 
         &:nth-child(1){
             grid-area: catInput;
@@ -676,11 +675,16 @@
         &:nth-child(2){
             grid-area: subcatInput;
         }
-   
     }
 
     &__counter{
         margin-right: 4px;
+        font-size: 1.2rem;  
+
+        @media screen and (max-width: $break-medium){
+            font-size: 1.6rem;  
+        }
+
     }
 
     &__smallSpan{
@@ -688,6 +692,35 @@
         @media screen and (max-width: $break-medium){
             font-size: 1.5rem;
         }
+    }
+
+    &__hamburger{
+        grid-area: hamburger;
+        justify-self: center;  
+    }
+
+    &__scrollableList{
+        position: absolute;
+        width: 100%;   
+        bottom: -103%;
+        font-size: 1.8rem;  
+
+        @media screen and (max-width: $break-medium){
+            width: 25%;   
+            bottom: -190%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            font-size: 1.8rem;
+        }
+
+        @media screen and (max-width: $break-small){
+            width: 40%;   
+            bottom: -190%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            font-size: 1.8rem;
+        }
+       
     }
 
 }
