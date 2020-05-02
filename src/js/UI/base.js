@@ -8,6 +8,8 @@ export const htmlElements = {
     },
     minmax:{
         controller: document.querySelector('#minmax__controller'),
+        listButton: document.querySelector('.hamburger--minmaxList'),
+        list: document.querySelector('.scrollableList--minmaxList'),
         elements:{
             maleMax: document.querySelector('.minmaxBox__item--maxMale'),
             maleMin: document.querySelector('.minmaxBox__item--minMale'),

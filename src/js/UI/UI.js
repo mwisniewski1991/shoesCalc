@@ -31,6 +31,15 @@ export const changeMainSpan = (chartType, newIndex, list)=>{
     mainSpanElement.innerText = newLabels;
 };
 
+//MINMAX
+export const createMinmaxSection = (data)=>{
+    const keys = Object.keys(data);
+
+    for(let key of keys){
+        createMinmaxElement(key, data[key][0])
+    }
+
+};
 export const createMinmaxElement = (DOMelement, shoesObject)=>{
 
     
@@ -56,26 +65,21 @@ export const createMinmaxElement = (DOMelement, shoesObject)=>{
     }
 };
 
-export const createSexbreakdownList = (subcategoryList) =>{
+export const createScrollableList = (section, subcategoryList) =>{
 
-    const list = htmlElements.sexBreakdown.list.querySelector("ul");
+    const list = htmlElements[section].list.querySelector("ul");
     list.innerHTML = ''; 
 
     subcategoryList.forEach((subcategory) => {
         const itemHTML = `
             <li class="scrollableList__item">
-                <button class="scrollableList__button" data-selectionType="${subcategory}">
+                <button class="scrollableList__button" data-variable="${subcategory}">
                     ${uiLabels[subcategory]}
                 </button>
             </li>
         `;
         list.insertAdjacentHTML('beforeend', itemHTML);
     });
-};
-
-export const showSexbreakdownListbutton = () =>{
-    const listButton = htmlElements.sexBreakdown.listButton;
-    listButton.classList.toggle("pieCtrl__hamburger--hidden");
 };
 
 
