@@ -116,7 +116,7 @@ const changeSexBreakdownType = async (e) =>{
             const { currentIndex } = state.sexBreakdown[selectedType];
             const list = shoesList[selectedType];
             const filter = list[currentIndex-1];
-            const piechartData = await dataFinder.getCounterData('sexBreakdown',selectedType, filter);
+            // const piechartData = await dataFinder.getCounterData('sexBreakdown',selectedType, filter);
     
             stateCtrl.changeSexbreakdownSettings('settings', 'type', selectedType); //reset value in state
             stateCtrl.changeSexbreakdownSettings('category', 'currentSelected', false); //reset value in state
@@ -126,7 +126,7 @@ const changeSexBreakdownType = async (e) =>{
             ui.createScrollableList('sexBreakdown', shoesList[selectedType])
             ui.changeMainSpan('sexBreakdown', currentIndex, list);
 
-            chart.updateChart(piechartData, settings)
+            // chart.updateChart(piechartData, settings)
             // chart.updateChart(randomSexBreakdownTestData(), settings) //TEST
             ui.breakdownLoaders('sexBreakdown');
         }
@@ -233,14 +233,14 @@ const changeMinmaxType = async (e)=>{
         const { currentIndex } = state.minmax[selectedType];
         const list = state.shoesList[selectedType];
         const filter = list[currentIndex-1];
-        const minmaxData = await dataFinder.getminmaxData(selectedType,filter);
+        // const minmaxData = await dataFinder.getminmaxData(selectedType,filter);
 
         stateCtrl.changeMinmaxSettings('category', 'currentSelected', false); //reset value in state
         stateCtrl.changeMinmaxSettings('subcategory', 'currentSelected', false); //reset value in state
         stateCtrl.changeMinmaxSettings(selectedType, 'currentSelected', true); //set new value
         ui.changeMainSpan('minmax', currentIndex, list)
         ui.createScrollableList('minmax', state.shoesList[selectedType])
-        ui.createMinmaxSection(minmaxData);
+        // ui.createMinmaxSection(minmaxData);
         ui.minmaxLoaders()
     }
 };

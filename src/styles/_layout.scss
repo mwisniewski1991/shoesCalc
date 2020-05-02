@@ -407,6 +407,11 @@
 
     &__radioBox{
         margin-left: -7px;
+        font-size: 1.5rem;  
+        
+        @media screen and (max-width: $break-small){
+            font-size: 1.8rem;  
+        }
 
         &:nth-child(1){
             grid-area: catInput;
@@ -428,10 +433,6 @@
 
     &__hamburger{
         margin: 0 auto;   
-
-        &--hidden{
-            // transform: scaleY(0);
-        }
     }
 
     &__listContainer{
@@ -443,20 +444,22 @@
 
     &__scrollableList{
         position: absolute;  
-        width: 100%;
+        width: 140%;
+        left: 50%;
+        transform: translate(-50%,0);
+        height: 200px;
         margin: 0 auto;
-        font-size: 1.4rem;
+        font-size: 1.6rem;
 
         @media screen and (max-width: $break-medium){
             font-size: 1.6rem;
             width: 120%;
-            transform: translate(-8%, 0);
         }
 
         @media screen and (max-width: $break-small){
-            font-size: 2rem;
-            width: 240%;
-            transform: translate(-29%, 0);
+            width: 80vw;
+            height: 250px;
+            font-size: 3rem;
         }
     }
 
@@ -702,6 +705,7 @@
     &__scrollableList{
         position: absolute;
         width: 100%;   
+        height: 200px;
         bottom: -103%;
         font-size: 1.8rem;  
 
@@ -714,11 +718,10 @@
         }
 
         @media screen and (max-width: $break-small){
-            width: 40%;   
-            bottom: -190%;
-            left: 50%;
-            transform: translate(-50%, 0);
-            font-size: 1.8rem;
+            width: 80vw;
+            height: 250px;
+            bottom: -235%;
+            font-size: 3.5rem;
         }
        
     }
