@@ -93,7 +93,7 @@
                                 type="radio"
                                 name="sexBreakdown__type" 
                                 id="sexBreakdown__input--category" 
-                                data-sectionType="sexBreakdown" data-type="category" 
+                                data-type="category" 
                                 checked>
                         <label class="radio__label radio__label--category" for="sexBreakdown__input--category">Kategoria</label>
                     </div>
@@ -113,7 +113,7 @@
                                 type="radio" 
                                 name="sexBreakdown__type" 
                                 id="sexBreakdown__input--subacagtegory" 
-                                data-sectionType="sexBreakdown" data-type="subcategory">
+                                data-type="subcategory">
                         <label class="radio__label radio__label--subcategory" for="sexBreakdown__input--subacagtegory">Podkat.</label>
                     </div>
                     <div class="pieCtrl__counter">
@@ -145,7 +145,7 @@
 
                     <div class="pieCtrl__scrollableList scrollableList scrollableList--hidden scrollableList--sexbreakdownList">
                         <ul class="scrollableList__box">
-                            <!-- <li class="scrollableList__item"><button class="scrollableList__button" data-sectionType="OPTION"> OPTIONS</button></li> -->
+                            <!-- <li class="scrollableList__item"><button class="scrollableList__button" data-type="OPTION"> OPTIONS</button></li> -->
                         </ul>
                     </div>
 
@@ -192,7 +192,7 @@
                                 type="radio"
                                 name="minmaxCtrl__type" 
                                 id="minmaxCtrl__input--category" 
-                                data-sectionType="minmax" data-type="category" 
+                                data-type="category" 
                                 checked>
                         <label class="radio__label radio__label--category" for="minmaxCtrl__input--category">Kategoria</label>
                     </div>
@@ -210,7 +210,7 @@
                                 type="radio" 
                                 name="minmaxCtrl__type" 
                                 id="minmaxCtrl__input--subacagtegory" 
-                                data-sectionType="minmax" data-type="subcategory">
+                                data-type="subcategory">
                         <label class="radio__label radio__label--subcategory" for="minmaxCtrl__input--subacagtegory">Podkat.</label>
                     </div>
                     <div class="minmaxCtrl__counter">
@@ -222,14 +222,12 @@
 
                 <button class="minmaxCtrl__button minmaxCtrl__button--left button button--left" 
                 id="minmax__leftButton" 
-                data-sectionType="minmax"
                 value="-1"> << Zmień</button>
 
                 <div class="minmaxCtrl__selection"><span class="minmaxCtrl__mainSpan mainSpan">Wszystkie</span></div>
 
                 <button class="minmaxCtrl__button minmaxCtrl__button--right button button--right" 
                 id="minmax__rightButton" 
-                data-sectionType="minmax"
                 value="1">Zmień >> </button>
 
                 <button class="minmaxCtrl__hamburger hamburger hamburger--minmaxList">
@@ -240,9 +238,7 @@
 
                 <div class="minmaxCtrl__scrollableList scrollableList scrollableList--hidden scrollableList--minmaxList">
                     <ul class="scrollableList__box">
-                        <li class="scrollableList__item"><button class="scrollableList__button" data-sectionType="OPTION"> OPTIONS</button></li>
-                        <li class="scrollableList__item"><button class="scrollableList__button" data-sectionType="OPTION"> OPTIONS</button></li>
-                        <li class="scrollableList__item"><button class="scrollableList__button" data-sectionType="OPTION"> OPTIONS</button></li>
+                        <!-- <li class="scrollableList__item"><button class="scrollableList__button" data-type="OPTION"> OPTIONS</button></li> -->
                     </ul>
                 </div>
 
@@ -366,9 +362,9 @@
                 <div class="priceLevelBox__radioBox radio">
                     <input class="radio__input" 
                         type="radio" 
-                        name="priceLevel__variable" 
+                        name="priceLevel__type" 
                         id="priceLevel__input--sex" 
-                        data-variable="sex" 
+                        data-type="sex" 
                         checked>
                     <label class="radio__label radio__label--subcategory" for="priceLevel__input--sex">Płeć</label>
                 </div>
@@ -376,45 +372,45 @@
                 <div class="priceLevelBox__radioBox radio">
                     <input class="radio__input" 
                         type="radio" 
-                        name="priceLevel__variable" 
+                        name="priceLevel__type" 
                         id="priceLevel__input--category"
-                        data-variable="category">
+                        data-type="category">
                     <label class="radio__label radio__label--subcategory" for="priceLevel__input--category">Kategoria</label>
                 </div>
 
                 <div class="priceLevelBox__radioBox radio">
                     <input class="radio__input" 
                         type="radio" 
-                        name="priceLevel__variable" 
+                        name="priceLevel__type" 
                         id="priceLevel__input--subcategoryOne"
-                        data-variable="subcategoryOne">
+                        data-type="subcategoryOne">
                     <label class="radio__label radio__label--subcategory" for="priceLevel__input--subcategoryOne">Podkat. 1</label>
                 </div>
 
                 <div class="priceLevelBox__radioBox radio">
                     <input class="radio__input" 
                         type="radio" 
-                        name="priceLevel__variable" 
+                        name="priceLevel__type" 
                         id="priceLevel__input--subcategoryTwo"
-                        data-variable="subcategoryTwo">
+                        data-type="subcategoryTwo">
                     <label class="radio__label radio__label--subcategory" for="priceLevel__input--subcategoryTwo">Podkat. 2</label>
                 </div>
 
                 <div class="priceLevelBox__radioBox priceLevelBox__radioBox--smallScreenOnly radio">
                     <input class="radio__input" 
                         type="radio" 
-                        name="priceLevel__variable" 
+                        name="priceLevel__type" 
                         id="priceLevel__input--subcategoryThree"
-                        data-variable="subcategoryThree">
+                        data-type="subcategoryThree">
                     <label class="radio__label radio__label--subcategory" for="priceLevel__input--subcategoryThree">Podkat. 3</label>
                 </div>
 
                 <div class="priceLevelBox__radioBox priceLevelBox__radioBox--smallScreenOnly radio">
                     <input class="radio__input" 
                         type="radio" 
-                        name="priceLevel__variable" 
+                        name="priceLevel__type" 
                         id="priceLevel__input--subcategoryFour"
-                        data-variable="subcategoryFour">
+                        data-type="subcategoryFour">
                     <label class="radio__label radio__label--subcategory" for="priceLevel__input--subcategoryFour">Podkat. 4</label>
                 </div>
 

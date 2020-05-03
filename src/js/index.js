@@ -90,7 +90,7 @@ const changeSexBreakdownSelection = async (e) =>{
             const { sexBreakdown:{chart, settings}, dataFinder } = state;
             const list = state.shoesList[currentType];
             const filter = list[newIndex-1]; //check what category has to been download from database
-            const piechartData = await dataFinder.getCounterData('sexBreakdown',currentType, filter);
+            // const piechartData = await dataFinder.getCounterData('sexBreakdown',currentType, filter);
 
             stateCtrl.changeSexbreakdownSettings(currentType, 'currentIndex', newIndex);
             ui.changeCatNumber('sexBreakdown',currentType, newIndex);
@@ -101,13 +101,36 @@ const changeSexBreakdownSelection = async (e) =>{
 
             // chart.updateChart(randomSexBreakdownTestData(), settings); //TEST
         }
-    }
+    };
+    if (e.target.matches('.scrollableList__button')){
+        const { sexBreakdown, shoesList } = state;
+        const selectedName = e.target.dataset.variable;
+        const currentType = state.sexBreakdown.category.currentSelected === true ? 'category' : 'subcategory';
+        const list = shoesList[currentType];
+        const newIndex = list.indexOf(selectedName) + 1;
+        const { currentIndex } = sexBreakdown[currentType];
+
+        if(newIndex !== currentIndex){
+            ui.breakdownLoaders('sexBreakdown');
+
+            const { sexBreakdown:{ chart, settings }, dataFinder } = state;
+            // const piechartData = await dataFinder.getCounterData('sexBreakdown',currentType, selectedName);
+
+            stateCtrl.changeSexbreakdownSettings(currentType, 'currentIndex', newIndex);
+            ui.changeCatNumber('sexBreakdown',currentType, newIndex);
+            ui.changeMainSpan('sexBreakdown', newIndex, list);
+            // chart.updateChart(piechartData, settings);
+            ui.breakdownLoaders('sexBreakdown');
+            
+            chart.updateChart(randomSexBreakdownTestData(), settings); //TEST
+        }
+    };
 };
 
 const changeSexBreakdownType = async (e) =>{
     if (e.target.matches('.radio__input')){
         const selectedType = e.target.dataset.type
-        const currentType = state.sexBreakdown.settings.type;
+        const currentType = state.sexBreakdown.category.currentSelected === true ? 'category' : 'subcategory';
 
         if( selectedType !== currentType ){
             ui.breakdownLoaders('sexBreakdown');
@@ -117,8 +140,7 @@ const changeSexBreakdownType = async (e) =>{
             const list = shoesList[selectedType];
             const filter = list[currentIndex-1];
             // const piechartData = await dataFinder.getCounterData('sexBreakdown',selectedType, filter);
-    
-            stateCtrl.changeSexbreakdownSettings('settings', 'type', selectedType); //reset value in state
+
             stateCtrl.changeSexbreakdownSettings('category', 'currentSelected', false); //reset value in state
             stateCtrl.changeSexbreakdownSettings('subcategory', 'currentSelected', false); //reset value in state
             stateCtrl.changeSexbreakdownSettings(selectedType, 'currentSelected', true); //set new value
@@ -141,40 +163,12 @@ const showSexbreakdownList = () =>{
     list.classList.toggle('scrollableList--hidden');
 };
 
-const changeSexBreakdownSelectionList = async (e) => {
-    if (e.target.matches('.scrollableList__button')){
-        const { sexBreakdown, shoesList } = state;
-        const selectedName = e.target.dataset.variable;
-        const currentType = sexBreakdown.settings.type;
-        const list = shoesList[currentType];
-        const newIndex = list.indexOf(selectedName) + 1;
-        const { currentIndex } = sexBreakdown[currentType];
-
-        if(newIndex !== currentIndex){
-            ui.breakdownLoaders('sexBreakdown');
-
-            const { sexBreakdown:{ chart, settings }, dataFinder } = state;
-            const piechartData = await dataFinder.getCounterData('sexBreakdown',currentType, selectedName);
-
-            stateCtrl.changeSexbreakdownSettings(currentType, 'currentIndex', newIndex);
-            ui.changeCatNumber('sexBreakdown',currentType, newIndex);
-            ui.changeMainSpan('sexBreakdown', newIndex, list);
-            chart.updateChart(piechartData, settings);
-            ui.breakdownLoaders('sexBreakdown');
-            
-            // chart.updateChart(randomSexBreakdownTestData(), settings); //TEST
-        }
-       
-    }
-};
 
 const pieController = htmlElements.sexBreakdown.controller;
 const sexbreakdownListButton = htmlElements.sexBreakdown.listButton;
-const sexBreakdownList = htmlElements.sexBreakdown.list;
 pieController.addEventListener('click', changeSexBreakdownSelection);
 pieController.addEventListener('click', changeSexBreakdownType);
 sexbreakdownListButton.addEventListener('click', showSexbreakdownList);
-sexBreakdownList.addEventListener('click', changeSexBreakdownSelectionList)
 
 //MINMAX
 const changeMinmaxSelection = async (e)=>{
@@ -190,12 +184,12 @@ const changeMinmaxSelection = async (e)=>{
             const { dataFinder } = state;
             const list = shoesList[currentType];
             const filter = list[newIndex-1];
-            const minmaxData = await dataFinder.getminmaxData(currentType,filter);
+            // const minmaxData = await dataFinder.getminmaxData(currentType,filter);
 
             stateCtrl.changeMinmaxSettings(currentType, 'currentIndex', newIndex);
             ui.changeCatNumber('minmax', currentType, newIndex)
             ui.changeMainSpan('minmax', newIndex, list)
-            ui.createMinmaxSection(minmaxData);
+            // ui.createMinmaxSection(minmaxData);
             ui.minmaxLoaders()
         }
     }
@@ -213,12 +207,12 @@ const changeMinmaxSelection = async (e)=>{
             const { dataFinder } = state;
             const list = state.shoesList[currentType];
             const filter = list[newIndex-1];
-            const minmaxData = await dataFinder.getminmaxData(currentType,filter);
+            // const minmaxData = await dataFinder.getminmaxData(currentType,filter);
 
             stateCtrl.changeMinmaxSettings(currentType, 'currentIndex', newIndex);
             ui.changeCatNumber('minmax', currentType, newIndex)
             ui.changeMainSpan('minmax', newIndex, list)
-            ui.createMinmaxSection(minmaxData);
+            // ui.createMinmaxSection(minmaxData);
 
             ui.minmaxLoaders()
         }
@@ -263,7 +257,7 @@ minmaxListButton.addEventListener('click', showMinmaxList);
 const changePriceLevelVariables = async (e)=>{
 
     if (e.target.matches('.radio__input')){
-        let selectedVariable = e.target.dataset.variable;
+        let selectedVariable = e.target.dataset.type;
         const { priceLevel: {settings: { variable }} } = state;
 
         //check if previous and nexy selection is category: if no then update new data, if not change current data in chart class

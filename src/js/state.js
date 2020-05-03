@@ -49,7 +49,6 @@ export const state = {
         chart: {},
         settings: {
             smallScreen: false,
-            type: 'category',
         },
         category:{
             currentSelected: true,
@@ -86,9 +85,6 @@ export const state = {
     },
 };
 
-export const changeSexbreakdownScreen = (newValue) => {
-    state.sexBreakdown.smallScreen = newValue;
-};
 
 export const changeSexbreakdownSettings = (selectionType, option, newValue) => {
     state.sexBreakdown[selectionType][option] = newValue;
