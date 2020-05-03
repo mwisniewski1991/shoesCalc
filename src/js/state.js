@@ -77,7 +77,7 @@ export const state = {
         chart: {},
         settings:{
             selectedSubcategory: false, //for subcategory chart has diffrent settings
-            subcategoryPart: 'one', //on screen can be shown only half of data from subcategory
+            subcategoryPart: 'One', //on screen can be shown only half of data from subcategory
             variable: 'sex',
             sortType: 'median',
             smallScreen: false,

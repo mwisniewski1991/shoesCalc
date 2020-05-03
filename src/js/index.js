@@ -2,7 +2,6 @@ import '../styles/main.scss'; //IMPORT SASS
 import "babel-polyfill"; //IMPORT BABEL FOR ASYNC/AWAIT
 import * as stateCtrl from './state';
 import DataFinder from './data/dataFinder';
-import Boxplot from './charts/boxplot';
 import * as ui from './UI/UI';
 import { htmlElements } from './UI/base';
 

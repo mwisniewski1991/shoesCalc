@@ -138,28 +138,35 @@ background-position: center;
 z-index: -1;
 
 &--header{
-    background-image: url(('../images/backgroundImages/backTestTwo.jpg'));
-    // Photo by Camila Damásio on Unsplash
-    filter: blur(2px);
+    background-image: url(('../images/backgroundImages/header.jpg'));
+    // Photo by Emma Van Sant on Unsplash
 }
 
 &--breakdown{
-    background-image: url(('../images/backgroundImages/backOne.jpg'));
+    background-image: url(('../images/backgroundImages/breakdown.jpg'));
     // Photo by Jakob Owens on Unsplash
-    filter: blur(2px);
     z-index: -1;
 }
 
-&--priceLevel{
-    background-image: url(('../images/backgroundImages/backTwo.jpg'));
-    // Photo by Md. Zahid Hasan Joy on Unsplash
-    filter: blur(2px) brightness(.45);
+&--minmax{
+    background-image: url(('../images/backgroundImages/minmax.jpg'));
+    // Photo by Camila Damásio on Unsplash
+
+    @media screen and (max-width: $break-small){
+        background-image: url(('../images/backgroundImages/minmax--small.jpg'));
+        // Photo by bantersnaps on Unsplash
+    }
 }
 
-&--minmax{
-    background-image: url(('../images/backgroundImages/backThree.jpg'));
-    // Photo by Camila Damásio on Unsplash
-    filter: blur(2px);
+&--priceLevel{
+    // background-image: url(('../images/backgroundImages/pricelevel.jpg'));
+    background-image: url(('../images/backgroundImages/pricelevel.jpg'));
+    // Photo by Md. Zahid Hasan Joy on Unsplash
+
+    @media screen and (max-width: $break-small){
+        background-image: url(('../images/backgroundImages/pricelevel--small.jpg'));
+        // Photo by Nicole Geri on Unsplash
+    }
 }
 }
 

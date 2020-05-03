@@ -3,6 +3,7 @@ import { htmlElements, uiLabels } from './base';
 import image from '../../images/shoesImg/lackShoesThree.png';
 import PieChart from '../charts/pieChart'
 import Boxplot from '../charts/boxplot';
+import { set } from 'd3';
 
 
 export const debounce = (func, wait, immediate)=>{
@@ -55,6 +56,7 @@ export const createMinmaxSection = (data)=>{
     }
 
 };
+
 export const createMinmaxElement = (DOMelement, shoesObject)=>{
 
     

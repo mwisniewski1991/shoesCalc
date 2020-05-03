@@ -193,7 +193,7 @@ export default class Boxplot {
         }else{
             this.data.mainData = this.data.sortedData;
         };
-    
+
     }
 
     //MAIN ELEMENTS
