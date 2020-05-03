@@ -247,6 +247,7 @@
     }
 }
 
+
 //BREAKDOWN
 .breakdownBox{
     position: relative;
@@ -973,10 +974,22 @@
 
 //TEXT SECTION
 .textSection{
-    height: 50vh;
-    background-image: $mainGradientAlpha;   
+    padding: 3rem .5rem .5rem .5rem;
+    background-image: $mainGradientAlpha;  
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
 
     &__text{
+        padding: 0 2rem;   
+        color: $colorBlack;
+        font-size: 2.5rem;
+        margin-bottom: 3rem;  
+    }
 
+    &__italic{
+        font-style: italic;
     }
 }
