@@ -1,6 +1,9 @@
+import * as stateCtrl from '../state'; 
 import { htmlElements, uiLabels } from './base';
 import image from '../../images/shoesImg/lackShoesThree.png';
-import { html } from 'd3';
+import PieChart from '../charts/pieChart'
+import Boxplot from '../charts/boxplot';
+
 
 export const debounce = (func, wait, immediate)=>{
 	let timeout;
@@ -29,6 +32,18 @@ export const changeMainSpan = (chartType, newIndex, list)=>{
     const mainSpanElement = controller.querySelector('.mainSpan');
     const newLabels = uiLabels[list[newIndex-1]]; //search ui label based on arrat from state
     mainSpanElement.innerText = newLabels;
+};
+
+//SEXBREAKDOWN
+export const createSexDivideChart = (data) =>{
+    const { chartContainer } = htmlElements.sexBreakdown;
+    const { state } = stateCtrl;
+
+    stateCtrl.changeSexbreakdownSettings('settings', 'smallScreen', window.screen.width <= 480 ? true : false);
+    state.sexBreakdown.chart = new PieChart('sexDivide', 'pieChart', chartContainer);
+    
+    const { sexBreakdown : { chart, settings } } = state;
+    chart.renderChart(data, settings);
 };
 
 //MINMAX
@@ -82,10 +97,21 @@ export const createScrollableList = (section, subcategoryList) =>{
     });
 };
 
+//PRICE LEVEL
+export const createPriceLevelChart = (data) =>{
+    const { chartContainer } = htmlElements.priceLevel;
+    const { state } = stateCtrl;
+
+    stateCtrl.changeBoxplotSettings('smallScreen', window.screen.width <= 480 ? true : false); //check on load if screen is big or small
+    state.priceLevel.chart = new Boxplot('priceLevel','boxplot', chartContainer);
+
+    const { chart, settings } = state.priceLevel;
+    chart.renderChart(data, settings);
+}
 
 //LOADERS
-export const breakdownLoaders = (chartType) => {
-    const loader = htmlElements[chartType].loader;
+export const breakdownLoaders = () => {
+    const loader = htmlElements.sexBreakdown.loader;
     loader.classList.toggle('pieContainer__loaderContainer--hidden')
     const bigCircles = loader.querySelector('.loader');
     const smallCircles = [...loader.querySelectorAll('.loader__small')];
