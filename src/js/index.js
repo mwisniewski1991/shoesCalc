@@ -61,16 +61,16 @@ const changeSexBreakdownSelection = async (e) =>{
             const { sexBreakdown:{chart, settings}, dataFinder } = state;
             const list = state.shoesList[currentType];
             const filter = list[newIndex-1]; //check what category has to been download from database
-            // const piechartData = await dataFinder.getCounterData('sexBreakdown',currentType, filter);
+            const piechartData = await dataFinder.getCounterData('sexBreakdown',currentType, filter);
 
             stateCtrl.changeSexbreakdownSettings(currentType, 'currentIndex', newIndex);
             ui.changeCatNumber('sexBreakdown',currentType, newIndex);
             ui.changeMainSpan('sexBreakdown', newIndex, list);
 
-            // chart.updateChart(piechartData, settings);
+            chart.updateChart(piechartData, settings);
             ui.breakdownLoaders();
 
-            chart.updateChart(randomSexBreakdownTestData(), settings); //TEST
+            // chart.updateChart(randomSexBreakdownTestData(), settings); //TEST
         }
     };
     if (e.target.matches('.scrollableList__button')){
@@ -85,15 +85,15 @@ const changeSexBreakdownSelection = async (e) =>{
             ui.breakdownLoaders();
 
             const { sexBreakdown:{ chart, settings }, dataFinder } = state;
-            // const piechartData = await dataFinder.getCounterData('sexBreakdown',currentType, selectedName);
+            const piechartData = await dataFinder.getCounterData('sexBreakdown',currentType, selectedName);
 
             stateCtrl.changeSexbreakdownSettings(currentType, 'currentIndex', newIndex);
             ui.changeCatNumber('sexBreakdown',currentType, newIndex);
             ui.changeMainSpan('sexBreakdown', newIndex, list);
-            // chart.updateChart(piechartData, settings);
+            chart.updateChart(piechartData, settings);
             ui.breakdownLoaders();
             
-            chart.updateChart(randomSexBreakdownTestData(), settings); //TEST
+            // chart.updateChart(randomSexBreakdownTestData(), settings); //TEST
         }
     };
 };
@@ -109,7 +109,7 @@ const changeSexBreakdownType = async (e) =>{
             const { currentIndex } = state.sexBreakdown[selectedType];
             const list = shoesList[selectedType];
             const filter = list[currentIndex-1];
-            // const piechartData = await dataFinder.getCounterData('sexBreakdown',selectedType, filter);
+            const piechartData = await dataFinder.getCounterData('sexBreakdown',selectedType, filter);
 
             stateCtrl.changeSexbreakdownSettings('category', 'currentSelected', false); //reset value in state
             stateCtrl.changeSexbreakdownSettings('subcategory', 'currentSelected', false); //reset value in state
@@ -118,7 +118,7 @@ const changeSexBreakdownType = async (e) =>{
             ui.createScrollableList('sexBreakdown', shoesList[selectedType])
             ui.changeMainSpan('sexBreakdown', currentIndex, list);
 
-            // chart.updateChart(piechartData, settings)
+            chart.updateChart(piechartData, settings)
             // chart.updateChart(randomSexBreakdownTestData(), settings) //TEST
             ui.breakdownLoaders();
         }
@@ -152,12 +152,12 @@ const changeMinmaxSelection = async (e)=>{
             const { dataFinder } = state;
             const list = shoesList[currentType];
             const filter = list[newIndex-1];
-            // const minmaxData = await dataFinder.getminmaxData(currentType,filter);
+            const minmaxData = await dataFinder.getminmaxData(currentType,filter);
 
             stateCtrl.changeMinmaxSettings(currentType, 'currentIndex', newIndex);
             ui.changeCatNumber('minmax', currentType, newIndex)
             ui.changeMainSpan('minmax', newIndex, list)
-            // ui.createMinmaxSection(minmaxData);
+            ui.createMinmaxSection(minmaxData);
             ui.minmaxLoaders()
         }
     }
@@ -175,12 +175,12 @@ const changeMinmaxSelection = async (e)=>{
             const { dataFinder } = state;
             const list = state.shoesList[currentType];
             const filter = list[newIndex-1];
-            // const minmaxData = await dataFinder.getminmaxData(currentType,filter);
+            const minmaxData = await dataFinder.getminmaxData(currentType,filter);
 
             stateCtrl.changeMinmaxSettings(currentType, 'currentIndex', newIndex);
             ui.changeCatNumber('minmax', currentType, newIndex)
             ui.changeMainSpan('minmax', newIndex, list)
-            // ui.createMinmaxSection(minmaxData);
+            ui.createMinmaxSection(minmaxData);
 
             ui.minmaxLoaders()
         }
@@ -195,14 +195,14 @@ const changeMinmaxType = async (e)=>{
         const { currentIndex } = state.minmax[selectedType];
         const list = state.shoesList[selectedType];
         const filter = list[currentIndex-1];
-        // const minmaxData = await dataFinder.getminmaxData(selectedType,filter);
+        const minmaxData = await dataFinder.getminmaxData(selectedType,filter);
 
         stateCtrl.changeMinmaxSettings('category', 'currentSelected', false); //reset value in state
         stateCtrl.changeMinmaxSettings('subcategory', 'currentSelected', false); //reset value in state
         stateCtrl.changeMinmaxSettings(selectedType, 'currentSelected', true); //set new value
         ui.changeMainSpan('minmax', currentIndex, list)
         ui.createScrollableList('minmax', state.shoesList[selectedType])
-        // ui.createMinmaxSection(minmaxData);
+        ui.createMinmaxSection(minmaxData);
         ui.minmaxLoaders()
     }
 };
@@ -238,27 +238,27 @@ const changePriceLevelVariables = async (e)=>{
                 const { priceLevel: { chart, settings }, dataFinder } = state;
 
                 //TEST DATA
-                let data = [];
-                switch(selectedVariable){
-                    case 'sex':
-                        data = boxPlotSex;
-                        break;
-                    case 'category':
-                        data = boxPlotCat;
-                        break;
-                    case 'subcategoryOne':
-                        data = boxPlotSubcat;
-                        break;
-                    case 'subcategoryTwo':
-                        data = boxPlotSubcat;
-                        break;
-                    case 'subcategoryThree':
-                        data = boxPlotSubcat;
-                        break;
-                    case 'subcategoryFour':
-                        data = boxPlotSubcat;
-                        break;
-                };
+                // let data = [];
+                // switch(selectedVariable){
+                //     case 'sex':
+                //         data = boxPlotSex;
+                //         break;
+                //     case 'category':
+                //         data = boxPlotCat;
+                //         break;
+                //     case 'subcategoryOne':
+                //         data = boxPlotSubcat;
+                //         break;
+                //     case 'subcategoryTwo':
+                //         data = boxPlotSubcat;
+                //         break;
+                //     case 'subcategoryThree':
+                //         data = boxPlotSubcat;
+                //         break;
+                //     case 'subcategoryFour':
+                //         data = boxPlotSubcat;
+                //         break;
+                // };
                 
                 //check if current selection if subcategory
                 let selectedSubcategory = selectedVariable.slice(0,11) === "subcategory" ? true : false; 
@@ -318,7 +318,7 @@ const resizeBoxplot= ()=>{
     stateCtrl.changeBoxplotSettings('smallScreen', window.screen.width <= 720 ? true : false);
 
     const { chartContainer, variablesController } = htmlElements.priceLevel;
-    const { chart, settings  } = state.priceLevel;
+    const { chart, settings  } = stateCtrl.state.priceLevel;
     const { subcategoryPart, smallScreen } = state.priceLevel.settings;
 
     //if user change screen from small to big subcategory 3 and 4 disapear and app has to change to 2
