@@ -1,5 +1,5 @@
 import '../styles/main.scss'; //IMPORT SASS
-import "babel-polyfill"; //IMPORT BABEL FOR ASYNC/AWAIT
+import 'babel-polyfill'; //IMPORT BABEL FOR ASYNC/AWAIT
 import * as stateCtrl from './state';
 import DataFinder from './data/dataFinder';
 import * as ui from './UI/UI';
@@ -37,10 +37,10 @@ const appController = async () =>{
 
 
     //PRICE LEVEL
-    // stateCtrl.changeBoxplotSettings('selectedSubcategory', true) //TEST
-    // ui.createPriceLevelChart(boxPlotSubcat); //TEST
-    const priceLevelData = await dataFinder.getPriceLevelData('sex');
-    ui.createPriceLevelChart(priceLevelData);
+    stateCtrl.changeBoxplotSettings('selectedSubcategory', true) //TEST
+    ui.createPriceLevelChart(boxPlotSubcat); //TEST
+    // const priceLevelData = await dataFinder.getPriceLevelData('sex');
+    // ui.createPriceLevelChart(priceLevelData);
     ui.priceLevelLoaders();
 };
 

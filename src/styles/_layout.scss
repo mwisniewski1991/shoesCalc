@@ -998,7 +998,7 @@
     padding: 1rem;   
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 50px 50px auto;
+    grid-template-rows: 70px 70px 70px auto;
     background-image: $mainGradient;
 
 
@@ -1015,20 +1015,26 @@
         }
 
         &--git{
-            @media screen and (max-width: $break-small){
-                grid-row: 2/3;
-                grid-column: 1/3;
-                padding: 0;
-                margin: 0 auto;
-            }
+            grid-row: 2/3;
+            grid-column: 1/3;
+            margin: 0 auto;
         }
         &--contribution{
-            @media screen and (max-width: $break-small){
+            grid-row: 3/4;
+            grid-column: 1/3;
+            margin: 0 auto;
+        }
+        &--contributionList{
+            grid-column: 1/3;
+            margin: 0 auto;
+
+            @media screen and (max-width: $break-midmedium){
                 grid-column: 1/3;
                 padding: 0;
                 margin: 0 auto;
                 align-self: start;
             }
+
         }
     }
 
@@ -1087,26 +1093,34 @@
 }
 
 .contributors{
+        
+    &__list{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
 
-    &__list{}
+        align-items: center;
+    }
     &__item{
-        padding-right: 20%;
-        margin-top: 1rem;
+        width: 100%;
+        padding: 1rem;
 
-        display: flex;
-        align-items: center;   
-        justify-content: flex-end;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        align-items: center;
+        justify-content: center;
+        align-items: center;
     }
     
     &__svg{
         height: 25px; width: 60px;
+        margin: auto;
     }
     &__background{
         width: 100px;
         height: 100px;
         background-size: cover;
         background-position: center;
-        margin-left: 1rem;
+        margin: auto;
 
         &--header{
             background-image: url(('../images/backgroundImages/header.jpg'));
@@ -1121,22 +1135,45 @@
         &--minmax{
             background-image: url(('../images/backgroundImages/minmax.jpg'));
             // Photo by Camila Damásio on Unsplash
-        
-            @media screen and (max-width: $break-small){
-                background-image: url(('../images/backgroundImages/minmax--small.jpg'));
-                // Photo by bantersnaps on Unsplash
-            }
+        }
+        &--minmaxSmall{
+            background-image: url(('../images/backgroundImages/minmax--small.jpg'));
+            // Photo by bantersnaps on Unsplash
         }
         
         &--priceLevel{
             // background-image: url(('../images/backgroundImages/pricelevel.jpg'));
             background-image: url(('../images/backgroundImages/pricelevel.jpg'));
             // Photo by Md. Zahid Hasan Joy on Unsplash
-        
-            @media screen and (max-width: $break-small){
-                background-image: url(('../images/backgroundImages/pricelevel--small.jpg'));
+        }
+
+        &--priceLevelSmall{
+            background-image: url(('../images/backgroundImages/pricelevel--small.jpg'));
                 // Photo by Nicole Geri on Unsplash
-            }
+        }
+    }
+
+    &__textBox{
+        text-align: center;
+    }
+
+    &__name{
+        font-size: 1.3rem;
+    }
+
+    &__link{
+        color: $colorFont;
+        text-decoration: none;
+        font-size: 1.3rem;
+
+        &:hover{
+            color: $colorBlack;
+        }
+        &:focus{
+            outline-color: #2d3436;
+        }
+        &:active{
+            text-decoration: underline;
         }
     }
 
