@@ -71,6 +71,18 @@ $break-big: 1100px;
     border-left: $loaderBorderSize solid transparent;
     border-right: $loaderBorderSize solid transparent;
     animation: rotateLoader linear 2s infinite;
+}
 
+@mixin linkStyle{
+    
+    &:hover{
+        color: $colorBlack;
+    }
+    &:focus{
+        outline-color: #2d3436;
+    }
+    &:active{
+        text-decoration: underline;
+    }
 }
 

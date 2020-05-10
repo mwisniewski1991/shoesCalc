@@ -150,6 +150,7 @@
         display: block;
         width: 100%;
         height: 100%;
+        transform: translateY(-4px);
 
         @media screen and (max-width: $break-medium){
             width: 85%;
@@ -162,7 +163,6 @@
 
         &--male{
             fill: $colorMale;
-            transform: translateY(8px);
             -webkit-filter: drop-shadow( 3px 3px 2px $colorBlack);
             filter: drop-shadow( 3px 3px 2px $colorBlack);
         }
@@ -1080,15 +1080,7 @@
         text-decoration: none;
         font-size: 2rem;
 
-        &:hover{
-            color: $colorBlack;
-        }
-        &:focus{
-            outline-color: #2d3436;
-        }
-        &:active{
-            text-decoration: underline;
-        }
+        @include linkStyle;
     }
 }
 
@@ -1112,7 +1104,7 @@
     }
     
     &__svg{
-        height: 25px; width: 60px;
+        height: 50px; width: 60px;
         margin: auto;
     }
     &__background{
@@ -1166,15 +1158,7 @@
         text-decoration: none;
         font-size: 1.3rem;
 
-        &:hover{
-            color: $colorBlack;
-        }
-        &:focus{
-            outline-color: #2d3436;
-        }
-        &:active{
-            text-decoration: underline;
-        }
+        @include linkStyle;
     }
 
 }
