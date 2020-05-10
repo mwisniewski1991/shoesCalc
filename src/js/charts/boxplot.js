@@ -86,9 +86,8 @@ export default class Boxplot {
         }
     }
 
-    //CONTROLLERS
+    //CONTROLERS
     renderChart(data, { sortType, selectedSubcategory, subcategoryPart, smallScreen}){
-        
         this.updateSettings(selectedSubcategory, smallScreen, false);
 
         if(!this.elements.svg){this.createBound();
@@ -299,8 +298,12 @@ export default class Boxplot {
         const { dimension:{boundHeight} } = this.settings;
         const { mainData } = this.data;
 
+        // const yScale = d3.scaleLinear()
+        //     .domain([0, d3.max(mainData.map((el)=> el.value.outliersMax))])
+        //     .range([boundHeight,0]);
+
         const yScale = d3.scaleLinear()
-            .domain([0, d3.max(mainData.map((el)=> el.value.outliersMax))])
+            .domain([0, 3200]) //DATA ARE CONISTENT SO Y MAX IS FIXED VALUE
             .range([boundHeight,0]);
 
         this.elements.yScale = yScale;
