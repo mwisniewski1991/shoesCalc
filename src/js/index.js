@@ -5,11 +5,6 @@ import DataFinder from './data/dataFinder';
 import * as ui from './UI/UI';
 import { htmlElements } from './UI/base';
 
-//TEST
-import { sexBreakdownTestData, sexBreakdownTestDataTwo, randomSexBreakdownTestData } from './data/sexBreakdownTestData';
-import { minmaxTestData } from './data/minmaxTestData';
-import { boxPlotSex, boxPlotCat, boxPlotSubcat} from './data/priceLevelTestData';
-
 
 const { state } = stateCtrl;
 const appController = async () =>{
@@ -22,25 +17,21 @@ const appController = async () =>{
     const { dataFinder } = state;
     
     //BREAKDOWN
-    ui.createSexDivideChart(randomSexBreakdownTestData()); //TEST
-    // const sexBreakdownData = await dataFinder.getCounterData('sexBreakdown','category','wszystkie');
-    // ui.createSexDivideChart(sexBreakdownData); 
+    const sexBreakdownData = await dataFinder.getCounterData('sexBreakdown','category','wszystkie');
+    ui.createSexDivideChart(sexBreakdownData); 
     ui.breakdownLoaders();
     ui.createScrollableList('sexBreakdown', state.shoesList.category)
 
     //MINMAX SECTION
-    ui.createMinmaxSection(minmaxTestData); //TEST
-    // const minmaxData = await dataFinder.getminmaxData('category','wszystkie');
-    // ui.createMinmaxSection(minmaxData);
+    const minmaxData = await dataFinder.getminmaxData('category','wszystkie');
+    ui.createMinmaxSection(minmaxData);
     ui.minmaxLoaders()
     ui.createScrollableList('minmax', state.shoesList.category)
 
 
     //PRICE LEVEL
-    stateCtrl.changeBoxplotSettings('selectedSubcategory', false) //TEST
-    ui.createPriceLevelChart(boxPlotSex); //TEST
-    // const priceLevelData = await dataFinder.getPriceLevelData('sex');
-    // ui.createPriceLevelChart(priceLevelData);
+    const priceLevelData = await dataFinder.getPriceLevelData('sex');
+    ui.createPriceLevelChart(priceLevelData);
     ui.priceLevelLoaders();
 };
 
