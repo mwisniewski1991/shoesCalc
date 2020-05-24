@@ -12,11 +12,11 @@ SASS (SCSS)\
 Vanilla JS\
 JS libraries:
 - D3.js
-- Parcel bundler
 
 #### Back-end
-Node.js\
-Expess.js\
+Node.js
+- Expess.js
+
 MongoDB
 
 ## Data source
@@ -52,11 +52,22 @@ User on app can select variable for X Axis: *sex, category or subcategory*.\
 Because there are 41 types of subcategory on chart user can see only part of it. Show 42 boxes will not be readable for user.\
 It is also possible to sort boxes acording to four option. Sort by: *median, min value, max value* and *max extreme value*.
 
+### Contributors
+All photos from Unsplash, made by: 
+- Emma Van Sant
+- Jakob Owens 
+- Camila Damási
+- bantersnaps
+- Md. Zahid Hasan Joy
+- Nicole Geri
+
+SVG from flaticon,
+- Freepik 
+
 ## Developer:
 **Mateusz Wiśniewski**
 ##### My Goal
-I like to create app based on data. So I want to learn how to create online charts and dashboards.\
-I think it is easier to remember what data bring to us when it is possibility to *touch* data and *play* with them. Web is perfect place to do this.
+I want to learn how to create online charts and dashboards.
 
 Check my other repositories:
 https://github.com/mwisniewski1991?tab=repositories
