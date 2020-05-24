@@ -1025,7 +1025,6 @@
         font-size: 2rem;
         text-align: center;
         margin: 0 1rem;
-        order: 2;
     }
 
     &__shoeBox{
@@ -1039,7 +1038,7 @@
         -webkit-filter: drop-shadow( 3px 3px 2px $colorBlack);
         filter: drop-shadow( 3px 3px 2px $colorBlack);
 
-        &--female{fill: $colorFemale;}
+        &--female{fill: $colorFemale}
         &--male{
             fill: $colorMale; 
             transform: translateY(15px);
