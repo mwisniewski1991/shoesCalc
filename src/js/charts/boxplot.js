@@ -317,7 +317,6 @@ export default class Boxplot {
         this.drawMinLines();
         this.drawMaxLines();
         this.drawOutliersMax();
-        this.boxesTooltip()
     }
 
     drawBoxes(){
@@ -501,38 +500,9 @@ export default class Boxplot {
         this.elements.outliersMax = outliersMax;
     }
 
-    //INTERACTIVITY
-    boxesTooltip(){
-        const { boxes } = this.elements;
-        const { animationTime:{ tooltipTime }, container} = this.settings; 
-        const tooltip = d3.select('.boxplotTooltip'); 
-
-        boxes.on('mouseover', (d,i,nodes)=>{
-            //update labels
-            container.querySelector('.boxplotTooltip__value--max').innerText = d.value.max;
-            container.querySelector('.boxplotTooltip__value--median').innerText = d.value.median;
-            container.querySelector('.boxplotTooltip__value--min').innerText = d.value.min;
-
-            //change tooltip position
-            const x = nodes[i].x.baseVal.value;
-            const y = nodes[i].y.baseVal.value;
-
-            tooltip
-                .style('left', `${x + 45}px`)
-                .style('top', `${y + 60}px`)
-                .style('opacity',1);
-        })
-        .on('mouseout',()=>{
-            tooltip
-                .style('left', `-150px`)
-                .style('opacity',0)
-        })
-    }
-
     //ADDITIONAL
     generateSexClass(key, type, mainClass){
         const sexClass = key === 'M' ? '--male' : key==="F" ? '--female' : '--other'; 
-        
         return `${mainClass}__${type} ${mainClass}__${type}${sexClass}`
     }
 

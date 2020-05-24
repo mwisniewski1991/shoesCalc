@@ -37,8 +37,8 @@ const appController = async () =>{
 
 
     //PRICE LEVEL
-    stateCtrl.changeBoxplotSettings('selectedSubcategory', true) //TEST
-    ui.createPriceLevelChart(boxPlotSubcat); //TEST
+    stateCtrl.changeBoxplotSettings('selectedSubcategory', false) //TEST
+    ui.createPriceLevelChart(boxPlotSex); //TEST
     // const priceLevelData = await dataFinder.getPriceLevelData('sex');
     // ui.createPriceLevelChart(priceLevelData);
     ui.priceLevelLoaders();
@@ -236,29 +236,6 @@ const changePriceLevelVariables = async (e)=>{
         if(variable !== selectedVariable){
             if(!selectedSubcategories){
                 const { priceLevel: { chart, settings }, dataFinder } = state;
-
-                //TEST DATA
-                // let data = [];
-                // switch(selectedVariable){
-                //     case 'sex':
-                //         data = boxPlotSex;
-                //         break;
-                //     case 'category':
-                //         data = boxPlotCat;
-                //         break;
-                //     case 'subcategoryOne':
-                //         data = boxPlotSubcat;
-                //         break;
-                //     case 'subcategoryTwo':
-                //         data = boxPlotSubcat;
-                //         break;
-                //     case 'subcategoryThree':
-                //         data = boxPlotSubcat;
-                //         break;
-                //     case 'subcategoryFour':
-                //         data = boxPlotSubcat;
-                //         break;
-                // };
                 
                 //check if current selection if subcategory
                 let selectedSubcategory = selectedVariable.slice(0,11) === "subcategory" ? true : false; 
